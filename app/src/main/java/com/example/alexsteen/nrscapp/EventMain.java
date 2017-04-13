@@ -1,10 +1,12 @@
 package com.example.alexsteen.nrscapp;
 
+import android.content.Intent;
 import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TabHost;
 
 public class EventMain extends AppCompatActivity {
 
@@ -15,7 +17,8 @@ public class EventMain extends AppCompatActivity {
         getSupportActionBar().hide();
 
         ImageView btn_back = (ImageView) findViewById(R.id.btn_back);
-
+        TabHost tabHost = (TabHost)findViewById(R.id.tabhost);
+//        tabHost.setup();
 
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -23,6 +26,23 @@ public class EventMain extends AppCompatActivity {
                 finish();
             }
         });
+
+        TabHost.TabSpec tab1 = tabHost.newTabSpec("First Tab");
+        TabHost.TabSpec tab2 = tabHost.newTabSpec("Second Tab");
+        TabHost.TabSpec tab3 = tabHost.newTabSpec("Third Tab");
+
+
+        tab1.setIndicator("Tab1");
+        tab1.setContent(new Intent(this,EventFeaturesAll.class));
+        tabHost.addTab(tab1);
+
+        tab2.setIndicator("Tab2");
+        tab1.setContent(new Intent(this,EventFeaturesAll.class));
+        tabHost.addTab(tab2);
+
+        tab3.setIndicator("Tab3");
+        tab1.setContent(new Intent(this,EventFeaturesAll.class));
+        tabHost.addTab(tab3);
 
     }
 }

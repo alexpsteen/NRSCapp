@@ -50,16 +50,16 @@
         android:layout_marginStart="10dp" />
 
 
-    <ImageButton
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        app:srcCompat="?android:attr/floatingToolbarOpenDrawable"
-        android:id="@+id/imageButton"
-        android:background="#00000000"
-        android:tint="@color/white"
-        android:scaleType="fitCenter"
-        android:layout_alignTop="@+id/btn_email"
-        android:layout_alignParentEnd="true" />
+    <!--<ImageButton-->
+        <!--android:layout_width="45dp"-->
+        <!--android:layout_height="45dp"-->
+        <!--app:srcCompat="?android:attr/floatingToolbarOpenDrawable"-->
+        <!--android:id="@+id/imageButton"-->
+        <!--android:background="#00000000"-->
+        <!--android:tint="@color/white"-->
+        <!--android:scaleType="fitCenter"-->
+        <!--android:layout_alignTop="@+id/btn_email"-->
+        <!--android:layout_alignParentEnd="true" />-->
 
     <TextView
         android:text="Start"
