@@ -94,10 +94,11 @@ public class AddVenue extends AppCompatActivity {
 
 
                 //TODO: ADD TO DB
+                String featureType = "Venue";
                 String isIndoor = rb.getText().toString();
                 String num_capacity = capacity.getSelectedItem().toString(); //capacity String
-                String details = notes;
-                String location_name = location;
+//                notes; //String
+//                location; //String
 
                 finish();
             }
