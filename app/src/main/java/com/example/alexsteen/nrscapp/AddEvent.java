@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.Toast;
+import android.content.SharedPreferences;
 
 public class AddEvent extends AppCompatActivity {
 
@@ -20,12 +21,21 @@ public class AddEvent extends AppCompatActivity {
     private int budget_amount;
     private boolean isBudgetBar = true;
     private final Integer BUDGET_MAX = 10000;
+    private eventDB dbHandler;
+    private SharedPreferences.Editor editCurrentEvent;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_event);
         getSupportActionBar().hide();
+
+        dbHandler = new eventDB(this);
+        SharedPreferences currentEvent;
+        currentEvent = getSharedPreferences("CurrentEvent", MODE_PRIVATE);
+        editCurrentEvent = currentEvent.edit();
+        editCurrentEvent.apply();
 
         ImageView btn_back = (ImageView) findViewById(R.id.btn_back);
         final EditText et_eventName = (EditText) findViewById(R.id.tb_eventName);
@@ -95,6 +105,12 @@ public class AddEvent extends AppCompatActivity {
                 //event_name; //string
                 //date_start; //string (date)
                 //date_end; //string (date)
+
+                eventObject event = new eventObject(event_name,0,date_start,date_end,budget_amount);
+                editCurrentEvent.putString("eventName",event_name);
+                editCurrentEvent.commit();
+                dbHandler.addEvent(event);
+
 
 
                 Intent in = new Intent(AddEvent.this, EventMain.class);
