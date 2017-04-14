@@ -133,7 +133,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginTop="300dp"
-        android:layout_marginLeft="40dp">
+        android:layout_marginLeft="40dp"
+        android:id="@+id/budgetGroup">
 
         <RadioButton
             android:layout_width="wrap_content"
@@ -158,12 +159,20 @@
 
     </RadioGroup>
 
+    <SeekBar
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/budgetGroup"
+        android:layout_marginTop="7dp"
+        android:layout_marginLeft="80dp"
+        android:id="@+id/budgetBar" />
+
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:id="@+id/editText"
-        android:hint="$12345"
+        android:inputType="number"
+        android:id="@+id/budgetCustom"
+        android:hint="12345"
         android:layout_marginLeft="185dp"
         android:layout_marginTop="343dp"/>
 
@@ -173,7 +182,7 @@
         android:layout_height="34dp"
         android:textAllCaps="false"
         android:id="@+id/btn_done"
-        android:layout_below="@+id/editText"
+        android:layout_below="@+id/budgetCustom"
         android:layout_centerHorizontal="true"
         android:background="@color/green"
         android:textColor="@color/white"

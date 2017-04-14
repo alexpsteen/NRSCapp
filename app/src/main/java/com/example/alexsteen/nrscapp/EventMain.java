@@ -5,6 +5,7 @@ import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TabHost;
 
@@ -17,6 +18,8 @@ public class EventMain extends AppCompatActivity {
         getSupportActionBar().hide();
 
         ImageView btn_back = (ImageView) findViewById(R.id.btn_back);
+        Button add_feature = (Button) findViewById(R.id.addFeature);
+
         TabHost tabHost = (TabHost)findViewById(R.id.tabhost);
 //        tabHost.setup();
 
@@ -27,22 +30,28 @@ public class EventMain extends AppCompatActivity {
             }
         });
 
-        TabHost.TabSpec tab1 = tabHost.newTabSpec("First Tab");
-        TabHost.TabSpec tab2 = tabHost.newTabSpec("Second Tab");
-        TabHost.TabSpec tab3 = tabHost.newTabSpec("Third Tab");
+        add_feature.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View view) {
+                Intent in = new Intent(EventMain.this, AddVenue.class);
+                startActivity(in);
+            }});
 
-
-        tab1.setIndicator("Tab1");
-        tab1.setContent(new Intent(this,EventFeaturesAll.class));
-        tabHost.addTab(tab1);
-
-        tab2.setIndicator("Tab2");
-        tab1.setContent(new Intent(this,EventFeaturesAll.class));
-        tabHost.addTab(tab2);
-
-        tab3.setIndicator("Tab3");
-        tab1.setContent(new Intent(this,EventFeaturesAll.class));
-        tabHost.addTab(tab3);
+//        TabHost.TabSpec tab1 = tabHost.newTabSpec("First Tab");
+//        TabHost.TabSpec tab2 = tabHost.newTabSpec("Second Tab");
+//        TabHost.TabSpec tab3 = tabHost.newTabSpec("Third Tab");
+//
+//
+//        tab1.setIndicator("Tab1");
+//        tab1.setContent(new Intent(this,EventFeaturesAll.class));
+//        tabHost.addTab(tab1);
+//
+//        tab2.setIndicator("Tab2");
+//        tab1.setContent(new Intent(this,EventFeaturesAll.class));
+//        tabHost.addTab(tab2);
+//
+//        tab3.setIndicator("Tab3");
+//        tab1.setContent(new Intent(this,EventFeaturesAll.class));
+//        tabHost.addTab(tab3);
 
     }
 }

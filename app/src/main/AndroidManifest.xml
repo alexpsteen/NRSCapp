@@ -31,7 +31,8 @@
         <activity
             android:name=".EventFeaturesAll"
             android:label="@string/title_activity_event_features_all"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".AddVenue"></activity>
     </application>
 
 </manifest>
