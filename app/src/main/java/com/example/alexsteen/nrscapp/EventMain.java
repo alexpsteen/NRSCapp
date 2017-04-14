@@ -32,7 +32,7 @@ public class EventMain extends AppCompatActivity {
 
         add_feature.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
-                Intent in = new Intent(EventMain.this, AddVenue.class);
+                Intent in = new Intent(EventMain.this, AddFeature.class);
                 startActivity(in);
             }});
 
