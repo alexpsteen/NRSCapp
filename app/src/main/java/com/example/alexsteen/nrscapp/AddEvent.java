@@ -19,6 +19,7 @@ public class AddEvent extends AppCompatActivity {
     private String event_name, date_start, date_end;
     private int budget_amount;
     private boolean isBudgetBar = true;
+    private final Integer BUDGET_MAX = 10000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,12 +84,18 @@ public class AddEvent extends AppCompatActivity {
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO: Add the event to the DB, use budget_amount from below
                 if (isBudgetBar) {
-                    budget_amount = budget_bar.getProgress();
+                    budget_amount = budget_bar.getProgress() * BUDGET_MAX;
                 } else {
                     budget_amount = Integer.parseInt(budget_custom.getText().toString());
                 }
+
+                //TODO: Add the event to the DB
+                //budget_amount; //int
+                //event_name; //string
+                //date_start; //string (date)
+                //date_end; //string (date)
+
 
                 Intent in = new Intent(AddEvent.this, EventMain.class);
                 startActivity(in);

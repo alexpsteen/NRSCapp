@@ -61,39 +61,38 @@
     <!--android:layout_alignTop="@+id/btn_email"-->
     <!--android:layout_alignParentEnd="true" />-->
 
-    <Button
-        android:text="Done"
-        android:layout_width="wrap_content"
-        android:layout_height="34dp"
-        android:textAllCaps="false"
-        android:id="@+id/btn_done"
-        android:layout_below="@+id/budgetCustom"
-        android:layout_centerHorizontal="true"
-        android:background="@color/green"
-        android:textColor="@color/white"
-        android:layout_marginTop="50dp" />
-
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="text"
         android:hint="Location"
         android:ems="10"
-        android:layout_marginTop="28dp"
-        android:id="@+id/tb_eventName"
+        android:layout_marginTop="12dp"
+        android:id="@+id/tb_location"
         android:textSize="20sp"
         android:layout_below="@+id/headBar"
-        android:layout_alignEnd="@+id/txt_pageName"
-        android:layout_marginEnd="10dp" />
+        android:layout_alignStart="@+id/btn_back"
+        android:layout_marginStart="12dp" />
+
+    <Spinner
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:id="@+id/ddl_capacity"
+        android:layout_marginLeft="20dp"
+        android:layout_below="@id/tb_location"
+        android:layout_marginTop="10dp"/>
 
     <RadioGroup
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginLeft="40dp"
-        android:id="@+id/budgetGroup"
+        android:id="@+id/indoorGroup"
         android:layout_centerVertical="true"
         android:layout_toEndOf="@+id/btn_back"
+        android:layout_below="@id/ddl_capacity"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="-20dp"
         android:layout_marginStart="20dp">
 
         <RadioButton
@@ -101,10 +100,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/radio_budgetBar"
-            android:layout_marginBottom="16dp"
             android:buttonTint="@color/gray"
-            android:layout_above="@+id/editText"
-            android:layout_alignStart="@+id/radio_budgetCustom"
             android:checked="true"/>
 
         <RadioButton
@@ -112,13 +108,47 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/radio_budgetCustom"
-            android:layout_below="@+id/textView2"
             android:buttonTint="@color/gray"
             android:textColor="@color/gray"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="0dp"/>
+            android:layout_marginBottom="50dp"/>
+
 
     </RadioGroup>
 
+    <EditText
+        android:inputType="textMultiLine"
+        android:textSize="14dp"
+        android:id="@+id/tb_notes"
+        android:layout_height="100dp"
+        android:layout_width="280dp"
+        android:background="@drawable/border"
+        android:gravity="top"
+        android:hint="specific needs,ideas, etc."
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/textView4"
+        android:layout_alignStart="@+id/textView4" />
+
+    <TextView
+        android:text="Additional Details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="17dp"
+        android:id="@+id/textView4"
+        android:layout_below="@id/indoorGroup"
+        android:gravity="center"
+        android:layout_marginLeft="52dp"
+        />
+
+    <Button
+        android:text="Save"
+        android:layout_width="wrap_content"
+        android:layout_height="34dp"
+        android:textAllCaps="false"
+        android:id="@+id/btn_save"
+        android:background="@color/headBlue"
+        android:textColor="@color/white"
+        android:layout_below="@id/tb_notes"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"/>
 
 </RelativeLayout>
