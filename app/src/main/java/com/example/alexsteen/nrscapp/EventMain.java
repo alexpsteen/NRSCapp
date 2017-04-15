@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.SeekBar;
 import android.widget.TabHost;
 import android.widget.TextView;
 
@@ -32,6 +34,9 @@ public class EventMain extends AppCompatActivity {
         Button add_feature = (Button) findViewById(R.id.addFeature);
         TextView event_name = (TextView) findViewById(R.id.tb_eventName);
         TextView date_range = (TextView) findViewById(R.id.tb_dateRange);
+        ProgressBar budget_bar = (ProgressBar) findViewById(R.id.budgetBar);
+
+        budget_bar.setScaleY(4f);
 
         String eventName = currentEvent.getString("eventName",null);
         event_name.setText(eventName);
@@ -42,7 +47,7 @@ public class EventMain extends AppCompatActivity {
 
 
 
-        TabHost tabHost = (TabHost)findViewById(R.id.tabhost);
+        TabHost tabHost = (TabHost)findViewById(R.id.featureTabs);
 //        tabHost.setup();
 
         btn_back.setOnClickListener(new View.OnClickListener() {

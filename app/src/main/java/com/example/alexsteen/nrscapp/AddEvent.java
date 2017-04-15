@@ -20,7 +20,7 @@ public class AddEvent extends AppCompatActivity {
     private String event_name, date_start, date_end;
     private int budget_amount;
     private boolean isBudgetBar = true;
-    private final Integer BUDGET_MAX = 10000;
+    private final Integer BUDGET_SCALE = 40000/100;
     private eventDB dbHandler;
     private SharedPreferences.Editor editCurrentEvent;
 
@@ -70,6 +70,9 @@ public class AddEvent extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
                 event_name = et_eventName.getText().toString();
+                if (event_name == "") {
+                    event_name = null;
+                }
             }
         });
 
@@ -94,8 +97,15 @@ public class AddEvent extends AppCompatActivity {
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                while(event_name.length() != 0 && event_name.charAt(0) == ' ') {
+                    event_name = event_name.substring(1,event_name.length());
+                }
+                if (event_name == null || event_name.equals("") || !event_name.matches("[a-zA-Z0-9 ]*")) {
+                    Toast.makeText(AddEvent.this, "Please enter a valid Event Name", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 if (isBudgetBar) {
-                    budget_amount = budget_bar.getProgress() * BUDGET_MAX;
+                    budget_amount = (budget_bar.getProgress() - 1) * BUDGET_SCALE;
                 } else {
                     budget_amount = Integer.parseInt(budget_custom.getText().toString());
                 }

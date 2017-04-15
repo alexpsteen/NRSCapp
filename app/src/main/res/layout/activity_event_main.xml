@@ -91,10 +91,8 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:max="100"
-        android:progress="50"
         android:layout_marginTop="45dp"
-        android:id="@+id/progressBar2"
-        android:background="@color/gray"
+        android:id="@+id/budgetBar"
         android:layout_below="@+id/tb_dateRange"
         android:layout_toEndOf="@+id/btn_back" />
 
@@ -102,7 +100,7 @@
         android:text="$"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/progressBar2"
+        android:layout_alignTop="@+id/budgetBar"
         android:layout_alignStart="@+id/tb_dateRange"
         android:id="@+id/textView3" />
 
@@ -125,14 +123,13 @@
         />
 
     <TabHost
-        android:layout_width="200dip"
-        android:layout_height="250dip"
-        android:id="@+id/tabhost"
+        android:layout_width="200dp"
+        android:layout_height="300dp"
+        android:id="@+id/featureTabs"
         android:layout_marginTop="17dp"
         android:layout_below="@+id/textView3"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignBottom="@+id/horizontalRule">
+        android:layout_alignParentStart="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -178,7 +175,8 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="510dp"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/featureTabs"
         android:id="@+id/horizontalRule"
         android:background="@android:color/darker_gray"/>
 
@@ -187,7 +185,7 @@
         android:layout_width="120dp"
         android:layout_height="40dp"
         android:id="@+id/addFeature"
-        android:layout_below="@+id/tabhost"
+        android:layout_below="@+id/horizontalRule"
         android:background="@color/headBlue"
         android:textAllCaps="false"
         android:textColor="@color/white"

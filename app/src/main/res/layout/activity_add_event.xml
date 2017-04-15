@@ -96,16 +96,6 @@
         android:layout_below="@+id/headBar"
         android:layout_centerHorizontal="true" />
 
-    <TextView
-        android:text="Budget"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:textSize="16sp"
-        android:layout_below="@+id/tb_endDate"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/textView2" />
-
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -155,12 +145,109 @@
             android:buttonTint="@color/gray"
             android:textColor="@color/gray"
             android:layout_alignParentStart="true"
-            android:layout_marginTop="0dp"/>
+            android:layout_marginTop="10dp"/>
 
     </RadioGroup>
 
+
+
+    <!--TICKS HERE-->
+
+    <ImageView
+        android:layout_width="2dp"
+        android:layout_height="25dp"
+        android:id="@+id/tick0"
+        android:layout_below="@id/budgetGroup"
+        android:layout_alignLeft="@id/txt_end"
+        android:layout_marginTop="-80dp"
+        android:layout_marginLeft="67dp"
+        android:src="@drawable/border"/>
+
+    <ImageView
+        android:layout_width="2dp"
+        android:layout_height="25dp"
+        android:src="@drawable/border"
+        android:layout_alignLeft="@id/tick0"
+        android:layout_alignTop="@id/tick0"
+        android:layout_marginLeft="240dp"/>
+
+    <ImageView
+        android:layout_width="2dp"
+        android:layout_height="25dp"
+        android:src="@drawable/border"
+        android:layout_alignLeft="@id/tick0"
+        android:layout_alignTop="@id/tick0"
+        android:layout_marginLeft="120dp"/>
+
+    <ImageView
+        android:layout_width="2dp"
+        android:layout_height="18dp"
+        android:src="@drawable/border"
+        android:layout_alignLeft="@id/tick0"
+        android:layout_alignTop="@id/tick0"
+        android:layout_marginTop="3.5dp"
+        android:layout_marginLeft="60dp"/>
+
+    <ImageView
+        android:layout_width="2dp"
+        android:layout_height="18dp"
+        android:src="@drawable/border"
+        android:layout_alignLeft="@id/tick0"
+        android:layout_alignTop="@id/tick0"
+        android:layout_marginTop="3.5dp"
+        android:layout_marginLeft="180dp"/>
+
+    <ImageView
+        android:layout_width="2dp"
+        android:layout_height="14dp"
+        android:src="@drawable/border"
+        android:layout_alignLeft="@id/tick0"
+        android:layout_alignTop="@id/tick0"
+        android:layout_marginTop="6dp"
+        android:layout_marginLeft="30dp"/>
+
+    <ImageView
+        android:layout_width="2dp"
+        android:layout_height="14dp"
+        android:src="@drawable/border"
+        android:layout_alignLeft="@id/tick0"
+        android:layout_alignTop="@id/tick0"
+        android:layout_marginTop="6dp"
+        android:layout_marginLeft="90dp"/>
+
+    <ImageView
+        android:layout_width="2dp"
+        android:layout_height="14dp"
+        android:src="@drawable/border"
+        android:layout_alignLeft="@id/tick0"
+        android:layout_alignTop="@id/tick0"
+        android:layout_marginTop="6dp"
+        android:layout_marginLeft="150dp"/>
+
+    <ImageView
+        android:layout_width="2dp"
+        android:layout_height="14dp"
+        android:src="@drawable/border"
+        android:layout_alignLeft="@id/tick0"
+        android:layout_alignTop="@id/tick0"
+        android:layout_marginTop="6dp"
+        android:layout_marginLeft="210dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tick0"
+        android:text="0             10             20             30            40"
+        android:layout_alignLeft="@id/tick0"
+        android:layout_marginLeft="-2dp"
+        />
+
+
+
+
+
     <SeekBar
-        android:layout_width="240dp"
+        android:layout_width="270dp"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/budgetGroup"
         android:layout_marginTop="7dp"
@@ -173,8 +260,10 @@
         android:inputType="number"
         android:id="@+id/budgetCustom"
         android:hint="12345"
-        android:layout_marginLeft="185dp"
-        android:layout_marginTop="343dp"/>
+        android:layout_alignLeft="@id/budgetGroup"
+        android:layout_below="@id/budgetGroup"
+        android:layout_marginLeft="150dp"
+        android:layout_marginTop="-40dp"/>
 
     <Button
         android:text="Done"
@@ -187,5 +276,35 @@
         android:background="@color/green"
         android:textColor="@color/white"
         android:layout_marginTop="50dp" />
+
+    <TextView
+        android:text="Budget"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:id="@+id/txtBudget"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="-10dp"
+        android:layout_toEndOf="@+id/tick0" />
+
+    <TextView
+        android:text="(in $1,000 increments)"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/txtBudget"
+        android:layout_below="@id/txtBudget"
+        android:layout_marginTop="-18dp"
+        android:layout_marginLeft="60dp"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text="$"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/budgetCustom"
+        android:layout_alignLeft="@id/budgetCustom"
+        android:layout_marginTop="-30dp"
+        android:layout_marginLeft="-10dp"
+        />
 
 </RelativeLayout>
