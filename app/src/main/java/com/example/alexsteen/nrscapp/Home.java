@@ -16,9 +16,9 @@ public class Home extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().hide();
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
+//        getSupportActionBar().hide();
 
         ImageView btn_addEvent = (ImageView) findViewById(R.id.btn_addEvent);
 
@@ -30,6 +30,16 @@ public class Home extends AppCompatActivity {
                 startActivity(new Intent(in));
             }
         });
+    }
+
+    public void backtoLogin(View view){
+        Intent intent = new Intent(this,Login.class);
+        startActivity(intent);
+    }
+
+    public void userDetails(View view){
+        Intent intent = new Intent(this, userDetails.class);
+        startActivity(intent);
     }
 
 }

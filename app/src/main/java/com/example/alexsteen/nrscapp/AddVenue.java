@@ -1,5 +1,6 @@
 package com.example.alexsteen.nrscapp;
 
+import android.content.Intent;
 import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,16 +15,22 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
+import android.content.SharedPreferences;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class AddVenue extends AppCompatActivity {
 
-    String location, notes;
+    String location, notes, name;
+    private SharedPreferences currentEvent;
+    private venueDB dbhandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        currentEvent = getSharedPreferences("CurrentEvent", MODE_PRIVATE);
+        dbhandler = new venueDB(this);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_venue);
         getSupportActionBar().hide();
@@ -33,6 +40,7 @@ public class AddVenue extends AppCompatActivity {
         Button btn_save = (Button) findViewById(R.id.btn_save);
         final EditText tb_location = (EditText) findViewById(R.id.tb_location);
         final EditText tb_notes = (EditText) findViewById(R.id.tb_notes);
+        final EditText tb_name = (EditText) findViewById(R.id.tb_name);
         final RadioGroup indoor = (RadioGroup) findViewById(R.id.indoorGroup);
 
         List<String> ddl_content = new ArrayList<>();
@@ -86,6 +94,21 @@ public class AddVenue extends AppCompatActivity {
             }
         });
 
+        tb_name.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                name = tb_name.getText().toString();
+            }
+        });
+
         btn_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -99,8 +122,12 @@ public class AddVenue extends AppCompatActivity {
                 String num_capacity = capacity.getSelectedItem().toString(); //capacity String
 //                notes; //String
 //                location; //String
-
-                finish();
+                //name; //String
+                String eventName = currentEvent.getString("eventName",null);
+                venueObject venue = new venueObject(eventName,name,location,num_capacity,isIndoor,notes);
+                dbhandler.addVenue(venue);
+                Intent in = new Intent(AddVenue.this, EventMain.class);
+                startActivity(in);
             }
         });
     }

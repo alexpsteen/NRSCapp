@@ -14,18 +14,27 @@ public class Login extends AppCompatActivity {
 
     private userDB userDB;
 
+
+    private SharedPreferences.Editor editCurrentUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login2);
 
         userDB = new userDB(this);
+        SharedPreferences currentUser;
+        currentUser = getSharedPreferences("CurrentUser", MODE_PRIVATE);
+        editCurrentUser = currentUser.edit();
+        editCurrentUser.apply();
     }
 
     public void loginSuccessful(View view) {
         EditText usernameText = (EditText) findViewById(R.id.login_username);
         EditText passwordText = (EditText) findViewById(R.id.login_password);
         if (userDB.authenticateUser(usernameText.getText().toString(), passwordText.getText().toString())) {
+            editCurrentUser.putString("username", usernameText.getText().toString());
+            editCurrentUser.commit();
             Intent intent = new Intent(this,Home.class);
             startActivity(intent);
         } else {

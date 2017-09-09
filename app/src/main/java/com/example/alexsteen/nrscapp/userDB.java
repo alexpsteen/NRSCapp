@@ -70,4 +70,12 @@ public class userDB extends SQLiteOpenHelper{
         db.close();
         return realPassword.equals(password);
     }
+
+    public void setPassword(String username, String newPassword) throws Exception {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_PASSWORD, newPassword);
+        db.update(TABLE_USERS, values, COLUMN_USERNAME + "= '" + username + "';",null);
+        db.close();
+    }
 }

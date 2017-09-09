@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Home"
+            android:name=".Login"
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -33,7 +33,10 @@
             android:label="@string/title_activity_event_features_all"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".AddVenue" />
-        <activity android:name=".AddFeature"></activity>
+        <activity android:name=".AddFeature" />
+        <activity android:name=".Home" />
+        <activity android:name=".CreateAccount" />
+        <activity android:name=".userDetails"></activity>
     </application>
 
 </manifest>

@@ -100,7 +100,7 @@ public class AddEvent extends AppCompatActivity {
                 while(event_name.length() != 0 && event_name.charAt(0) == ' ') {
                     event_name = event_name.substring(1,event_name.length());
                 }
-                if (event_name == null || event_name.equals("") || !event_name.matches("[a-zA-Z0-9 ]*")) {
+                if (event_name == null || event_name.equals("") || !event_name.matches("[a-zA-Z0-9]*")) {
                     Toast.makeText(AddEvent.this, "Please enter a valid Event Name", Toast.LENGTH_SHORT).show();
                     return;
                 }
