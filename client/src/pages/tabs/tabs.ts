@@ -1,12 +1,12 @@
 import { Component } from '@angular/core'
-import { HomePage } from '../home/home'
+import { ProjectOverviewPage } from '../project-overview/project-overview'
 import { TasksPage } from '../tasks/tasks'
 
 @Component({
   templateUrl: 'tabs.html'
 })
 export class TabsPage {
-  tab1Root: any = HomePage
+  tab1Root: any = ProjectOverviewPage
   tab2Root: any = TasksPage
   constructor() {}
 }
