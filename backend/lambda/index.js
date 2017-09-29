@@ -64,13 +64,22 @@ function handleEventsPOST (httpEvent, context) {
   let event = JSON.parse(httpEvent.body);
   if (!event || !event.eventId) { return errorResponse(context, 'Error: no eventId found') }
   event.userId = httpEvent.requestContext.identity.cognitoIdentityId;
-  let params = { TableName: eventsTable, Item: event };
+  let params = {
+    TableName: eventsTable,
+    Item: event
+  };
 
   console.log('Inserting event', JSON.stringify(event));
   doc.put(params, (err, data) => {
     if (err) { return errorResponse(context, 'Error: could not add event', err.message) }
-    return successResponse(context, {event: data.Attributes});
-    // updateProjectTable(event, 'added', () => successResponse(context, {event: event}))
+    console.log('After insert promise', data);
+    let retEvent = null;
+    if (data && data.Attributes) {
+      retEvent = data.Attributes;
+    } else {
+      retEvent = event;
+    }
+    return successResponse(context, {event: retEvent});
   });
 }
 

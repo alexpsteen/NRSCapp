@@ -9,14 +9,14 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
   <ion-refresher (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
   <ion-list>
     <button ion-item *ngFor="let ev of eventStore.events | async; let idx = index" (click)="editEvent(idx)">
-      <span item-start>{{ev.name}}</span>
+      <span>{{ev.name}}</span>
       <ion-note item-end>{{ev.startDate | date: 'M/d/yy'}}</ion-note>
     </button>
   </ion-list>
