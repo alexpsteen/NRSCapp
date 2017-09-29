@@ -7,13 +7,15 @@ import { LoginModal } from '../../modal/login/login'
 import { LogoutModal } from '../../modal/logout/logout'
 import { AuthService } from '../../app/auth.service'
 
+import * as moment from 'moment'
+
 // import _ from 'lodash'
 import * as _groupBy from 'lodash.groupby'
 import * as _map from 'lodash.map'
 import { List } from 'immutable'
 
-import { IProject } from '../../app/project.interface'
-import { ProjectStore } from '../../app/project.store'
+import {EventDetailsPage} from "../event-details/event-details";
+import {EventStore} from "../../app/event.store";
 
 @Component({
   selector: 'page-home',
@@ -24,20 +26,36 @@ export class HomePage {
     public navCtrl: NavController,
     public modalCtrl: ModalController,
     public auth: AuthService,
-    public store: ProjectStore) { }
+    public eventStore: EventStore) { }
 
-  doRefresh (refresher) {
-    let subscription = this.store.refresh().subscribe({
+  // ionViewDidEnter() {
+  //   this.doRefresh();
+  // }
+
+  doRefresh (refresher?) {
+    let subscription = this.eventStore.refresh().subscribe({
       complete: () => {
         subscription.unsubscribe();
-        refresher.complete();
+        if (refresher) {
+          refresher.complete();
+        }
       }
     })
   }
 
-  openModal () {
-    let modal = this.modalCtrl.create(this.auth.isUserSignedIn() ? LogoutModal : LoginModal)
-    modal.present()
+  addTapped() {
+    this.navCtrl.push(EventDetailsPage);
+  }
+
+  editEvent(index) {
+    this.eventStore.getEvent(index).subscribe(event => {
+      if (!event) { return console.log('could not find event. Please check logs') }
+
+      this.navCtrl.push(EventDetailsPage, {
+        event: event,
+        parentPage: this
+      });
+    })
   }
 
   get userColor ():string {

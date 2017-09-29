@@ -1,8 +1,9 @@
 'use strict';
 const AWS = require('aws-sdk');
 let doc = new AWS.DynamoDB.DocumentClient();
-let tasksTable = process.env.TASKS_TABLE;
-let projectsTable = process.env.PROJECTS_TABLE;
+const tasksTable = process.env.TASKS_TABLE;
+const projectsTable = process.env.PROJECTS_TABLE;
+const eventsTable = process.env.EVENTS_TABLE;
 
 console.log('Loading function');
 
@@ -15,21 +16,99 @@ function handleHttpMethod (event, context) {
   let httpMethod = event.httpMethod;
   if (event.path.match(/^\/tasks/)) {
     if (httpMethod === 'GET') {
-      return handleTasksGET(event, context)
+      return handleTasksGET(event, context);
     } else if (httpMethod === 'POST') {
-      return handleTasksPOST(event, context)
+      return handleTasksPOST(event, context);
     } else if (httpMethod === 'PUT') {
-      return handleTasksPUT(event, context)
+      return handleTasksPUT(event, context);
     } else if (httpMethod === 'DELETE') {
-      return handleTasksDELETE(event, context)
+      return handleTasksDELETE(event, context);
     }
   } else if (event.path.match(/^\/projects/)) {
     if (httpMethod === 'GET') {
-      return handleProjectsGET(event, context)
+      return handleProjectsGET(event, context);
+    }
+  } else if (event.path.match(/^\/events/)) {
+    if (httpMethod === 'GET') {
+      return handleEventsGET(event, context);
+    } else if (httpMethod === 'POST') {
+      return handleEventsPOST(event, context);
+    } else if (httpMethod === 'PUT') {
+      return handleEventsPUT(event, context);
     }
   }
   return errorResponse(context, 'Unhandled http method:', httpMethod);
 }
+
+//////// EVENTS
+
+function handleEventsGET (event, context) {
+  const eventId = getEventId(event.path);
+  let params = {
+    TableName: eventsTable,
+    KeyConditionExpression: 'userId = :key',
+    ExpressionAttributeValues: { ':key': event.requestContext.identity.cognitoIdentityId }
+  };
+  if (eventId) {
+    params.KeyConditionExpression += ' and eventId = :eventKey';
+    params.ExpressionAttributeValues[':eventKey'] = eventId;
+  }
+  console.log('GET query: ', JSON.stringify(params));
+  doc.query(params, (err, data) => {
+    if (err) { return errorResponse(context, 'Error getting events ', err.message) }
+    return successResponse(context, {events: data.Items});
+  })
+}
+
+function handleEventsPOST (httpEvent, context) {
+  let event = JSON.parse(httpEvent.body);
+  if (!event || !event.eventId) { return errorResponse(context, 'Error: no eventId found') }
+  event.userId = httpEvent.requestContext.identity.cognitoIdentityId;
+  let params = { TableName: eventsTable, Item: event };
+
+  console.log('Inserting event', JSON.stringify(event));
+  doc.put(params, (err, data) => {
+    if (err) { return errorResponse(context, 'Error: could not add event', err.message) }
+    return successResponse(context, {event: data.Attributes});
+    // updateProjectTable(event, 'added', () => successResponse(context, {event: event}))
+  });
+}
+
+function handleEventsPUT (httpEvent, context) {
+  let event = JSON.parse(httpEvent.body);
+  console.log('updating event [' + event.eventId + ']');
+  let eventId = getEventId(httpEvent.path);
+  if (!event || !eventId) { return errorResponse(context, 'Error: no eventId found') }
+  let params = {
+    TableName: eventsTable,
+    Key: {
+      userId: httpEvent.requestContext.identity.cognitoIdentityId,
+      eventId: event.eventId
+    },
+    UpdateExpression: 'set #a = :val1, #b = :val2, #c = :val3',
+    ExpressionAttributeNames: {'#a': 'name', '#b': 'startDate', '#c': 'endDate'},
+    ExpressionAttributeValues: {':val1': event.name, ':val2': event.startDate, ':val3': event.endDate},
+    ReturnValues: 'ALL_NEW'
+  };
+
+  console.log('Updating event', JSON.stringify(params));
+  doc.update(params, (err, data) => {
+    if (err) { return errorResponse(context, 'Error: could not update event', err.message) }
+    return successResponse(context, {event: data.Attributes});
+    // updateProjectTable(data.Attributes, 'completed', () => successResponse(context, {event: data.Attributes}))
+  });
+}
+
+function getEventId (path) {
+  const matches = path.match(/events\/(.*)/);
+  if (matches) {
+    return matches[1];
+  } else {
+    return null;
+  }
+}
+
+//////// PROJECTS
 
 function handleProjectsGET (event, context) {
   doc.scan({ TableName: projectsTable }, (err, data) => {
@@ -37,6 +116,54 @@ function handleProjectsGET (event, context) {
     return successResponse(context, {projects: data.Items})
   })
 }
+
+function updateProjectTable (task, action, callback) {
+  let expressions = [];
+  if (action === 'added') {
+    expressions = [updateAddedCount(task, true)];
+  } else if (action === 'completed') {
+    expressions = [updateCompletedCount(task, true)];
+  } else if (action === 'deleted') {
+    expressions = [updateAddedCount(task, false)];
+  }
+  updateTable(expressions, callback);
+}
+
+function updateAddedCount (task, inc) {
+  return {
+    TableName: projectsTable,
+    ExpressionAttributeNames: {'#a': 'added', '#b': 'completed'},
+    ExpressionAttributeValues: {':val': inc ? 1 : -1, ':comp': inc ? 0 : task.completed ? -1 : 0},
+    Key: {'projectId': task.project, 'month': task.createdOn.substr(0, 7)},
+    UpdateExpression: 'ADD #a :val, #b :comp'
+  };
+}
+
+function updateCompletedCount (task, inc) {
+  return {
+    TableName: projectsTable,
+    ExpressionAttributeNames: {'#b': 'completed'},
+    ExpressionAttributeValues: {':val': inc ? 1 : -1},
+    Key: {'projectId': task.project, 'month': task.createdOn.substr(0, 7)},
+    UpdateExpression: 'ADD #b :val'
+  };
+}
+
+function updateTable (expressions, callback) {
+  let params = expressions.shift();
+  console.log('update projects table', params);
+  doc.update(params, (err) => {
+    if (err) { console.log('error updating projects table', err) }
+    if (expressions.length) {
+      updateTable(expressions, callback);
+    } else {
+      if (callback) { callback() }
+    }
+  });
+}
+
+
+//////// TASKS
 
 function handleTasksGET (event, context) {
   let params = {
@@ -108,51 +235,6 @@ function handleTasksDELETE (event, context) {
 }
 
 function getTaskId (path) { return path.match(/tasks\/(.*)/)[1] }
-
-function updateProjectTable (task, action, callback) {
-  let expressions = [];
-  if (action === 'added') {
-    expressions = [updateAddedCount(task, true)];
-  } else if (action === 'completed') {
-    expressions = [updateCompletedCount(task, true)];
-  } else if (action === 'deleted') {
-    expressions = [updateAddedCount(task, false)];
-  }
-  updateTable(expressions, callback);
-}
-
-function updateAddedCount (task, inc) {
-  return {
-    TableName: projectsTable,
-    ExpressionAttributeNames: {'#a': 'added', '#b': 'completed'},
-    ExpressionAttributeValues: {':val': inc ? 1 : -1, ':comp': inc ? 0 : task.completed ? -1 : 0},
-    Key: {'projectId': task.project, 'month': task.createdOn.substr(0, 7)},
-    UpdateExpression: 'ADD #a :val, #b :comp'
-  };
-}
-
-function updateCompletedCount (task, inc) {
-  return {
-    TableName: projectsTable,
-    ExpressionAttributeNames: {'#b': 'completed'},
-    ExpressionAttributeValues: {':val': inc ? 1 : -1},
-    Key: {'projectId': task.project, 'month': task.createdOn.substr(0, 7)},
-    UpdateExpression: 'ADD #b :val'
-  };
-}
-
-function updateTable (expressions, callback) {
-  let params = expressions.shift();
-  console.log('update projects table', params);
-  doc.update(params, (err) => {
-    if (err) { console.log('error updating projects table', err) }
-    if (expressions.length) {
-      updateTable(expressions, callback);
-    } else {
-      if (callback) { callback() }
-    }
-  });
-}
 
 function errorResponse (context, logline) {
   let response = { statusCode: 404, body: JSON.stringify({ 'Error': 'Could not execute request' }) };

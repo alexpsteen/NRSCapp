@@ -1,6 +1,12 @@
 export interface IEvent {
   eventId:string
-  month:string
-  added?:number
-  completed?:number
+  name:string
+  startDate:string
+  endDate:string
+  budget:IBudget
+}
+
+export interface IBudget {
+  lower:number
+  upper:number
 }

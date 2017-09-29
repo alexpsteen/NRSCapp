@@ -28,11 +28,14 @@ import { Sigv4Http, Sigv4HttpProvider } from './sigv4.service'
 import { ChartsModule } from 'ng2-charts'
 import { momentFromNowPipe } from './momentFromNow.pipe'
 
+import { EventDetailsPage } from "../pages/event-details/event-details";
+
 @NgModule({
   declarations: [
     MyApp,
     LoginPage,
     HomePage,
+    EventDetailsPage,
     TasksPage,
     ProjectOverviewPage,
     TabsPage,
@@ -53,6 +56,7 @@ import { momentFromNowPipe } from './momentFromNow.pipe'
     MyApp,
     LoginPage,
     HomePage,
+    EventDetailsPage,
     TasksPage,
     ProjectOverviewPage,
     TabsPage,

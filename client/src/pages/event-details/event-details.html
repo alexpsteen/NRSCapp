@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Event Details</ion-title>
+    <ion-buttons start>
+      <button ion-button icon-only clear (click)="openModal()"  [color]="userColor">
+        <ion-icon name="person"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <form (ngSubmit)="saveEvent()" #eventForm="ngForm">
+    <ion-card *ngIf="message" color='secondary'>
+      <ion-card-content>
+        {{message}}
+      </ion-card-content>
+    </ion-card>
+
+    <ion-list inset>
+
+      <ion-item>
+        <ion-label floating>Event Name</ion-label>
+        <ion-input name="name" [(ngModel)]="event.name" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Start Date</ion-label>
+        <ion-datetime name="startDate" displayFormat="MMMM DD, YYYY hh:mm a" pickerFormat="MMM DD, YYYY hh:mm a" min="2017-09-27" max="2020-12-31" [(ngModel)]="event.startDate"></ion-datetime>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>End Date</ion-label>
+        <ion-datetime name="endDate" displayFormat="MMMM DD, YYYY hh:mm a" pickerFormat="MMM DD, YYYY hh:mm a" min="2017-09-27" max="2020-12-31" [(ngModel)]="event.endDate"></ion-datetime>
+      </ion-item>
+
+
+      <!--<ion-item>-->
+        <!--<ion-label stacked>Budget</ion-label>-->
+        <!--<ion-range name="budget" color="secondary" dualKnobs="true" [(ngModel)]="event.budget" min="0" max="50000" step="100" pin="true"></ion-range>-->
+      <!--</ion-item>-->
+
+    </ion-list>
+    <button ion-button full type="submit" [disabled]="!eventForm.form.valid">Save Event</button>
+  </form>
+
+</ion-content>
