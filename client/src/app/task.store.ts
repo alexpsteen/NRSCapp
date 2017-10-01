@@ -8,7 +8,8 @@ import { List } from 'immutable'
 import { ITask } from './task.interface'
 import { AuthService } from './auth.service'
 import * as moment from 'moment'
-import * as _orderBy from 'lodash.orderby'
+import * as _ from 'lodash'
+// import * as _orderBy from 'lodash.orderby'
 import { Sigv4Http } from './sigv4.service'
 import { Config } from 'ionic-angular'
 
@@ -98,6 +99,6 @@ export class TaskStore {
   }
 
   private sort (tasks:ITask[]): ITask[] {
-    return _orderBy(tasks, ['completed', 'due'], ['asc', 'asc'])
+    return _.orderBy(tasks, ['completed', 'due'], ['asc', 'asc'])
   }
 }

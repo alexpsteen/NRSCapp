@@ -1,0 +1,47 @@
+page-event-overview {
+  .time-period {
+    color: grey;
+    font-size: 14px;
+    display: block;
+    .time {
+      font-size: 12px;
+    }
+  }
+
+  ion-toolbar {
+    .toolbar-content {
+      display: flex;
+      justify-content: space-around;
+    }
+  }
+
+  .settings {
+    float: right;
+    color: grey;
+  }
+
+  .overview-row {
+    margin-bottom: 5px;
+  }
+
+  .budget-outer {
+    .budget-total {
+      position: relative;
+      height: 20px;
+      background-color: lightgrey;
+
+      .min {
+        position: absolute;
+        left: 0;
+        padding-left: 3px;
+      }
+
+      .max {
+        position: absolute;
+        right: 0;
+        padding-right: 3px;
+      }
+    }
+  }
+
+}

@@ -4,6 +4,7 @@ let doc = new AWS.DynamoDB.DocumentClient();
 const tasksTable = process.env.TASKS_TABLE;
 const projectsTable = process.env.PROJECTS_TABLE;
 const eventsTable = process.env.EVENTS_TABLE;
+const featuresTable = process.env.FEATURES_TABLE;
 
 console.log('Loading function');
 
@@ -35,6 +36,18 @@ function handleHttpMethod (event, context) {
       return handleEventsPOST(event, context);
     } else if (httpMethod === 'PUT') {
       return handleEventsPUT(event, context);
+    } else if (httpMethod === 'DELETE') {
+      return handleEventsDELETE(event, context);
+    }
+  } else if (event.path.match(/^\/features/)) {
+    if (httpMethod === 'GET') {
+      return handleFeaturesGET(event, context);
+    } else if (httpMethod === 'POST') {
+      return handleFeaturesPOST(event, context);
+    } else if (httpMethod === 'PUT') {
+      return handleFeaturesPUT(event, context);
+    } else if (httpMethod === 'DELETE') {
+      return handleFeaturesDELETE(event, context);
     }
   }
   return errorResponse(context, 'Unhandled http method:', httpMethod);
@@ -90,26 +103,139 @@ function handleEventsPUT (httpEvent, context) {
   if (!event || !eventId) { return errorResponse(context, 'Error: no eventId found') }
   let params = {
     TableName: eventsTable,
-    Key: {
-      userId: httpEvent.requestContext.identity.cognitoIdentityId,
-      eventId: event.eventId
-    },
-    UpdateExpression: 'set #a = :val1, #b = :val2, #c = :val3',
-    ExpressionAttributeNames: {'#a': 'name', '#b': 'startDate', '#c': 'endDate'},
-    ExpressionAttributeValues: {':val1': event.name, ':val2': event.startDate, ':val3': event.endDate},
-    ReturnValues: 'ALL_NEW'
+    Item: event,
   };
 
   console.log('Updating event', JSON.stringify(params));
-  doc.update(params, (err, data) => {
+  doc.put(params, (err, data) => {
     if (err) { return errorResponse(context, 'Error: could not update event', err.message) }
+    console.log('After insert promise', data);
+    let retEvent = null;
+    if (data && data.Attributes) {
+      retEvent = data.Attributes;
+    } else {
+      retEvent = event;
+    }
+    return successResponse(context, {event: retEvent});
+  });
+}
+
+function handleEventsDELETE (httpEvent, context) {
+  const eventId = getEventId(httpEvent.path);
+  if (!eventId) { return errorResponse(context, 'Error: no eventId found') }
+  let params = {
+    TableName: eventsTable,
+    Key: {
+      userId: httpEvent.requestContext.identity.cognitoIdentityId,
+      eventId: eventId
+    },
+    ReturnValues: 'ALL_OLD'
+  };
+
+  console.log('Deleting event', JSON.stringify(params));
+  doc.delete(params, (err, data) => {
+    if (err) { return errorResponse(context, 'Error: could not delete event', err.message) }
     return successResponse(context, {event: data.Attributes});
-    // updateProjectTable(data.Attributes, 'completed', () => successResponse(context, {event: data.Attributes}))
   });
 }
 
 function getEventId (path) {
   const matches = path.match(/events\/(.*)/);
+  if (matches) {
+    return matches[1];
+  } else {
+    return null;
+  }
+}
+
+//////// FEATURES
+
+function handleFeaturesGET (feature, context) {
+  const featureId = getFeatureId(feature.path);
+  let params = {
+    TableName: featuresTable,
+    KeyConditionExpression: 'userId = :key',
+    ExpressionAttributeValues: { ':key': feature.requestContext.identity.cognitoIdentityId }
+  };
+  if (featureId) {
+    params.KeyConditionExpression += ' and featureId = :featureKey';
+    params.ExpressionAttributeValues[':featureKey'] = featureId;
+  }
+  console.log('GET query: ', JSON.stringify(params));
+  doc.query(params, (err, data) => {
+    if (err) { return errorResponse(context, 'Error getting features ', err.message) }
+    return successResponse(context, {features: data.Items});
+  })
+}
+
+function handleFeaturesPOST (httpEvent, context) {
+  let feature = JSON.parse(httpEvent.body);
+  if (!feature || !feature.featureId) { return errorResponse(context, 'Error: no featureId found') }
+  feature.userId = httpEvent.requestContext.identity.cognitoIdentityId;
+  let params = {
+    TableName: featuresTable,
+    Item: feature
+  };
+
+  console.log('Inserting feature', JSON.stringify(feature));
+  doc.put(params, (err, data) => {
+    if (err) { return errorResponse(context, 'Error: could not add feature', err.message) }
+    console.log('After insert promise', data);
+    let retFeature = null;
+    if (data && data.Attributes) {
+      retFeature = data.Attributes;
+    } else {
+      retFeature = feature;
+    }
+    return successResponse(context, {feature: retFeature});
+  });
+}
+
+function handleFeaturesPUT (httpEvent, context) {
+  let feature = JSON.parse(httpEvent.body);
+  console.log('updating feature [' + feature.featureId + ']');
+  let featureId = getFeatureId(httpEvent.path);
+  if (!feature || !featureId) { return errorResponse(context, 'Error: no featureId found') }
+  let params = {
+    TableName: featuresTable,
+    Key: {
+      userId: httpEvent.requestContext.identity.cognitoIdentityId,
+      featureId: feature.featureId
+    },
+    UpdateExpression: 'set #a = :val1, #b = :val2, #c = :val3',
+    ExpressionAttributeNames: {'#a': 'type', '#b': 'additionalDetails', '#c': 'location'},
+    ExpressionAttributeValues: {':val1': feature.type, ':val2': feature.additionalDetails, ':val3': feature.location},
+    ReturnValues: 'ALL_NEW'
+  };
+
+  console.log('Updating feature', JSON.stringify(params));
+  doc.update(params, (err, data) => {
+    if (err) { return errorResponse(context, 'Error: could not update feature', err.message) }
+    return successResponse(context, {feature: data.Attributes});
+  });
+}
+
+function handleFeaturesDELETE (httpEvent, context) {
+  const featureId = getFeatureId(httpEvent.path);
+  if (!featureId) { return errorResponse(context, 'Error: no featureId found') }
+  let params = {
+    TableName: featuresTable,
+    Key: {
+      userId: httpEvent.requestContext.identity.cognitoIdentityId,
+      featureId: featureId
+    },
+    ReturnValues: 'ALL_OLD'
+  };
+
+  console.log('Deleting feature', JSON.stringify(params));
+  doc.delete(params, (err, data) => {
+    if (err) { return errorResponse(context, 'Error: could not delete feature', err.message) }
+    return successResponse(context, {feature: data.Attributes});
+  });
+}
+
+function getFeatureId (path) {
+  const matches = path.match(/features\/(.*)/);
   if (matches) {
     return matches[1];
   } else {

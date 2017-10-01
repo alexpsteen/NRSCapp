@@ -1,0 +1,16 @@
+feature-card {
+  ion-card {
+    height: 13vh;
+
+    ion-icon {
+      font-size: 60px;
+      text-align: center;
+      display: block;
+    }
+
+    span {
+      text-align: center;
+      display: block;
+    }
+  }
+}

@@ -1,0 +1,70 @@
+<ion-header>
+  <ion-navbar>
+    <!--<ion-title></ion-title>-->
+    <ion-buttons end>
+      <button ion-button icon-only clear (click)="openLoginModal()"  [color]="userColor">
+        <ion-icon name="person"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+  <div padding>
+    <h2>{{event.name}}</h2>
+    <button class="settings" ion-button clear icon-only (click)="editEvent()">
+      <ion-icon name='settings'></ion-icon>
+    </button>
+    <div class="overview-row">
+      <span class="time-period">Start: <span class="time">{{event.startDate | date: 'short'}}</span></span>
+    </div>
+    <div class="overview-row">
+      <span class="time-period">End: <span class="time">{{event.endDate | date: 'short'}}</span></span>
+    </div>
+    <div class="overview-row">
+      <span class="time-period">Budget</span>
+    </div>
+    <div class="overview-row">
+      <div class="budget-outer">
+        <div class="budget-total">
+          <span class="min">0</span>
+          <span class="max">{{event.budget}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <ion-segment [(ngModel)]="featureStatus" color="primary">
+      <ion-segment-button value="all">
+        All
+      </ion-segment-button>
+      <ion-segment-button value="confirmed">
+        Confirmed
+      </ion-segment-button>
+      <ion-segment-button value="unconfirmed">
+        Unconfirmed
+      </ion-segment-button>
+    </ion-segment>
+
+  <ion-grid>
+    <ion-row wrap>
+      <ion-col col-4 *ngFor="let feature of featureStore.features | async">
+        <feature-card [feature]="feature" (click)="editFeature(feature)"></feature-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-footer>
+    <ion-toolbar>
+      <button ion-button icon-left (click)="addFeature()" color="primary">
+        <ion-icon name="add"></ion-icon>
+        Add Feature
+      </button>
+      <button ion-button (click)="plan()" color="secondary">
+        LET'S PLAN!
+      </button>
+    </ion-toolbar>
+  </ion-footer>
+
+</ion-content>

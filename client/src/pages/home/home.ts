@@ -1,21 +1,15 @@
 import { Component } from '@angular/core'
 
-import { NavController } from 'ionic-angular'
+import {NavController} from 'ionic-angular'
 import { ModalController } from 'ionic-angular'
 
 import { LoginModal } from '../../modal/login/login'
 import { LogoutModal } from '../../modal/logout/logout'
 import { AuthService } from '../../app/auth.service'
 
-import * as moment from 'moment'
-
-// import _ from 'lodash'
-import * as _groupBy from 'lodash.groupby'
-import * as _map from 'lodash.map'
-import { List } from 'immutable'
-
 import {EventDetailsPage} from "../event-details/event-details";
 import {EventStore} from "../../app/event.store";
+import {EventOverviewPage} from "../event-overview/event-overview";
 
 @Component({
   selector: 'page-home',
@@ -27,10 +21,6 @@ export class HomePage {
     public modalCtrl: ModalController,
     public auth: AuthService,
     public eventStore: EventStore) { }
-
-  // ionViewDidEnter() {
-  //   this.doRefresh();
-  // }
 
   doRefresh (refresher?) {
     let subscription = this.eventStore.refresh().subscribe({
@@ -44,18 +34,24 @@ export class HomePage {
   }
 
   addTapped() {
-    this.navCtrl.push(EventDetailsPage);
+    this.navCtrl.push(EventDetailsPage, {
+      title: 'Edit Event Details'
+    });
   }
 
   editEvent(index) {
     this.eventStore.getEvent(index).subscribe(event => {
       if (!event) { return console.log('could not find event. Please check logs') }
 
-      this.navCtrl.push(EventDetailsPage, {
-        event: event,
-        parentPage: this
+      this.navCtrl.push(EventOverviewPage, {
+        event: event
       });
     })
+  }
+
+  openLoginModal () {
+    let modal = this.modalCtrl.create(this.auth.isUserSignedIn() ? LogoutModal : LoginModal);
+    modal.present()
   }
 
   get userColor ():string {

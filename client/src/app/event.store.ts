@@ -5,11 +5,10 @@ import 'rxjs/add/operator/map'
 import 'rxjs/add/operator/concatAll'
 import 'rxjs/add/operator/share'
 import { List } from 'immutable'
-import { IProject } from './project.interface'
 import { Sigv4Http } from './sigv4.service'
-import * as _keyBy from 'lodash.keyby'
-import * as _values from 'lodash.values'
-import * as _orderBy from 'lodash.orderby'
+import _ from 'lodash'
+// import * as _orderBy from 'lodash.orderby'
+// import * as _findIndex from 'lodash.findIndex'
 import { Config } from 'ionic-angular'
 import { AuthService } from './auth.service'
 import { IEvent } from "./event.interface";
@@ -30,8 +29,6 @@ export class EventStore {
 
   constructor (private sigv4: Sigv4Http, private auth: AuthService, private config: Config) {
     this.endpoint = this.config.get('APIs')['EventsAPI'];
-    console.log('jtf');
-    console.log(this.endpoint);
     this.refresh();
   }
 
@@ -67,32 +64,54 @@ export class EventStore {
   }
 
   getEvent (index): Observable<IEvent> {
-    let events = this._events.getValue().toArray()
-    let obs = this.auth.getCredentials().map(creds => this.sigv4.get(this.endpoint, `events/${events[index].eventId}`, creds)).concatAll().share()
+    let events = this._events.getValue().toArray();
+    let obs = this.auth.getCredentials().map(creds => this.sigv4.get(this.endpoint, `events/${events[index].eventId}`, creds)).concatAll().share();
+
+    return obs.map(resp => resp.status === 200 ? resp.json().events[0] : null)
+  }
+
+  getEventById (id): Observable<IEvent> {
+    let obs = this.auth.getCredentials().map(creds => this.sigv4.get(this.endpoint, `events/${id}`, creds)).concatAll().share();
 
     return obs.map(resp => resp.status === 200 ? resp.json().events[0] : null)
   }
 
   updateEvent (event): Observable<IEvent> {
-    // let tasks = this._tasks.getValue().toArray()
+    let events = this._events.getValue().toArray()
     let obs = this.auth.getCredentials().map(creds => this.sigv4.put(
       this.endpoint,
       `events/${event.eventId}`,
       event,
       creds)).concatAll().share();
 
-    // obs.subscribe(resp => {
-    //   if (resp.status === 200) {
-    //     tasks[index] = resp.json().task
-    //     this._tasks.next(List(this.sort(tasks)))
-    //   }
-    // })
+    obs.subscribe(resp => {
+      if (resp.status === 200) {
+        const retEvent = resp.json().event;
+        let index = _.findIndex(events, (e) => {return e.eventId === retEvent.eventId} );
+        events[index] = retEvent;
+        this._events.next(List(this.sort(events)))
+      }
+    })
 
     return obs.map(resp => resp.status === 200 ? resp.json().event : null)
   }
 
+  deleteEvent (eventId): Observable<IEvent> {
+    let events = this._events.getValue().toArray();
+    let obs = this.auth.getCredentials().map(creds => this.sigv4.del(this.endpoint, `events/${eventId}`, creds)).concatAll().share();
+
+    obs.subscribe(resp => {
+      if (resp.status === 200) {
+        let index = _.findIndex(events, (e) => {return e.eventId === eventId} );
+        events.splice(index, 1)[0];
+        this._events.next(List(<IEvent[]>events));
+      }
+    })
+    return obs.map(resp => resp.status === 200 ? resp.json().event : null)
+  }
+
   private sort (events:IEvent[]): IEvent[] {
-    return _orderBy(events, ['startDate', 'name'], ['asc', 'asc'])
+    return _.orderBy(events, ['startDate', 'name'], ['asc', 'asc'])
   }
 
 }

@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Add Feature</ion-title>
+    <!--<ion-buttons end>-->
+      <!--<button ion-button icon-only clear (click)="openLoginModal()"  [color]="userColor">-->
+        <!--<ion-icon name="person"></ion-icon>-->
+      <!--</button>-->
+    <!--</ion-buttons>-->
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list>
+    <ion-list-header>
+      Select a Feature Type
+    </ion-list-header>
+    <button ion-item *ngFor="let f of featureTypes" (click)="select(f.type)">
+      <span>{{f.name}}</span>
+    </button>
+  </ion-list>
+
+</ion-content>

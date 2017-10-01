@@ -7,8 +7,7 @@ import 'rxjs/add/operator/share'
 import { List } from 'immutable'
 import { IProject } from './project.interface'
 import { Sigv4Http } from './sigv4.service'
-import * as _keyBy from 'lodash.keyby'
-import * as _values from 'lodash.values'
+import _ from 'lodash'
 import { Config } from 'ionic-angular'
 import { AuthService } from './auth.service'
 
@@ -38,7 +37,7 @@ export class ProjectStore {
     let observable =  this.auth.getCredentials().map(creds => this.sigv4.get(this.endpoint, 'projects', creds)).concatAll().share()
     observable.subscribe(resp => {
       let data = resp.json()
-      this._projectsMap = _keyBy(data.projects, (p) => `${p.projectId}+${p.month}`)
+      this._projectsMap = _.keyBy(data.projects, (p) => `${p.projectId}+${p.month}`)
       this._projects.next(List(<IProject[]>data.projects))
     })
     return observable
@@ -67,7 +66,7 @@ export class ProjectStore {
   }
 
   private updateProjectList () {
-    this._projects.next(List(_values(this._projectsMap) as IProject[]))
+    this._projects.next(List(_.values(this._projectsMap) as IProject[]))
   }
 
   private updateProject (action, name, month, inc) {

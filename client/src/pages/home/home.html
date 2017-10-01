@@ -1,8 +1,8 @@
 <ion-header>
   <ion-navbar>
     <ion-title>Home</ion-title>
-    <ion-buttons start>
-      <button ion-button icon-only clear (click)="openModal()"  [color]="userColor">
+    <ion-buttons end>
+      <button ion-button icon-only clear (click)="openLoginModal()"  [color]="userColor">
         <ion-icon name="person"></ion-icon>
       </button>
     </ion-buttons>
@@ -15,6 +15,9 @@
   </ion-refresher>
 
   <ion-list>
+    <ion-list-header>
+      My Events
+    </ion-list-header>
     <button ion-item *ngFor="let ev of eventStore.events | async; let idx = index" (click)="editEvent(idx)">
       <span>{{ev.name}}</span>
       <ion-note item-end>{{ev.startDate | date: 'M/d/yy'}}</ion-note>

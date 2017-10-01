@@ -1,0 +1,16 @@
+page-event-details {
+  #budget-content {
+    position: relative;
+    padding: 0 0 0 16px;
+
+    .budget-badge {
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+
+    ion-range {
+      padding: 0;
+    }
+  }
+}

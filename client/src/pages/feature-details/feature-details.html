@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Feature Details</ion-title>
+    <!--<ion-buttons end>-->
+    <!--<button ion-button icon-only clear (click)="openLoginModal()"  [color]="userColor">-->
+    <!--<ion-icon name="person"></ion-icon>-->
+    <!--</button>-->
+    <!--</ion-buttons>-->
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <form (ngSubmit)="saveFeature()" #featureForm="ngForm">
+    <ion-card *ngIf="message" color='secondary'>
+      <ion-card-content>
+        {{message}}
+      </ion-card-content>
+    </ion-card>
+
+    <ion-list inset>
+
+      <ion-item>
+        <ion-label floating>Location</ion-label>
+        <ion-input name="location" [(ngModel)]="feature.location"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Addtional Details</ion-label>
+        <ion-textarea name="addtionalDetails" [(ngModel)]="feature.addtionalDetails"></ion-textarea>
+      </ion-item>
+
+    </ion-list>
+
+    <ion-row>
+      <button ion-button full type="submit" [disabled]="!featureForm.form.valid">Save</button>
+    </ion-row>
+    <ion-row>
+      <button ion-button full type="button" *ngIf="feature.featureId" color="danger" (click)="confirmDelete()">Delete</button>
+    </ion-row>
+
+  </form>
+
+</ion-content>

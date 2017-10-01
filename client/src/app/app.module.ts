@@ -29,6 +29,11 @@ import { ChartsModule } from 'ng2-charts'
 import { momentFromNowPipe } from './momentFromNow.pipe'
 
 import { EventDetailsPage } from "../pages/event-details/event-details";
+import {EventOverviewPage} from "../pages/event-overview/event-overview";
+import {FeatureCard} from "../components/feature-card/feature-card";
+import {FeatureDetailsPage} from "../pages/feature-details/feature-details";
+import {FeatureSelectionPage} from "../pages/feature-selection/feature-selection";
+import {FeatureStore, FeatureStoreProvider} from "./feature.store";
 
 @NgModule({
   declarations: [
@@ -42,7 +47,11 @@ import { EventDetailsPage } from "../pages/event-details/event-details";
     LoginModal,
     LogoutModal,
     AddTaskModal,
-    momentFromNowPipe
+    momentFromNowPipe,
+    EventOverviewPage,
+    FeatureCard,
+    FeatureDetailsPage,
+    FeatureSelectionPage
   ],
   imports: [
     HttpModule,
@@ -62,7 +71,10 @@ import { EventDetailsPage } from "../pages/event-details/event-details";
     TabsPage,
     LoginModal,
     LogoutModal,
-    AddTaskModal
+    AddTaskModal,
+    EventOverviewPage,
+    FeatureDetailsPage,
+    FeatureSelectionPage
   ],
   providers: [
     StatusBar,
@@ -72,6 +84,7 @@ import { EventDetailsPage } from "../pages/event-details/event-details";
     ProjectStore, ProjectStoreProvider,
     TaskStore, TaskStoreProvider,
     EventStore, EventStoreProvider,
+    FeatureStore, FeatureStoreProvider,
     Sigv4Http, Sigv4HttpProvider
   ]
 })

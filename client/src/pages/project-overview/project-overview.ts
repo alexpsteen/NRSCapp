@@ -7,9 +7,9 @@ import { LoginModal } from '../../modal/login/login'
 import { LogoutModal } from '../../modal/logout/logout'
 import { AuthService } from '../../app/auth.service'
 
-// import _ from 'lodash'
-import * as _groupBy from 'lodash.groupby'
-import * as _map from 'lodash.map'
+import _ from 'lodash'
+// import * as _groupBy from 'lodash.groupby'
+// import * as _map from 'lodash.map'
 import { List } from 'immutable'
 
 import { IProject } from '../../app/project.interface'
@@ -69,7 +69,7 @@ export class ProjectOverviewPage {
   private createBurnDownChart (projects:IProject[]) {
     if (projects.length === 0 && !this.lineChartLabels) { return this.lineChartLabels = null }
 
-    let byMonths = _groupBy(projects, 'month')
+    let byMonths = _.groupBy(projects, 'month')
     this.lineChartLabels = Object.keys(byMonths).sort()
     let burndown = this.lineChartLabels.map((k) => byMonths[k].reduce((sum, p) => {
       return sum + (p.added || 0) - (p.completed || 0)
@@ -94,7 +94,7 @@ export class ProjectOverviewPage {
   private createPieChart (projects:IProject[]) {
     if (projects.length === 0 && !this.projectChartLabels) { return this.projectChartLabels = null }
 
-    let data = _map(_groupBy(projects, 'projectId'), (a) => a.reduce((res, p) => {
+    let data = _.map(_.groupBy(projects, 'projectId'), (a) => a.reduce((res, p) => {
       res.total += (p.added || 0) - (p.completed || 0)
       return res
     },{name: a[0].projectId, total:0}))
