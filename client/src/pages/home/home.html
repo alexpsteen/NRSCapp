@@ -19,6 +19,7 @@
       My Events
     </ion-list-header>
     <button ion-item *ngFor="let ev of eventStore.events | async; let idx = index" (click)="editEvent(idx)">
+      <ion-icon [name]="getIcon(ev)" [color]="getIconColor(ev)" item-start></ion-icon>
       <span>{{ev.name}}</span>
       <ion-note item-end>{{ev.startDate | date: 'M/d/yy'}}</ion-note>
     </button>
@@ -27,5 +28,18 @@
   <ion-fab right bottom>
     <button ion-fab color="secondary" (click)="addTapped()"><ion-icon name="add"></ion-icon></button>
   </ion-fab>
+
+  <ion-row>
+    <ion-col>
+      <ion-icon name="alert" color="primary"></ion-icon>
+      Not yet published to our planners
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-icon name="checkmark-circle" color="secondary"></ion-icon>
+      Published and being planned
+    </ion-col>
+  </ion-row>
 
 </ion-content>

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core'
 
-import {ModalController, NavController, NavParams} from 'ionic-angular'
+import {AlertController, ModalController, NavController, NavParams, ToastController} from 'ionic-angular'
 
 import { LoginModal } from '../../modal/login/login'
 import { LogoutModal } from '../../modal/logout/logout'
@@ -29,7 +29,9 @@ export class EventOverviewPage {
     public modalCtrl: ModalController,
     public eventStore: EventStore,
     public featureStore: FeatureStore,
-    public navParams: NavParams) {
+    public navParams: NavParams,
+    public alertCtrl: AlertController,
+    public toastCtrl: ToastController) {
     if (this.navParams.get('event')) {
       this.event = this.navParams.get('event');
     }
@@ -45,10 +47,6 @@ export class EventOverviewPage {
         title: 'Edit Event Details'
       });
     // })
-  }
-
-  getFeaturesTest() {
-    return [{type: 1},{type: 4},{type: 0},{type: 2},{type:1},{type:0},{type:1},{type:3},{type:3}];
   }
 
   getFeatures(status:string) {
@@ -72,7 +70,36 @@ export class EventOverviewPage {
   }
 
   plan() {
-    // TODO open a confirmation modal and then update event status
+    const alert = this.alertCtrl.create({
+      title: "Let's Plan",
+      message: 'Click Publish to let our event planners begin helping you select services. You can still make changes after you publish.',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        },
+        {
+          text: 'Publish',
+          handler: () => {
+            this.event.status = 1;
+            this.eventStore.updateEvent(this.event).subscribe(event => {
+              if (event) {
+                this.navCtrl.pop();
+                this.toastCtrl.create({
+                  message: 'Event succesfully published to the event planners. One will contact you shortly.',
+                  position: 'top',
+                  duration: 3000
+                }).present();
+              } else {
+                console.log('Could not update event. Please see logs');
+              }
+            });
+          }
+        }
+      ]
+    });
+
+    alert.present();
   }
 
   openLoginModal () {

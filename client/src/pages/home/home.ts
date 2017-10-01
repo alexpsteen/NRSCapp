@@ -49,6 +49,28 @@ export class HomePage {
     })
   }
 
+  getIconColor(event) {
+    switch(event.status) {
+      case 0:
+        return 'primary';
+      case 1:
+        return 'secondary';
+      default:
+        return 'primary';
+    }
+  }
+
+  getIcon(event) {
+    switch(event.status) {
+      case 0:
+        return 'alert';
+      case 1:
+        return 'checkmark-circle';
+      default:
+        return 'alert';
+    }
+  }
+
   openLoginModal () {
     let modal = this.modalCtrl.create(this.auth.isUserSignedIn() ? LogoutModal : LoginModal);
     modal.present()

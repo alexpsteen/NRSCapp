@@ -22,7 +22,8 @@ export class EventDetailsPage {
     name: null,
     startDate: null,
     endDate: null,
-    budget: null
+    budget: null,
+    status: 0
   };
 
   private parentPage;

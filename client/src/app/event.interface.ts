@@ -3,10 +3,11 @@ export interface IEvent {
   name:string
   startDate:string
   endDate:string
-  budget:IBudget
+  budget:number
+  status:number
 }
 
-export interface IBudget {
-  lower:number
-  upper:number
-}
+// export interface IBudget {
+//   lower:number
+//   upper:number
+// }
