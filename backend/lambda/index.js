@@ -57,14 +57,22 @@ function handleHttpMethod (event, context) {
 
 function handleEventsGET (event, context) {
   const eventId = getEventId(event.path);
+  console.log(eventId);
   let params = {
-    TableName: eventsTable,
-    KeyConditionExpression: 'userId = :key',
-    ExpressionAttributeValues: { ':key': event.requestContext.identity.cognitoIdentityId }
+    TableName: eventsTable
   };
-  if (eventId) {
-    params.KeyConditionExpression += ' and eventId = :eventKey';
-    params.ExpressionAttributeValues[':eventKey'] = eventId;
+  if (eventId === 'all') {
+    const statusId = +event.queryStringParameters.status;
+    params.IndexName = 'eventStatus_idx';
+    params.KeyConditionExpression = 'eventStatus = :statusId';
+    params.ExpressionAttributeValues = {':statusId': statusId};
+  } else {
+    params.KeyConditionExpression = 'userId = :key';
+    params.ExpressionAttributeValues = {':key': event.requestContext.identity.cognitoIdentityId};
+    if (eventId) {
+      params.KeyConditionExpression += ' and eventId = :eventKey';
+      params.ExpressionAttributeValues[':eventKey'] = eventId;
+    }
   }
   console.log('GET query: ', JSON.stringify(params));
   doc.query(params, (err, data) => {
@@ -140,7 +148,7 @@ function handleEventsDELETE (httpEvent, context) {
 }
 
 function getEventId (path) {
-  const matches = path.match(/events\/(.*)/);
+  const matches = path.match(/events\/(.*)\/?/);
   if (matches) {
     return matches[1];
   } else {
