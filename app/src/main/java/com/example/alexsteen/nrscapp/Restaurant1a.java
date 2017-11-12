@@ -13,8 +13,8 @@ public class Restaurant1a extends AppCompatActivity {
         setContentView(R.layout.activity_restaurant1a);
     }
 
-    public void back(View view) {
-        Intent intent = new Intent(this, UserVendors.class);
+    public void reject(View view) {
+        Intent intent = new Intent(this, EventMain.class);
         startActivity(intent);
     }
 
