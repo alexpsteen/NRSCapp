@@ -105,7 +105,7 @@ public class eventDB extends SQLiteOpenHelper{
 
     public LinkedList<eventObject> listOfCurrentEvents() {
         SQLiteDatabase db = getReadableDatabase();
-        Cursor c = db.rawQuery("SELECT * FROM " + TABLE_EVENTS + " WHERE " + COLUMN_STATUS + " = 0;", null);
+        Cursor c = db.rawQuery("SELECT * FROM " + TABLE_EVENTS +";", null);
         c.moveToFirst();
         LinkedList<eventObject> returnList = new LinkedList<>();
         while(!c.isAfterLast()) {

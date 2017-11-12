@@ -12,5 +12,18 @@
         android:layout_height="wrap_content"
         android:text="Event Planner Home"
         tools:layout_editor_absoluteX="163dp"
-        tools:layout_editor_absoluteY="47dp" />
+        tools:layout_editor_absoluteY="47dp"
+        android:layout_above="@+id/button3"
+        android:layout_alignStart="@+id/button3"
+        android:layout_marginStart="11dp"
+        android:layout_marginBottom="112dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text = "View Current Events"
+        android:onClick="viewCurrentEvents"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/button3" />
 </RelativeLayout>
