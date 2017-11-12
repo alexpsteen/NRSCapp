@@ -78,20 +78,48 @@ public class EventMain extends AppCompatActivity {
 
         LinearLayout layout1 = (LinearLayout) findViewById(R.id.tab1);
         LinearLayout layout3 = (LinearLayout) findViewById(R.id.tab3);
-        LinkedList<venueObject> events = dbHandler1.listOfVenues(eventName);
+//        LinkedList<venueObject> events = dbHandler1.listOfVenues(eventName);
 
-        for(venueObject o:events) {
-            TextView i = new TextView(this);
-            TextView j = new TextView(this);
-            j.setText(o.getName());
+        LinkedList<String> features = new LinkedList<>();
+        features.add("Restaurant");
+        features.add("Transportation");
+        features.add("Flowers");
+
+
+//        for(venueObject o:events) {
+//            TextView i = new TextView(this);
+//            TextView j = new TextView(this);
+//            j.setText(o.getName());
+//            j.setBackgroundResource(R.drawable.border);
+//            i.setBackgroundResource(R.drawable.border);
+//            i.setText(o.getName());
+//            layout1.addView(i);
+//            layout3.addView(j);
+//
+//        }
+
+        for(int i = 0; i < features.size(); i++) {
+            System.out.println("in");
+            Button j = new Button(this);
+            Button k = new Button(this);
             j.setBackgroundResource(R.drawable.border);
-            i.setBackgroundResource(R.drawable.border);
-            i.setText(o.getName());
-            layout1.addView(i);
-            layout3.addView(j);
+            j.setText(features.get(i));
+            k.setBackgroundResource(R.drawable.border);
+            k.setText(features.get(i));
+            j.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent i = new Intent(EventMain.this, UserVendors.class);
+                    startActivity(i);
+                }
+            });
+
+
+            layout1.addView(j);
+            layout3.addView(k);
+
 
         }
-
 
         TabHost.TabSpec tab1 = tabHost.newTabSpec("First Tab");
         TabHost.TabSpec tab2 = tabHost.newTabSpec("Second Tab");
