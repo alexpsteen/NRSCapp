@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.alexsteen.nrscapp.VendorHome">
+
+    <TextView
+        android:id="@+id/vendorAdditionalInfoLabel"
+        android:layout_width="76dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="161dp"
+        android:layout_marginStart="115dp"
+        android:layout_toEndOf="@+id/vendorNameLabel"
+        android:layout_x="144dp"
+        android:layout_y="320dp"
+        android:text="TextView"
+        tools:layout_editor_absoluteX="163dp"
+        tools:layout_editor_absoluteY="247dp" />
+
+    <TextView
+        android:id="@+id/vendorAddressLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/vendorAdditionalInfoLabel"
+        android:layout_alignStart="@+id/vendorAdditionalInfoLabel"
+        android:layout_marginBottom="50dp"
+        android:layout_x="148dp"
+        android:layout_y="248dp"
+        android:text="TextView"
+        tools:layout_editor_absoluteX="249dp"
+        tools:layout_editor_absoluteY="127dp" />
+
+    <TextView
+        android:id="@+id/vendorCellphoneLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/VendorAddressLabel"
+        android:layout_marginBottom="68dp"
+        android:layout_toEndOf="@+id/vendorNameLabel"
+        android:layout_x="66dp"
+        android:layout_y="200dp"
+        android:text="TextView"
+        tools:layout_editor_absoluteX="46dp"
+        tools:layout_editor_absoluteY="120dp" />
+
+    <TextView
+        android:id="@+id/vendorEmailLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/vendorCellphoneLabel"
+        android:layout_alignBottom="@+id/vendorCellphoneLabel"
+        android:layout_marginStart="32dp"
+        android:layout_toEndOf="@+id/VendorAddressLabel"
+        android:layout_x="216dp"
+        android:layout_y="200dp"
+        android:text="TextView"
+        tools:layout_editor_absoluteX="149dp"
+        tools:layout_editor_absoluteY="71dp" />
+
+    <TextView
+        android:id="@+id/vendorNameLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="146dp"
+        android:layout_marginTop="80dp"
+        android:layout_x="138dp"
+        android:layout_y="108dp"
+        android:text="TextView"
+        tools:layout_editor_absoluteX="149dp"
+        tools:layout_editor_absoluteY="29dp" />
+
+    <Button
+        android:id="@+id/viewCurrentEventsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="94dp"
+        android:layout_y="402dp"
+        android:onClick="viewCurrentEvents"
+        android:text="View Current Events" />
+</AbsoluteLayout>

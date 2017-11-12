@@ -90,4 +90,62 @@ public class vendorDB extends SQLiteOpenHelper{
         db.update(TABLE_VENDORS, values, COLUMN_USERNAME + "= '" + username + "';",null);
         db.close();
     }
+
+    public void setAddress(String username, String address) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_ADDRESS, address);
+        db.update(TABLE_VENDORS, values, COLUMN_USERNAME + "= '" + username + "';",null);
+        db.close();
+    }
+
+    public void setName(String username, String name) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_NAME, name);
+        db.update(TABLE_VENDORS, values, COLUMN_USERNAME + "= '" + username + "';",null);
+        db.close();
+    }
+
+    public String getName(String username) {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor c = db.rawQuery("SELECT * FROM " + TABLE_VENDORS + " WHERE " + COLUMN_USERNAME + " = '" + username + "';", null);
+        c.moveToFirst();
+        String additionalInfo = c.getString(c.getColumnIndex(COLUMN_NAME));
+        c.close();
+        db.close();
+        return additionalInfo;
+    }
+
+    public String getEmail(String username) {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor c = db.rawQuery("SELECT * FROM " + TABLE_VENDORS + " WHERE " + COLUMN_USERNAME + " = '" + username + "';", null);
+        c.moveToFirst();
+        String additionalInfo = c.getString(c.getColumnIndex(COLUMN_EMAIL));
+        c.close();
+        db.close();
+        return additionalInfo;
+    }
+
+    public String getAddress(String username) {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor c = db.rawQuery("SELECT * FROM " + TABLE_VENDORS + " WHERE " + COLUMN_USERNAME + " = '" + username + "';", null);
+        c.moveToFirst();
+        String additionalInfo = c.getString(c.getColumnIndex(COLUMN_ADDRESS));
+        c.close();
+        db.close();
+        return additionalInfo;
+    }
+
+    public String getCellPhone(String username) {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor c = db.rawQuery("SELECT * FROM " + TABLE_VENDORS + " WHERE " + COLUMN_USERNAME + " = '" + username + "';", null);
+        c.moveToFirst();
+        String additionalInfo = c.getString(c.getColumnIndex(COLUMN_CELLPHONE));
+        c.close();
+        db.close();
+        return additionalInfo;
+    }
+
+
 }

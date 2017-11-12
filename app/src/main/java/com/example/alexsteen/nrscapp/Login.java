@@ -37,11 +37,13 @@ public class Login extends AppCompatActivity {
         EditText passwordText = (EditText) findViewById(R.id.login_password);
         EditText specialPassword = (EditText) findViewById(R.id.special_user_password);
         Intent intent;
+        System.out.println("begin logging in");
             if(specialPassword.getText().toString().equals("vendor")) {
                 if(vendorDB.authenticateUser(usernameText.getText().toString(), passwordText.getText().toString())) {
                     editCurrentUser.putString("username", usernameText.getText().toString());
                     editCurrentUser.commit();
-                    intent = new Intent(this, VendorHome.class);
+                    System.out.println("Hello");
+                    intent = new Intent(this, VendorAddDetails.class);
                     startActivity(intent);
                 }  else {
                     int duration = Toast.LENGTH_SHORT;

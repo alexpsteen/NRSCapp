@@ -31,13 +31,21 @@
         android:layout_below="@+id/login_username"
         android:layout_alignStart="@+id/login_username"
         android:layout_marginTop="20dp" />
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/special_user_password"
+        android:hint="Secret Password"
+        android:layout_below="@+id/login_password"
+        android:layout_alignStart="@+id/login_password"
+        android:layout_marginTop="20dp" />
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/login_button"
         android:text="Login"
-        android:layout_below="@+id/login_password"
-        android:layout_alignEnd="@+id/login_password"
+        android:layout_below="@+id/special_user_password"
+        android:layout_alignEnd="@+id/special_user_password"
         android:layout_marginTop="23dp"
         android:onClick="loginSuccessful"/>
     <Button

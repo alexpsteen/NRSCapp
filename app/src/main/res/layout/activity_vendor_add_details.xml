@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.alexsteen.nrscapp.VendorAddDetails">
+
+    <TextView
+        android:id="@+id/addVendorDetailsHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Vendor Details"
+        tools:layout_editor_absoluteX="163dp"
+        tools:layout_editor_absoluteY="31dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="28dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/vendorName"
+        android:hint="Name"
+        android:layout_below="@+id/addVendorDetailsHeader"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="41dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/vendorAddress"
+        android:hint="Address"
+        android:layout_marginTop="37dp"
+        android:layout_below="@+id/vendorName"
+        android:layout_alignStart="@+id/vendorName" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/vendorAdditionalInfo"
+        android:hint="Additional Information"
+        android:layout_below="@+id/vendorAddress"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="58dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/vendorSaveInfo"
+        android:hint="Save Information"
+        android:layout_alignParentBottom="true"
+        android:layout_alignEnd="@+id/addVendorDetailsHeader"
+        android:layout_marginBottom="76dp"
+        android:onClick="saveInformation"/>
+</RelativeLayout>
