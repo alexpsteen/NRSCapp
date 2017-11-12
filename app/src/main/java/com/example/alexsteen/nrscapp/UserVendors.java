@@ -20,8 +20,6 @@ public class UserVendors extends AppCompatActivity {
 
         LinkedList<String> features = new LinkedList<>();
         features.add("China Dragon");
-        features.add("Oriental Pearl");
-        features.add("Royal China");
 
         for(int i = 0; i < features.size(); i++) {
             System.out.println("in");
@@ -39,10 +37,6 @@ public class UserVendors extends AppCompatActivity {
                             startActivity(i);
                             break;
                         //Second button click
-                        case 1:
-                            i = new Intent(UserVendors.this, Restaurant2a.class);
-                            startActivity(i);
-                            break;
                     }
                 }});
 
