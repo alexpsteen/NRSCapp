@@ -25,52 +25,52 @@
         android:text="Back" />
 
     <TextView
-        android:id="@+id/textView12"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_x="0dp"
-        android:layout_y="262dp"
-        android:text="Lo meins, egg rolls and an array of other Chinese eats doled out in a casual setup."
-        tools:layout_editor_absoluteX="152dp"
-        tools:layout_editor_absoluteY="377dp" />
-
-    <TextView
-        android:id="@+id/textView11"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_x="61dp"
-        android:layout_y="217dp"
-        android:text="798 Ponce De Leon Ave NE, Atlanta, GA 30306"
-        tools:layout_editor_absoluteX="148dp"
-        tools:layout_editor_absoluteY="281dp" />
-
-    <TextView
-        android:id="@+id/textView10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_x="266dp"
-        android:layout_y="147dp"
-        android:text="email: N/A"
-        tools:layout_editor_absoluteX="244dp"
-        tools:layout_editor_absoluteY="188dp" />
-
-    <TextView
         android:id="@+id/textView9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_x="61dp"
-        android:layout_y="147dp"
+        android:layout_y="107dp"
         android:text="404-815-8898"
         tools:layout_editor_absoluteX="55dp"
         tools:layout_editor_absoluteY="188dp" />
 
     <TextView
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="258dp"
+        android:layout_y="103dp"
+        android:text="email: N/A"
+        tools:layout_editor_absoluteX="244dp"
+        tools:layout_editor_absoluteY="188dp" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="54dp"
+        android:layout_y="155dp"
+        android:text="798 Ponce De Leon Ave NE, Atlanta, GA 30306"
+        tools:layout_editor_absoluteX="148dp"
+        tools:layout_editor_absoluteY="281dp" />
+
+    <TextView
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_x="164dp"
-        android:layout_y="86dp"
+        android:layout_x="153dp"
+        android:layout_y="51dp"
         android:text="China Dragon"
         tools:layout_editor_absoluteX="136dp"
         tools:layout_editor_absoluteY="108dp" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="3dp"
+        android:layout_y="209dp"
+        android:text="Lo meins, egg rolls and an array of other Chinese eats doled out in a casual setup."
+        tools:layout_editor_absoluteX="152dp"
+        tools:layout_editor_absoluteY="377dp" />
 </AbsoluteLayout>

@@ -1,62 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.alexsteen.nrscapp.Login">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Login"
-        android:id="@+id/textView5"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="85dp" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/login_username"
-        android:hint="Username"
-        android:layout_below="@+id/textView5"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="34dp" />
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/login_password"
-        android:hint="Password"
-        android:layout_below="@+id/login_username"
-        android:layout_alignStart="@+id/login_username"
-        android:layout_marginTop="20dp" />
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/special_user_password"
-        android:hint="Secret Password"
-        android:layout_below="@+id/login_password"
-        android:layout_alignStart="@+id/login_password"
-        android:layout_marginTop="20dp" />
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/login_button"
-        android:text="Login"
-        android:layout_below="@+id/special_user_password"
-        android:layout_alignEnd="@+id/special_user_password"
-        android:layout_marginTop="23dp"
-        android:onClick="loginSuccessful"/>
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/create_account_button"
-        android:text="Create Account"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/login_button"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="22dp"
-        android:onClick="createAccount"/>
+        android:layout_x="122dp"
+        android:layout_y="460dp"
+        android:onClick="createAccount"
+        android:text="Create Account" />
+
+    <Button
+        android:id="@+id/login_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/special_user_password"
+        android:layout_below="@+id/special_user_password"
+        android:layout_marginTop="23dp"
+        android:layout_x="152dp"
+        android:layout_y="378dp"
+        android:onClick="loginSuccessful"
+        android:text="Login" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="85dp"
+        android:layout_x="159dp"
+        android:layout_y="34dp"
+        android:text="Login"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+
+    <EditText
+        android:id="@+id/login_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView5"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="34dp"
+        android:layout_x="59dp"
+        android:layout_y="141dp"
+        android:hint="Username" />
+
+    <EditText
+        android:id="@+id/login_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/login_username"
+        android:layout_below="@+id/login_username"
+        android:layout_marginTop="20dp"
+        android:layout_x="227dp"
+        android:layout_y="145dp"
+        android:hint="Password" />
+
+    <EditText
+        android:id="@+id/special_user_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/login_password"
+        android:layout_below="@+id/login_password"
+        android:layout_marginTop="20dp"
+        android:layout_x="123dp"
+        android:layout_y="254dp"
+        android:hint="Secret Password" />
 
 
-</RelativeLayout>
+</AbsoluteLayout>

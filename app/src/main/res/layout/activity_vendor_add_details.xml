@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,48 +9,59 @@
     <TextView
         android:id="@+id/addVendorDetailsHeader"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add Vendor Details"
-        tools:layout_editor_absoluteX="163dp"
-        tools:layout_editor_absoluteY="31dp"
+        android:layout_height="71dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="28dp" />
+        android:layout_marginTop="28dp"
+        android:layout_x="53dp"
+        android:layout_y="31dp"
+        android:text="Add Vendor Details"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        tools:layout_editor_absoluteX="163dp"
+        tools:layout_editor_absoluteY="31dp" />
 
     <EditText
+        android:id="@+id/vendorName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/vendorName"
-        android:hint="Name"
         android:layout_below="@+id/addVendorDetailsHeader"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="41dp" />
+        android:layout_marginTop="41dp"
+        android:layout_x="165dp"
+        android:layout_y="136dp"
+        android:hint="Name" />
 
     <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/vendorAddress"
-        android:hint="Address"
-        android:layout_marginTop="37dp"
-        android:layout_below="@+id/vendorName"
-        android:layout_alignStart="@+id/vendorName" />
-
-    <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/vendorName"
+        android:layout_below="@+id/vendorName"
+        android:layout_marginTop="37dp"
+        android:layout_x="152dp"
+        android:layout_y="205dp"
+        android:hint="Address" />
+
+    <EditText
         android:id="@+id/vendorAdditionalInfo"
-        android:hint="Additional Information"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/vendorAddress"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="58dp" />
+        android:layout_marginTop="58dp"
+        android:layout_x="96dp"
+        android:layout_y="280dp"
+        android:hint="Additional Information" />
 
     <Button
+        android:id="@+id/vendorSaveInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/vendorSaveInfo"
-        android:hint="Save Information"
-        android:layout_alignParentBottom="true"
         android:layout_alignEnd="@+id/addVendorDetailsHeader"
+        android:layout_alignParentBottom="true"
         android:layout_marginBottom="76dp"
-        android:onClick="saveInformation"/>
-</RelativeLayout>
+        android:layout_x="123dp"
+        android:layout_y="359dp"
+        android:hint="Save Information"
+        android:onClick="saveInformation" />
+</AbsoluteLayout>
