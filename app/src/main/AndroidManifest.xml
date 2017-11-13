@@ -36,7 +36,19 @@
         <activity android:name=".AddFeature" />
         <activity android:name=".Home" />
         <activity android:name=".CreateAccount" />
-        <activity android:name=".userDetails"></activity>
+        <activity android:name=".userDetails" />
+        <activity android:name=".VendorHome" />
+        <activity android:name=".EventPlannerHome" />
+        <activity android:name=".VendorAddDetails" />
+        <activity android:name=".VendorEvents" />
+        <activity android:name=".EPEvents" />
+        <activity android:name=".EPFeatures" />
+        <activity android:name=".EPVendors" />
+        <activity android:name=".Restaurant1" />
+        <activity android:name=".Restaurant2" />
+        <activity android:name=".UserVendors" />
+        <activity android:name=".Restaurant1a" />
+        <activity android:name=".Restaurant2a"></activity>
     </application>
 
 </manifest>
