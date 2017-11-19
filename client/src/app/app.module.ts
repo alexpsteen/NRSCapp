@@ -34,6 +34,8 @@ import {FeatureCard} from "../components/feature-card/feature-card";
 import {FeatureDetailsPage} from "../pages/feature-details/feature-details";
 import {FeatureSelectionPage} from "../pages/feature-selection/feature-selection";
 import {FeatureStore, FeatureStoreProvider} from "./feature.store";
+import { VendorHomePage } from "../pages/vendor-home/vendor-home";
+import { EventList } from "../pages/event-list/event-list"
 
 @NgModule({
   declarations: [
@@ -51,7 +53,9 @@ import {FeatureStore, FeatureStoreProvider} from "./feature.store";
     EventOverviewPage,
     FeatureCard,
     FeatureDetailsPage,
-    FeatureSelectionPage
+    FeatureSelectionPage,
+    VendorHomePage,
+    EventList
   ],
   imports: [
     HttpModule,
@@ -74,7 +78,9 @@ import {FeatureStore, FeatureStoreProvider} from "./feature.store";
     AddTaskModal,
     EventOverviewPage,
     FeatureDetailsPage,
-    FeatureSelectionPage
+    FeatureSelectionPage,
+    VendorHomePage,
+    EventList
   ],
   providers: [
     StatusBar,
