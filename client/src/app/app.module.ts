@@ -34,6 +34,7 @@ import {FeatureCard} from "../components/feature-card/feature-card";
 import {FeatureDetailsPage} from "../pages/feature-details/feature-details";
 import {FeatureSelectionPage} from "../pages/feature-selection/feature-selection";
 import {FeatureStore, FeatureStoreProvider} from "./feature.store";
+
 import {FoodDetailsPage} from "../pages/feature-details/food/food";
 import {VenueDetailsPage} from "../pages/feature-details/venue/venue";
 import {MusicDetailsPage} from "../pages/feature-details/music/music";

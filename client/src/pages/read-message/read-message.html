@@ -1,0 +1,34 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>Message</ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only clear (click)="openLoginModal()"  [color]="userColor">
+                <ion-icon name="person"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+
+    <div>
+        <div style="display:inline-block; padding-top:1%">
+            <b id="sender">From: Sender</b>
+        </div>
+
+        <div style="display:inline-block; float:right">
+            <ion-item>
+                <button ion-button (click)="load()">Reply</button>
+            </ion-item>
+        </div>
+    </div>
+
+    <ion-item style="padding-top:1%">
+        <p id="message">
+            Message Filler
+        </p>
+    </ion-item>
+</ion-content>

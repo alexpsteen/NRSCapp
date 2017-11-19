@@ -1,0 +1,35 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>Home</ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only clear (click)="openLoginModal()"  [color]="userColor">
+                <ion-icon name="person"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+    <div class="container">
+        <div class = "header-container" style="display:inline-block">
+            <h1>Vendor</h1>
+        </div>
+        <div class = "button-container" style="float:right; display:inline-block">
+            <button ion-button (click)="openMessage()">View Profile</button>
+        </div>
+    </div>
+    <ion-list>
+        <ion-list-header>
+            Events I'm Serving
+        </ion-list-header>
+        <button ion-item *ngFor="let ev of eventStore.events | async;">
+            <ion-icon [name]="getIcon(ev)" [color]="getIconColor(ev)" item-start></ion-icon>
+            <span>{{ev.name}}</span>
+            <ion-note item-end>{{ev.startDate | date: 'M/d/yy'}}</ion-note>
+        </button>
+    </ion-list>
+    <button ion-button (click)="openEventList()">View All Events</button>
+</ion-content>

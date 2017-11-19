@@ -71,4 +71,5 @@ interface Credentials {
   email?: string
   password?: string
   confcode?: string
+  type?: string
 }
