@@ -2,6 +2,7 @@ import { Component } from '@angular/core'
 import { NavController, NavParams, ViewController } from 'ionic-angular'
 import { AuthService } from '../../app/auth.service'
 import { HomePage } from "../home/home";
+import {InboxHomePage} from "../inbox-home/inbox-home";
 
 @Component({
   selector: 'login-page',
@@ -21,7 +22,7 @@ export class LoginPage {
   signin () {
     this.auth.signin(this.credentials).then((user) => {
       console.log('signed in');
-      this.navCtrl.setRoot(HomePage);
+      this.navCtrl.setRoot(InboxHomePage);
     }).catch((err) => {
       console.log('error signing in', err)
       this.setError(err.message)

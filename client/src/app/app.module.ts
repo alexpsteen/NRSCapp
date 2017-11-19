@@ -38,6 +38,7 @@ import {FoodDetailsPage} from "../pages/feature-details/food/food";
 import {VenueDetailsPage} from "../pages/feature-details/venue/venue";
 import {MusicDetailsPage} from "../pages/feature-details/music/music";
 import {ClothingDetailsPage} from "../pages/feature-details/clothing/clothing";
+import {InboxHomePage} from "../pages/inbox-home/inbox-home";
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import {ClothingDetailsPage} from "../pages/feature-details/clothing/clothing";
       FoodDetailsPage,
       MusicDetailsPage,
       VenueDetailsPage,
-      ClothingDetailsPage
+      ClothingDetailsPage,
+      InboxHomePage
   ],
   imports: [
     HttpModule,
@@ -86,7 +88,8 @@ import {ClothingDetailsPage} from "../pages/feature-details/clothing/clothing";
       FoodDetailsPage,
       MusicDetailsPage,
       VenueDetailsPage,
-      ClothingDetailsPage
+      ClothingDetailsPage,
+      InboxHomePage
   ],
   providers: [
     StatusBar,
