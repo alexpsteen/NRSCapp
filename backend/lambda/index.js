@@ -6,12 +6,57 @@ const projectsTable = process.env.PROJECTS_TABLE;
 const eventsTable = process.env.EVENTS_TABLE;
 const featuresTable = process.env.FEATURES_TABLE;
 
+const db_host = process.env.DB_HOST;
+const db_name = process.env.DB_NAME;
+const db_user = process.env.DB_USER;
+const db_pw = process.env.DB_PW;
+
+const mysql = require('mysql');
+const connection = mysql.createConnection({
+  host     : db_host,
+  user     : db_user,
+  password : db_pw,
+  database : db_name
+});
+
 console.log('Loading function');
 
 exports.handler = function (event, context, callback) {
   console.log('request: ' + JSON.stringify(event));
   handleHttpMethod(event, context);
 };
+
+function runQuery(query) {
+  try {
+    console.log('about to connect');
+    connection.connect((err) => {
+      console.log('did that connect');
+      if (!err) {
+        console.log('no err, continuing...');
+        connection.query(query,
+            function(err, results) {
+              console.log('ran query: ', query);
+              if (!err) {
+                console.log('results: ', JSON.stringify(results));
+                connection.end();
+                context.succeed({ statusCode: 200, body: JSON.stringify(results),
+                  headers: { 'Access-Control-Allow-Origin': '*' } });
+              } else {
+                console.log('Query error!: ');
+                context.fail('prob with query i guess');
+              }
+            });
+
+      } else {
+        console.log("Error connecterating database ...", err.message);
+        context.fail('connect prob');
+      }
+
+    });
+  } catch (error) {
+    context.fail(`Exception caught: ${error}`);
+  }
+}
 
 function handleHttpMethod (event, context) {
   let httpMethod = event.httpMethod;
@@ -165,9 +210,12 @@ function handleFeaturesGET (feature, context) {
     KeyConditionExpression: 'userId = :key',
     ExpressionAttributeValues: { ':key': feature.requestContext.identity.cognitoIdentityId }
   };
-  if (featureId) {
+  if (eventId === 'event') {
     params.KeyConditionExpression += ' and featureId = :featureKey';
-    params.ExpressionAttributeValues[':featureKey'] = featureId;
+    params.ExpressionAttributeValues[':featureKey'] = event.queryStringParameters.id;
+  } else {
+    params.KeyConditionExpression += ' and eventId = :eventKey';
+    params.ExpressionAttributeValues[':eventKey'] = eventId;
   }
   console.log('GET query: ', JSON.stringify(params));
   doc.query(params, (err, data) => {
@@ -244,6 +292,16 @@ function handleFeaturesDELETE (httpEvent, context) {
 
 function getFeatureId (path) {
   const matches = path.match(/features\/(.*)/);
+  if (matches) {
+    return matches[1];
+  } else {
+    return null;
+  }
+}
+
+function getFeatureEventId(path) {
+  if (path.indexOf('eventId'))
+  const matches = path.match(/features\/?event\/(.*)/);
   if (matches) {
     return matches[1];
   } else {
