@@ -11,6 +11,7 @@ import {EventDetailsPage} from "../event-details/event-details";
 import {EventStore} from "../../app/event.store";
 import {EventOverviewPage} from "../event-overview/event-overview"
 import {EventList} from "../event-list/event-list"
+import {ReadMessage} from "../read-message/read-message"
 
 @Component({
     selector: 'page-vendor-home',
@@ -83,5 +84,9 @@ export class VendorHomePage {
 
     get userColor ():string {
         return this.auth.isUserSignedIn() ? 'secondary' : 'primary'
+    }
+
+    openMessage() {
+        this.navCtrl.push(ReadMessage)
     }
 }

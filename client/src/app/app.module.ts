@@ -36,6 +36,7 @@ import {FeatureSelectionPage} from "../pages/feature-selection/feature-selection
 import {FeatureStore, FeatureStoreProvider} from "./feature.store";
 import { VendorHomePage } from "../pages/vendor-home/vendor-home";
 import { EventList } from "../pages/event-list/event-list"
+import {ReadMessage} from "../pages/read-message/read-message"
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { EventList } from "../pages/event-list/event-list"
     FeatureDetailsPage,
     FeatureSelectionPage,
     VendorHomePage,
-    EventList
+    EventList,
+    ReadMessage
   ],
   imports: [
     HttpModule,
@@ -80,7 +82,8 @@ import { EventList } from "../pages/event-list/event-list"
     FeatureDetailsPage,
     FeatureSelectionPage,
     VendorHomePage,
-    EventList
+    EventList,
+    ReadMessage
   ],
   providers: [
     StatusBar,
