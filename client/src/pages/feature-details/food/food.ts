@@ -7,7 +7,7 @@ import {FeatureStore} from "../../../app/feature.store";
 
 @Component({
   selector: 'page-food-details',
-  templateUrl: 'food-details.html'
+  templateUrl: 'food.html'
 })
 export class FoodDetailsPage {
   feature:IFeature = {
