@@ -41,6 +41,10 @@ import {MusicDetailsPage} from "../pages/feature-details/music/music";
 import {ClothingDetailsPage} from "../pages/feature-details/clothing/clothing";
 import {InboxHomePage} from "../pages/inbox-home/inbox-home";
 
+import {VendorHomePage} from "../pages/vendor-home/vendor-home";
+import {ReadMessage} from "../pages/read-message/read-message";
+import {EventList} from "../pages/event-list/event-list";
+
 @NgModule({
   declarations: [
     MyApp,
@@ -58,11 +62,14 @@ import {InboxHomePage} from "../pages/inbox-home/inbox-home";
     FeatureCard,
     FeatureDetailsPage,
     FeatureSelectionPage,
-      FoodDetailsPage,
-      MusicDetailsPage,
-      VenueDetailsPage,
-      ClothingDetailsPage,
-      InboxHomePage
+    FoodDetailsPage,
+    MusicDetailsPage,
+    VenueDetailsPage,
+    ClothingDetailsPage,
+    InboxHomePage,
+    VendorHomePage,
+    ReadMessage,
+    EventList
   ],
   imports: [
     HttpModule,
@@ -86,11 +93,14 @@ import {InboxHomePage} from "../pages/inbox-home/inbox-home";
     EventOverviewPage,
     FeatureDetailsPage,
     FeatureSelectionPage,
-      FoodDetailsPage,
-      MusicDetailsPage,
-      VenueDetailsPage,
-      ClothingDetailsPage,
-      InboxHomePage
+    FoodDetailsPage,
+    MusicDetailsPage,
+    VenueDetailsPage,
+    ClothingDetailsPage,
+    InboxHomePage,
+    VendorHomePage,
+    ReadMessage,
+    EventList
   ],
   providers: [
     StatusBar,
