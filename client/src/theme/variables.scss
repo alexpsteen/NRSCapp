@@ -24,13 +24,16 @@ $font-path: "../assets/fonts";
 // The "primary" color is the only required color in the map.
 
 $colors: (
-  primary:    #387ef5,
+  primary:    #3aa6ff,
   secondary:  #32db64,
   danger:     #f53d3d,
   light:      #f4f4f4,
   dark:       #222,
-  darkbar:    #455a64
+  darkbar:    #455a64,
+  white:      #ffffff
 );
+
+$color1: #3aa6ff;
 
 .xxl {
   font-size: 5em;
@@ -59,6 +62,7 @@ $colors: (
 // --------------------------------------------------
 // Windows only Sass variables can go here
 
+$toolbar-background: $color1;
 
 
 

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core'
 
-import {NavController} from 'ionic-angular'
+import { NavController } from 'ionic-angular'
 import { ModalController } from 'ionic-angular'
 
 import { LoginModal } from '../../modal/login/login'

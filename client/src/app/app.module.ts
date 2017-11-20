@@ -35,6 +35,12 @@ import {FeatureDetailsPage} from "../pages/feature-details/feature-details";
 import {FeatureSelectionPage} from "../pages/feature-selection/feature-selection";
 import {FeatureStore, FeatureStoreProvider} from "./feature.store";
 
+import {FoodDetailsPage} from "../pages/feature-details/food/food";
+import {VenueDetailsPage} from "../pages/feature-details/venue/venue";
+import {MusicDetailsPage} from "../pages/feature-details/music/music";
+import {ClothingDetailsPage} from "../pages/feature-details/clothing/clothing";
+import {InboxHomePage} from "../pages/inbox-home/inbox-home";
+
 @NgModule({
   declarations: [
     MyApp,
@@ -51,7 +57,12 @@ import {FeatureStore, FeatureStoreProvider} from "./feature.store";
     EventOverviewPage,
     FeatureCard,
     FeatureDetailsPage,
-    FeatureSelectionPage
+    FeatureSelectionPage,
+      FoodDetailsPage,
+      MusicDetailsPage,
+      VenueDetailsPage,
+      ClothingDetailsPage,
+      InboxHomePage
   ],
   imports: [
     HttpModule,
@@ -74,7 +85,12 @@ import {FeatureStore, FeatureStoreProvider} from "./feature.store";
     AddTaskModal,
     EventOverviewPage,
     FeatureDetailsPage,
-    FeatureSelectionPage
+    FeatureSelectionPage,
+      FoodDetailsPage,
+      MusicDetailsPage,
+      VenueDetailsPage,
+      ClothingDetailsPage,
+      InboxHomePage
   ],
   providers: [
     StatusBar,

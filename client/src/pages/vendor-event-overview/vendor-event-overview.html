@@ -12,10 +12,7 @@
 <ion-content>
 
   <div padding>
-    <h2>{{event.name}}</h2>
-    <button class="settings" ion-button clear icon-only (click)="editEvent()">
-      <ion-icon name='settings'></ion-icon>
-    </button>
+    <h2>{{event.name}} ({{event.eventId}})</h2>
     <div class="overview-row">
       <span class="time-period">Start: <span class="time">{{event.startDate | date: 'short'}}</span></span>
     </div>
@@ -35,19 +32,17 @@
     </div>
   </div>
 
-  <ion-navbar color="white">
-    <ion-segment [(ngModel)]="featureStatus" color="primary">
-      <ion-segment-button value="all">
-        All
-      </ion-segment-button>
-      <ion-segment-button value="confirmed">
-        Confirmed
-      </ion-segment-button>
-      <ion-segment-button value="unconfirmed">
-        Unconfirmed
-      </ion-segment-button>
-    </ion-segment>
-  </ion-navbar>
+  <ion-segment [(ngModel)]="featureStatus" color="primary">
+    <ion-segment-button value="all">
+      All
+    </ion-segment-button>
+    <ion-segment-button value="confirmed">
+      Confirmed
+    </ion-segment-button>
+    <ion-segment-button value="unconfirmed">
+      Unconfirmed
+    </ion-segment-button>
+  </ion-segment>
 
   <ion-grid>
     <ion-row wrap>
@@ -59,12 +54,12 @@
 
   <ion-footer>
     <ion-toolbar>
-      <button ion-button icon-left (click)="addFeature()" color="primary">
+      <button ion-button icon-left (click)="assignPlanner()" color="primary">
         <ion-icon name="add"></ion-icon>
-        Add Feature
+        Assign Planner
       </button>
-      <button ion-button (click)="plan()" color="secondary">
-        LET'S PLAN!
+      <button ion-button (click)="approve()" color="secondary">
+        APPROVE
       </button>
     </ion-toolbar>
   </ion-footer>
