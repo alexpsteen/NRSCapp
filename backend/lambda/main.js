@@ -1,3 +1,5 @@
+//////// COMMON
+
 'use strict';
 const AWS = require('aws-sdk');
 let doc = new AWS.DynamoDB.DocumentClient();
@@ -12,12 +14,6 @@ const db_user = process.env.DB_USER;
 const db_pw = process.env.DB_PW;
 
 const mysql = require('mysql');
-const connection = mysql.createConnection({
-  host     : db_host,
-  user     : db_user,
-  password : db_pw,
-  database : db_name
-});
 
 console.log('Loading function');
 
@@ -26,7 +22,13 @@ exports.handler = function (event, context, callback) {
   handleHttpMethod(event, context);
 };
 
-function runQuery(query) {
+function runQuery(context, query) {
+  const connection = mysql.createConnection({
+    host     : db_host,
+    user     : db_user,
+    password : db_pw,
+    database : db_name
+  });
   try {
     console.log('about to connect');
     connection.connect((err) => {
@@ -93,6 +95,16 @@ function handleHttpMethod (event, context) {
       return handleFeaturesPUT(event, context);
     } else if (httpMethod === 'DELETE') {
       return handleFeaturesDELETE(event, context);
+    }
+  } else if (event.path.match(/^\/users/)) {
+    if (httpMethod === 'GET') {
+      return handleUsersGET(event, context);
+    } else if (httpMethod === 'POST') {
+      return handleUsersPOST(event, context);
+    } else if (httpMethod === 'PUT') {
+      return handleUsersPUT(event, context);
+    } else if (httpMethod === 'DELETE') {
+      return handleUsersDELETE(event, context);
     }
   }
   return errorResponse(context, 'Unhandled http method:', httpMethod);

@@ -1,17 +1,17 @@
-function handleEventsGET (event, context) {
-  const eventId = getEventId(event.path);
+function handleEventsGET (httpEvent, context) {
+  const eventId = getEventId(httpEvent.path);
   console.log(eventId);
   let params = {
     TableName: eventsTable
   };
   if (eventId === 'all') {
-    const statusId = +event.queryStringParameters.status;
+    const statusId = +httpEvent.queryStringParameters.status;
     params.IndexName = 'eventStatus_idx';
     params.KeyConditionExpression = 'eventStatus = :statusId';
     params.ExpressionAttributeValues = {':statusId': statusId};
   } else {
     params.KeyConditionExpression = 'userId = :key';
-    params.ExpressionAttributeValues = {':key': event.requestContext.identity.cognitoIdentityId};
+    params.ExpressionAttributeValues = {':key': httpEvent.requestContext.identity.cognitoIdentityId};
     if (eventId) {
       params.KeyConditionExpression += ' and eventId = :eventKey';
       params.ExpressionAttributeValues[':eventKey'] = eventId;

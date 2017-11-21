@@ -1,9 +1,9 @@
-function handleFeaturesGET (feature, context) {
-  const featureId = getFeatureId(feature.path);
+function handleFeaturesGET (httpEvent, context) {
+  const featureId = getFeatureId(httpEvent.path);
   let params = {
     TableName: featuresTable,
     KeyConditionExpression: 'userId = :key',
-    ExpressionAttributeValues: { ':key': feature.requestContext.identity.cognitoIdentityId }
+    ExpressionAttributeValues: { ':key': httpEvent.requestContext.identity.cognitoIdentityId }
   };
   if (eventId === 'event') {
     params.KeyConditionExpression += ' and featureId = :featureKey';
