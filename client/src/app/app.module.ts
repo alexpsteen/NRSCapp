@@ -45,6 +45,13 @@ import {VendorHomePage} from "../pages/vendor-home/vendor-home";
 import {ReadMessage} from "../pages/read-message/read-message";
 import {EventList} from "../pages/event-list/event-list";
 
+import {ComposeMessagePage} from "../pages/compose-message/compose-message";
+import {EditVendorProfilePage} from "../pages/edit-vendor-profile/edit-vendor-profile";
+import {VendorEventOverviewPage} from "../pages/vendor-event-overview/vendor-event-overview";
+import {VendorProfilePage} from "../pages/vendor-profile/vendor-profile";
+import {EventPlannerHomePage} from "../pages/event-planner-home/event-planner-home";
+
+
 @NgModule({
   declarations: [
     MyApp,
@@ -69,7 +76,11 @@ import {EventList} from "../pages/event-list/event-list";
     InboxHomePage,
     VendorHomePage,
     ReadMessage,
-    EventList
+    EventList,
+    ComposeMessagePage,
+    EditVendorProfilePage,
+    VendorProfilePage,
+    EventPlannerHomePage
   ],
   imports: [
     HttpModule,
@@ -100,7 +111,11 @@ import {EventList} from "../pages/event-list/event-list";
     InboxHomePage,
     VendorHomePage,
     ReadMessage,
-    EventList
+    EventList,
+    ComposeMessagePage,
+    EditVendorProfilePage,
+    VendorProfilePage,
+    EventPlannerHomePage
   ],
   providers: [
     StatusBar,
