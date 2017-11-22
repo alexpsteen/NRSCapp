@@ -1,0 +1,34 @@
+<!--
+  Page for users to compose messages.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Compose Message</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list>
+    <ion-item>
+      <ion-label>TO: </ion-label>
+      <ion-select [(ngModel)]="recipient">
+          <ion-option value="user1">USER 1</ion-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+
+  <ion-item name="subject">
+    <ion-label stacked>Subject</ion-label>
+    <ion-input type="text" value="" ></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label stacked>Message</ion-label>
+    <textarea placeholder="Enter Message Here" value="" id="message"></textarea>
+  </ion-item>
+
+  <button ion-button type="submit" (click)="submit()" style="float: right">SUBMIT</button>
+</ion-content>
