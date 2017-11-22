@@ -1,0 +1,56 @@
+<!--
+  Home-Page for Event Planner
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Event Planner Home</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only clear>
+        <ion-icon name="person"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <div padding>
+    <ion-segment [(ngModel)]="tabs">
+      <ion-segment-button value="myEvents">
+        My Events
+      </ion-segment-button>
+
+      <ion-segment-button value="allEvents">
+        All Events
+      </ion-segment-button>
+
+      <ion-segment-button value="vendors">
+        Vendors
+      </ion-segment-button>
+    </ion-segment>
+
+  </div>
+
+  <div [ngSwitch]="tabs">
+    <ion-list *ngSwitchCase="'myEvents'">
+      <ion-item>
+        <button ion-button color="light" block full item-start>DUMMY EVENT #1</button>
+      </ion-item>
+    </ion-list>
+
+    <ion-list *ngSwitchCase="'allEvents'">
+      <ion-item>
+        <button ion-button color="light" block full item-start>DUMMY EVENT #2 (NOT AFFILIATED)</button>
+      </ion-item>
+    </ion-list>
+
+    <ion-list *ngSwitchCase="'vendors'">
+      <ion-item>
+        <button ion-button color="light" block full item-start>DUMMY VENDOR</button>
+      </ion-item>
+    </ion-list>
+  </div>
+
+</ion-content>
