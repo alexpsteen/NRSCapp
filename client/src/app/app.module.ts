@@ -23,11 +23,13 @@ import { AuthService, AuthServiceProvider } from './auth.service'
 import { ProjectStore, ProjectStoreProvider } from './project.store'
 import { TaskStore, TaskStoreProvider } from './task.store'
 import { EventStore, EventStoreProvider } from "./event.store";
+import { UserStore, UserStoreProvider } from "./user.store";
 import { Sigv4Http, Sigv4HttpProvider } from './sigv4.service'
 
 import { ChartsModule } from 'ng2-charts'
 import { momentFromNowPipe } from './momentFromNow.pipe'
 
+import { UserInfoPage } from "../pages/user-info/user-info";
 import { EventDetailsPage } from "../pages/event-details/event-details";
 import {EventOverviewPage} from "../pages/event-overview/event-overview";
 import {FeatureCard} from "../components/feature-card/feature-card";
@@ -62,7 +64,8 @@ import {InboxHomePage} from "../pages/inbox-home/inbox-home";
       MusicDetailsPage,
       VenueDetailsPage,
       ClothingDetailsPage,
-      InboxHomePage
+      InboxHomePage,
+    UserInfoPage
   ],
   imports: [
     HttpModule,
@@ -90,7 +93,8 @@ import {InboxHomePage} from "../pages/inbox-home/inbox-home";
       MusicDetailsPage,
       VenueDetailsPage,
       ClothingDetailsPage,
-      InboxHomePage
+      InboxHomePage,
+    UserInfoPage
   ],
   providers: [
     StatusBar,
@@ -101,6 +105,7 @@ import {InboxHomePage} from "../pages/inbox-home/inbox-home";
     TaskStore, TaskStoreProvider,
     EventStore, EventStoreProvider,
     FeatureStore, FeatureStoreProvider,
+    UserStore, UserStoreProvider,
     Sigv4Http, Sigv4HttpProvider
   ]
 })

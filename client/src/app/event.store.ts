@@ -7,8 +7,6 @@ import 'rxjs/add/operator/share'
 import { List } from 'immutable'
 import { Sigv4Http } from './sigv4.service'
 import _ from 'lodash'
-// import * as _orderBy from 'lodash.orderby'
-// import * as _findIndex from 'lodash.findIndex'
 import { Config } from 'ionic-angular'
 import { AuthService } from './auth.service'
 import { IEvent } from "./event.interface";
@@ -41,6 +39,8 @@ export class EventStore {
         console.log(resp);
         let data = resp.json();
         this._events.next(List(this.sort(data.events)));
+      }, err => {
+        // must be defined so not ignored in the chain
       });
       return observable;
     } else {
@@ -77,7 +77,7 @@ export class EventStore {
   }
 
   updateEvent (event): Observable<IEvent> {
-    let events = this._events.getValue().toArray()
+    let events = this._events.getValue().toArray();
     let obs = this.auth.getCredentials().map(creds => this.sigv4.put(
       this.endpoint,
       `events/${event.eventId}`,
@@ -91,7 +91,7 @@ export class EventStore {
         events[index] = retEvent;
         this._events.next(List(this.sort(events)))
       }
-    })
+    });
 
     return obs.map(resp => resp.status === 200 ? resp.json().event : null)
   }
@@ -106,7 +106,7 @@ export class EventStore {
         events.splice(index, 1)[0];
         this._events.next(List(<IEvent[]>events));
       }
-    })
+    });
     return obs.map(resp => resp.status === 200 ? resp.json().event : null)
   }
 

@@ -6,8 +6,3 @@ export interface IEvent {
   budget:number
   status:number
 }
-
-// export interface IBudget {
-//   lower:number
-//   upper:number
-// }

@@ -1,12 +1,6 @@
 //////// COMMON
 
 'use strict';
-const AWS = require('aws-sdk');
-let doc = new AWS.DynamoDB.DocumentClient();
-const tasksTable = process.env.TASKS_TABLE;
-const projectsTable = process.env.PROJECTS_TABLE;
-const eventsTable = process.env.EVENTS_TABLE;
-const featuresTable = process.env.FEATURES_TABLE;
 
 const db_host = process.env.DB_HOST;
 const db_name = process.env.DB_NAME;
@@ -14,6 +8,13 @@ const db_user = process.env.DB_USER;
 const db_pw = process.env.DB_PW;
 
 const mysql = require('mysql');
+const pool = mysql.createPool({
+  host: db_host,
+  user: db_user,
+  password: db_pw,
+  database: db_name,
+  connectionLimit: 10
+});
 
 console.log('Loading function');
 
@@ -22,41 +23,22 @@ exports.handler = function (event, context, callback) {
   handleHttpMethod(event, context);
 };
 
-function runQuery(context, query) {
-  const connection = mysql.createConnection({
-    host     : db_host,
-    user     : db_user,
-    password : db_pw,
-    database : db_name
-  });
+// BE CAREFUL! If you need more customized result, just use the same format here
+function runFinalQuery(context, query) {
   try {
-    console.log('about to connect');
-    connection.connect((err) => {
-      console.log('did that connect');
-      if (!err) {
-        console.log('no err, continuing...');
-        connection.query(query,
-            function(err, results) {
-              console.log('ran query: ', query);
-              if (!err) {
-                console.log('results: ', JSON.stringify(results));
-                connection.end();
-                context.succeed({ statusCode: 200, body: JSON.stringify(results),
-                  headers: { 'Access-Control-Allow-Origin': '*' } });
-              } else {
-                console.log('Query error!: ');
-                context.fail('prob with query i guess');
-              }
-            });
-
-      } else {
-        console.log("Error connecterating database ...", err.message);
-        context.fail('connect prob');
+    console.log('running final query:', query);
+    pool.query(query, function(err, results) {
+      if (err) {
+        console.log(`query error: ${err}`);
+        throw err;
       }
+      console.log('query success: ', results);
 
+      successResponse(context, getResult(results));
     });
   } catch (error) {
-    context.fail(`Exception caught: ${error}`);
+    console.log(error);
+    errorResponse(context, `Exception caught: ${error}`);
   }
 }
 
@@ -108,6 +90,21 @@ function handleHttpMethod (event, context) {
     }
   }
   return errorResponse(context, 'Unhandled http method:', httpMethod);
+}
+
+function getResult(results) {
+  let res = null;
+  if (!results) {
+    return res;
+  }
+  if (results.affectedRows) {
+    res = results.affectedRows;
+  } else if (results.length === 1) {
+    res = results[0];
+  } else if (results.length === 0) {
+    res = null;
+  }
+  return res;
 }
 
 function errorResponse (context, logline) {

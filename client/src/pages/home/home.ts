@@ -29,8 +29,14 @@ export class HomePage {
         if (refresher) {
           refresher.complete();
         }
+      },
+      error: (err) => {
+        subscription.unsubscribe();
+        if (refresher) {
+          refresher.complete();
+        }
       }
-    })
+    });
   }
 
   addTapped() {
