@@ -45,7 +45,6 @@ export class LoginPage {
           this.navCtrl.setRoot(UserInfoPage);
         }
       });
-
     }).catch((err) => {
       console.log('error signing in', err);
       this.setError(err.message);

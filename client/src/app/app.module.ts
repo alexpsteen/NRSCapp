@@ -43,6 +43,17 @@ import {MusicDetailsPage} from "../pages/feature-details/music/music";
 import {ClothingDetailsPage} from "../pages/feature-details/clothing/clothing";
 import {InboxHomePage} from "../pages/inbox-home/inbox-home";
 
+import {VendorHomePage} from "../pages/vendor-home/vendor-home";
+import {ReadMessage} from "../pages/read-message/read-message";
+import {EventList} from "../pages/event-list/event-list";
+
+import {ComposeMessagePage} from "../pages/compose-message/compose-message";
+import {EditVendorProfilePage} from "../pages/edit-vendor-profile/edit-vendor-profile";
+import {VendorEventOverviewPage} from "../pages/vendor-event-overview/vendor-event-overview";
+import {VendorProfilePage} from "../pages/vendor-profile/vendor-profile";
+import {EventPlannerHomePage} from "../pages/event-planner-home/event-planner-home";
+
+
 @NgModule({
   declarations: [
     MyApp,
@@ -60,11 +71,18 @@ import {InboxHomePage} from "../pages/inbox-home/inbox-home";
     FeatureCard,
     FeatureDetailsPage,
     FeatureSelectionPage,
-      FoodDetailsPage,
-      MusicDetailsPage,
-      VenueDetailsPage,
-      ClothingDetailsPage,
-      InboxHomePage,
+    FoodDetailsPage,
+    MusicDetailsPage,
+    VenueDetailsPage,
+    ClothingDetailsPage,
+    InboxHomePage,
+    VendorHomePage,
+    ReadMessage,
+    EventList,
+    ComposeMessagePage,
+    EditVendorProfilePage,
+    VendorProfilePage,
+    EventPlannerHomePage,
     UserInfoPage
   ],
   imports: [
@@ -89,11 +107,18 @@ import {InboxHomePage} from "../pages/inbox-home/inbox-home";
     EventOverviewPage,
     FeatureDetailsPage,
     FeatureSelectionPage,
-      FoodDetailsPage,
-      MusicDetailsPage,
-      VenueDetailsPage,
-      ClothingDetailsPage,
-      InboxHomePage,
+    FoodDetailsPage,
+    MusicDetailsPage,
+    VenueDetailsPage,
+    ClothingDetailsPage,
+    InboxHomePage,
+    VendorHomePage,
+    ReadMessage,
+    EventList,
+    ComposeMessagePage,
+    EditVendorProfilePage,
+    VendorProfilePage,
+    EventPlannerHomePage,
     UserInfoPage
   ],
   providers: [
