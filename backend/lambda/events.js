@@ -1,100 +1,74 @@
+//////// EVENTS
+
 function handleEventsGET (httpEvent, context) {
-  const eventId = getEventId(httpEvent.path);
-  console.log(eventId);
-  let params = {
-    TableName: eventsTable
-  };
-  if (eventId === 'all') {
-    const statusId = +httpEvent.queryStringParameters.status;
-    params.IndexName = 'eventStatus_idx';
-    params.KeyConditionExpression = 'eventStatus = :statusId';
-    params.ExpressionAttributeValues = {':statusId': statusId};
-  } else {
-    params.KeyConditionExpression = 'userId = :key';
-    params.ExpressionAttributeValues = {':key': httpEvent.requestContext.identity.cognitoIdentityId};
-    if (eventId) {
-      params.KeyConditionExpression += ' and eventId = :eventKey';
-      params.ExpressionAttributeValues[':eventKey'] = eventId;
+    /**
+     * I have two functions below that will use the path:
+     * events/userType/userId
+     * and get the userType and userId from it.
+     * UserTypes include: customer, eventPlanner, event, inProgress, completed and all
+     * (Special case: event is not a User but it does have a specific id)
+     * Select SQL statement based on what UserType and then run it.
+     * */
+
+    const userType = getUserType(httpEvent.path);
+    const userId = getUserId(httpEvent.path);
+    let q;
+    if(userType == "customer") {
+        q = 'SELECT * FROM event WHERE user_id = ?';
+        const inserts = [userId];
+        q = mysql.format(q, inserts);
+    } else if(userType == "all") {
+        q = 'SELECT * FROM event';
+    } else if(userType == "event") {
+        q = 'SELECT * FROM event WHERE event_id = ?';
+        const inserts = [userId];
+        q = mysql.format(q, inserts);
+    } else if(userType == "eventPlanner") {
+        q = 'SELECT * FROM event WHERE event_planner_id = ?';
+        const inserts = [userId];
+        q = mysql.format(q, inserts);
+    } else if(userType == "completed") {
+        q = 'SELECT * FROM event WHERE event_status = 1';
+    } else if(userType == "inProgress") {
+        q = 'SELECT * FROM event WHERE event_status = 0';
     }
-  }
-  console.log('GET query: ', JSON.stringify(params));
-  doc.query(params, (err, data) => {
-    if (err) { return errorResponse(context, 'Error getting events ', err.message) }
-    return successResponse(context, {events: data.Items});
-  })
+    runFinalQuery(context, q);
 }
 
 function handleEventsPOST (httpEvent, context) {
-  let event = JSON.parse(httpEvent.body);
-  if (!event || !event.eventId) { return errorResponse(context, 'Error: no eventId found') }
-  event.userId = httpEvent.requestContext.identity.cognitoIdentityId;
-  let params = {
-    TableName: eventsTable,
-    Item: event
-  };
+    const customer_id = getUserId(httpEvent.path);
+    let event = JSON.parse(httpEvent.body);
+    let q = 'INSERT INTO event SET customer_id = ?, event_planner_id = ?, event_name = ?, event_status = ?, event_budget = ?, event_description = ?, event_date_start = ?, event_date_end = ?'
+    const inserts = [customer_id, "", event.name, 0, event.budget, event.description, event.date_start, event.date_end];
+    q = mysql.format(q, inserts);
+    runFinalQuery(context, q);
 
-  console.log('Inserting event', JSON.stringify(event));
-  doc.put(params, (err, data) => {
-    if (err) { return errorResponse(context, 'Error: could not add event', err.message) }
-    console.log('After insert promise', data);
-    let retEvent = null;
-    if (data && data.Attributes) {
-      retEvent = data.Attributes;
-    } else {
-      retEvent = event;
-    }
-    return successResponse(context, {event: retEvent});
-  });
 }
 
 function handleEventsPUT (httpEvent, context) {
-  let event = JSON.parse(httpEvent.body);
-  console.log('updating event [' + event.eventId + ']');
-  let eventId = getEventId(httpEvent.path);
-  if (!event || !eventId) { return errorResponse(context, 'Error: no eventId found') }
-  let params = {
-    TableName: eventsTable,
-    Item: event,
-  };
-
-  console.log('Updating event', JSON.stringify(params));
-  doc.put(params, (err, data) => {
-    if (err) { return errorResponse(context, 'Error: could not update event', err.message) }
-    console.log('After insert promise', data);
-    let retEvent = null;
-    if (data && data.Attributes) {
-      retEvent = data.Attributes;
-    } else {
-      retEvent = event;
-    }
-    return successResponse(context, {event: retEvent});
-  });
+    console.log("PUT not implemented yet");
+    successResponse(context, {});
 }
 
 function handleEventsDELETE (httpEvent, context) {
-  const eventId = getEventId(httpEvent.path);
-  if (!eventId) { return errorResponse(context, 'Error: no eventId found') }
-  let params = {
-    TableName: eventsTable,
-    Key: {
-      userId: httpEvent.requestContext.identity.cognitoIdentityId,
-      eventId: eventId
-    },
-    ReturnValues: 'ALL_OLD'
-  };
-
-  console.log('Deleting event', JSON.stringify(params));
-  doc.delete(params, (err, data) => {
-    if (err) { return errorResponse(context, 'Error: could not delete event', err.message) }
-    return successResponse(context, {event: data.Attributes});
-  });
+    console.log("DELETE not implemented yet");
+    successResponse(context, {});
 }
 
-function getEventId (path) {
-  const matches = path.match(/events\/(.*)\/?/);
-  if (matches) {
-    return matches[1];
-  } else {
-    return null;
-  }
+function getUserId (path) {
+    const matches = path.match(/events\/(.*)\/?/);
+    if(matches) {
+        return matches[2];
+    } else {
+        return null;
+    }
+}
+
+function getUserType (path) {
+    const matches = path.match(/events\/(.*)\/?/);
+    if(matches) {
+        return matches[1];
+    } else {
+        return null;
+    }
 }
