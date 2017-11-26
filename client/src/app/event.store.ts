@@ -38,8 +38,7 @@ export class EventStore {
     }
 
     getEventByCustomerId (): Observable<IEvent> {
-    let id = this.getUserId();
-        let obs = this.auth.getCredentials().map(creds => this.sigv4.get(this.endpoint, `events/customer/${id}`, creds)).concatAll().share();
+        let obs = this.auth.getCredentials().map(creds => this.sigv4.get(this.endpoint, `events/customer`, creds)).concatAll().share();
 
         return obs.map(resp => resp.status === 200 ? resp.json() : null)
     }
@@ -89,6 +88,29 @@ export class EventStore {
             }
         });
         return observable.map(resp => resp.status === 200 ? resp.json().event : null);
+
+
+    }
+
+    editEvent (event): Observable<IEvent>{
+        let obs = this.auth.getCredentials().map(creds => this.sigv4.put(this.endpoint, `events/editProfile/${event.eventId}`, event, creds)).concatAll().share();
+        return obs.map(resp => resp.status === 200 ? resp.json().event : null);
+    }
+
+    assignEventPlanner(event, eventId): Observable<IEvent>{
+        let id = this.getUserId();
+        let obs = this.auth.getCredentials().map(creds => this.sigv4.put(this.endpoint, `events/assignEventPlanner/${eventId}/${id}`,event,creds)).concatAll().share();
+        return obs.map(resp => resp.status === 200 ? resp.json().event : null);
+    }
+
+    completeEvent(event, eventId): Observable<IEvent>{
+        let obs = this.auth.getCredentials().map(creds => this.sigv4.put(this.endpoint, `events/completeEvent/${eventId}`, event, creds)).concatAll().share();
+        return obs.map(resp => resp.status === 200 ? resp.json().event : null);
+    }
+
+    deleteEvent(eventId): Observable<IEvent>{
+      let obs = this.auth.getCredentials().map(creds => this.sigv4.del(this.endpoint, `events/completeEvent/${eventId}`, creds)).concatAll().share();
+      return obs.map(resp => resp.status === 200 ? resp.json().event : null);
     }
 
     private sort (events:IEvent[]): IEvent[] {
@@ -101,22 +123,22 @@ export class EventStore {
 
 
 
-  // refresh () : Observable<any> {
-  //   if (this.auth.isUserSignedIn()) {
-  //     let observable = this.auth.getCredentials().map(creds => this.sigv4.get(this.endpoint, 'events', creds)).concatAll().share();
-  //     observable.subscribe(resp => {
-  //       console.log(resp);
-  //       let data = resp.json();
-  //       this._events.next(List(this.sort(data.events)));
-  //     }, err => {
-  //       // must be defined so not ignored in the chain
-  //     });
-  //     return observable;
-  //   } else {
-  //     this._events.next(List([]));
-  //     return Observable.from([]);
-  //   }
-  // }
+  refresh () : Observable<any> {
+    if (this.auth.isUserSignedIn()) {
+      let observable = this.auth.getCredentials().map(creds => this.sigv4.get(this.endpoint, 'events/customer', creds)).concatAll().share();
+      observable.subscribe(resp => {
+        console.log(resp);
+        let data = resp.json();
+        this._events.next(List(this.sort(data.events)));
+      }, err => {
+        // must be defined so not ignored in the chain
+      });
+      return observable;
+    } else {
+      this._events.next(List([]));
+      return Observable.from([]);
+    }
+  }
 
 
 
