@@ -74,8 +74,11 @@ function handleEventsPUT (httpEvent, context) {
 }
 
 function handleEventsDELETE (httpEvent, context) {
-  console.log("DELETE not implemented yet");
-  successResponse(context, {});
+  let id = getId(httpEvent.path);
+  let q = 'DELETE FROM event WHERE event_id = ?'
+  const inserts = [id]
+  q = mysql.format(q, inserts);
+  runFinalQuery(context, q);
 }
 
 function getId (path) {
