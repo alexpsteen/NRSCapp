@@ -8,7 +8,7 @@ import { AuthService } from '../../app/auth.service'
 
 import {UserStore} from "../../app/user.store";
 import { HomePage } from "../home/home";
-import {IUser, IVendor, UserDao, UserType} from "../../app/user.interface";
+import {IUser, IVendor, IVendorLite, UserDao, UserType} from "../../app/user.interface";
 
 @Component({
   selector: 'page-user-info',
@@ -27,7 +27,7 @@ export class UserInfoPage {
     authentication_id: null
   };
 
-  vendor:IVendor = {
+  vendor:IVendorLite = {
     vendor_id: null,
     user_id: null,
     name: null,

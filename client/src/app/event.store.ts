@@ -73,14 +73,13 @@ export class EventStore {
         let observable = this.auth.getCredentials().map(creds => this.sigv4.post(this.endpoint, `events`, event, creds)).concatAll().share();
 
         observable.subscribe(resp => {
-            if (resp.status === 200) {
+            if (resp.status === 200 && resp.json() == 1) {
                 let events = this._events.getValue().toArray();
-                let event = resp.json().event;
                 events.push(event);
                 this._events.next(List(this.sort(events)));
             }
         });
-        return observable.map(resp => resp.status === 200 ? resp.json().event : null);
+        return observable.map(resp => resp.status === 200 ? resp.json() : null);
 
 
     }

@@ -97,12 +97,15 @@ function getResult(results) {
   if (!results) {
     return res;
   }
+
   if (results.affectedRows) {
     res = results.affectedRows;
   } else if (results.length === 1) {
     res = results[0];
   } else if (results.length === 0) {
     res = null;
+  } else {
+    res = results;
   }
   return res;
 }

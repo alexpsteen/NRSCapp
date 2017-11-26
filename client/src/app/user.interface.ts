@@ -23,9 +23,18 @@ export interface IVendor {
   name:string
 }
 
+export interface IVendorLite {
+  vendor_id:number
+  user_id:number
+  address:string
+  description:string
+  approved:number
+  name:string
+}
+
 export interface UserDao {
   user: IUser
-  vendor?: IVendor
+  vendor?: IVendorLite
 }
 
 
