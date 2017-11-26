@@ -88,10 +88,14 @@ export class UserStore {
 
       return obs.map(resp => resp.status === 200 ? resp.json() : null);
   }
+    deactivateVendor (id) :Observable<IVendor> {
+        let obs = this.auth.getCredentials().map(creds => this.sigv4.get(this.endpoint, `users?type=vendor&id=${id}&task=deactivate`, creds)).concatAll().share();
 
-  
+        return obs.map(resp => resp.status === 200 ? resp.json() : null);
+    }
 
-  updateUser (user): Observable<IUser> {
+
+    updateUser (user): Observable<IUser> {
     let obs = this.auth.getCredentials().map(creds => this.sigv4.put(
         this.endpoint,
         `users/${user.userId}`,
