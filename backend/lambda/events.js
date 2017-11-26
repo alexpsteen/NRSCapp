@@ -41,7 +41,7 @@ function handleEventsPOST (httpEvent, context) {
   const customer_id = getId(httpEvent.path);
   let event = JSON.parse(httpEvent.body);
   let q = 'INSERT INTO event (customer_id, event_name, event_status, event_budget, event_date_start, event_date_end) SELECT user_id, ?, ?, ?, ?, ? FROM user WHERE authentication_id = ?';
-  const inserts = [event.name, 0, event.budget, event.date_start, event.date_end, httpEvent.requestContext.identity.cognitoIdentityId];
+  const inserts = [event.event_name, 0, event.event_budget, event.event_date_start, event.event_date_end, httpEvent.requestContext.identity.cognitoIdentityId];
   q = mysql.format(q, inserts);
   runFinalQuery(context, q);
 
