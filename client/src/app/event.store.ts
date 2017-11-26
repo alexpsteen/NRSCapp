@@ -27,6 +27,7 @@ export class EventStore {
 
   constructor (private sigv4: Sigv4Http, private auth: AuthService, private config: Config) {
     this.endpoint = this.config.get('APIs')['EventsAPI'];
+    this.refresh();
   }
 
    get events () { return Observable.create( fn => this._events.subscribe(fn) ) }
@@ -85,17 +86,17 @@ export class EventStore {
     }
 
     updateEvent (event): Observable<IEvent>{
-        let obs = this.auth.getCredentials().map(creds => this.sigv4.put(this.endpoint, `events/editProfile/${event.eventId}`, event, creds)).concatAll().share();
+        let obs = this.auth.getCredentials().map(creds => this.sigv4.put(this.endpoint, `events/editProfile/${event.event_id}`, event, creds)).concatAll().share();
         return obs.map(resp => resp.status === 200 ? resp.json() : null);
     }
 
-    assignEventPlanner(event, eventId, eventPlannerId): Observable<IEvent>{
-        let obs = this.auth.getCredentials().map(creds => this.sigv4.put(this.endpoint, `events/assignEventPlanner/${eventId}/${eventPlannerId}`,event,creds)).concatAll().share();
+    assignEventPlanner(event, eventPlannerId): Observable<IEvent>{
+        let obs = this.auth.getCredentials().map(creds => this.sigv4.put(this.endpoint, `events/assignEventPlanner/${event.event_id}/${eventPlannerId}`,event,creds)).concatAll().share();
         return obs.map(resp => resp.status === 200 ? resp.json() : null);
     }
 
-    completeEvent(event, eventId): Observable<IEvent>{
-        let obs = this.auth.getCredentials().map(creds => this.sigv4.put(this.endpoint, `events/completeEvent/${eventId}`, event, creds)).concatAll().share();
+    completeEvent(event,): Observable<IEvent>{
+        let obs = this.auth.getCredentials().map(creds => this.sigv4.put(this.endpoint, `events/completeEvent/${event.event_id}`, event, creds)).concatAll().share();
         return obs.map(resp => resp.status === 200 ? resp.json() : null);
     }
 
@@ -105,7 +106,7 @@ export class EventStore {
     }
 
     private sort (events:IEvent[]): IEvent[] {
-        return _.orderBy(events, ['startDate', 'name'], ['asc', 'asc'])
+        return _.orderBy(events, ['event_date_start', 'event_name'], ['asc', 'asc'])
     }
 
 
@@ -118,9 +119,11 @@ export class EventStore {
     if (this.auth.isUserSignedIn()) {
       let observable = this.auth.getCredentials().map(creds => this.sigv4.get(this.endpoint, 'events/customer', creds)).concatAll().share();
       observable.subscribe(resp => {
-        console.log(resp);
         let data = resp.json();
-        this._events.next(List(this.sort(data.events)));
+        if (!Array.isArray(data)) {
+          data = [data];
+        }
+        this._events.next(List(this.sort(data)));
       }, err => {
         // must be defined so not ignored in the chain
       });

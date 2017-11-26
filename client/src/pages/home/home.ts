@@ -45,8 +45,8 @@ export class HomePage {
     });
   }
 
-  editEvent(index) {
-    this.eventStore.getEvent(index).subscribe(event => {
+  editEvent(eventId) {
+    this.eventStore.getEventByEventId(eventId).subscribe(event => {
       if (!event) { return console.log('could not find event. Please check logs') }
 
       this.navCtrl.push(EventOverviewPage, {
@@ -56,7 +56,7 @@ export class HomePage {
   }
 
   getIconColor(event) {
-    switch(event.status) {
+    switch(event.event_status) {
       case 0:
         return 'primary';
       case 1:
@@ -67,7 +67,7 @@ export class HomePage {
   }
 
   getIcon(event) {
-    switch(event.status) {
+    switch(event.event_status) {
       case 0:
         return 'alert';
       case 1:

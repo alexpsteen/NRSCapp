@@ -18,12 +18,12 @@ import {EventOverviewPage} from "../event-overview/event-overview";
 })
 export class EventDetailsPage {
   event:IEvent = {
-    eventId: null,
-    name: null,
-    startDate: null,
-    endDate: null,
-    budget: null,
-    status: 0
+    event_id: null,
+    event_name: null,
+    event_date_start: null,
+    event_date_end: null,
+    event_budget: null,
+    event_status: 0
   };
 
   private parentPage;
@@ -61,14 +61,14 @@ export class EventDetailsPage {
   }
 
   saveEvent () {
-    if (this.event.eventId) {
+    if (this.event.event_id) {
       this.eventStore.updateEvent(this.event).subscribe(event => {
         if (event) {
           if (this.parentPage.doRefresh) {
             this.parentPage.doRefresh();
           }
           if (this.parentPage.event) {
-            this.parentPage.event = event;
+            this.parentPage.event = this.event;
           }
           this.navCtrl.pop();
           this.doToast('Event updated successfully');
@@ -77,11 +77,10 @@ export class EventDetailsPage {
         }
       });
     } else {
-      this.event.eventId = UUID.v4();
       this.eventStore.addEvent(this.event).subscribe(event => {
         if (event) {
           this.navCtrl.push(EventOverviewPage, {
-            event: event
+            event: this.event
           }).then(() => {
             const index = this.viewCtrl.index;
             this.navCtrl.remove(index);
@@ -106,7 +105,7 @@ export class EventDetailsPage {
         {
           text: 'Delete',
           handler: () => {
-            this.eventStore.deleteEvent(this.event.eventId).subscribe(event => {
+            this.eventStore.deleteEvent(this.event.event_id).subscribe(event => {
               if (event) {
                 const index = this.viewCtrl.index;
                 this.navCtrl.remove(index - 1);

@@ -12,15 +12,15 @@
 <ion-content>
 
   <div padding>
-    <h2>{{event.name}}</h2>
+    <h2>{{event.event_name}}</h2>
     <button class="settings" ion-button clear icon-only (click)="editEvent()">
       <ion-icon name='settings'></ion-icon>
     </button>
     <div class="overview-row">
-      <span class="time-period">Start: <span class="time">{{event.startDate | date: 'short'}}</span></span>
+      <span class="time-period">Start: <span class="time">{{event.event_date_start | date: 'short'}}</span></span>
     </div>
     <div class="overview-row">
-      <span class="time-period">End: <span class="time">{{event.endDate | date: 'short'}}</span></span>
+      <span class="time-period">End: <span class="time">{{event.event_date_end | date: 'short'}}</span></span>
     </div>
     <div class="overview-row">
       <span class="time-period">Budget</span>
@@ -29,7 +29,7 @@
       <div class="budget-outer">
         <div class="budget-total">
           <span class="min">0</span>
-          <span class="max">{{event.budget}}</span>
+          <span class="max">{{event.event_budget}}</span>
         </div>
       </div>
     </div>

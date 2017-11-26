@@ -8,13 +8,15 @@ import { AuthService } from '../../app/auth.service'
 
 import {UserStore} from "../../app/user.store";
 import { HomePage } from "../home/home";
-import {IUser, IVendor, UserType} from "../../app/user.interface";
+import {IUser, IVendor, UserDao, UserType} from "../../app/user.interface";
 
 @Component({
   selector: 'page-user-info',
   templateUrl: 'user-info.html'
 })
 export class UserInfoPage {
+  addMode:boolean = false;
+
   user:IUser = {
     user_id: null,
     user_type: 1,
@@ -48,6 +50,7 @@ export class UserInfoPage {
     if (this.navParams.get('vendor')) {
       this.vendor = this.navParams.get('vendor');
     }
+    this.addMode = this.user.user_id == null;
   }
 
   saveUser() {
@@ -55,7 +58,7 @@ export class UserInfoPage {
     if (userObj.user.user_type == UserType.VENDOR) {
       userObj.vendor = this.vendor;
     }
-    if (this.user.user_id == null) {
+    if (this.addMode) {
       this.userStore.addUser(userObj).subscribe(rows => {
         if (rows) {
           this.navCtrl.setRoot(HomePage);
@@ -73,9 +76,4 @@ export class UserInfoPage {
       });
     }
   }
-}
-
-interface UserDao {
-  user: IUser
-  vendor?: IVendor
 }

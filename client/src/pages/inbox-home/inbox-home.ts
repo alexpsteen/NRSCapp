@@ -32,8 +32,8 @@ export class InboxHomePage {
         });
     }
 
-    editEvent(index) {
-        this.eventStore.getEvent(index).subscribe(event => {
+    editEvent(eventId) {
+        this.eventStore.getEventByEventId(eventId).subscribe(event => {
             if (!event) { return console.log('could not find event. Please check logs') }
 
             this.navCtrl.push(EventOverviewPage, {

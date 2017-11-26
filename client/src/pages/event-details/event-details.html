@@ -22,24 +22,24 @@
 
       <ion-item>
         <ion-label floating>Event Name</ion-label>
-        <ion-input name="name" [(ngModel)]="event.name" required></ion-input>
+        <ion-input name="name" [(ngModel)]="event.event_name" required></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label floating>Start Date</ion-label>
-        <ion-datetime name="startDate" displayFormat="MMMM DD, YYYY hh:mm a" pickerFormat="MMM DD, YYYY hh:mm a" min="2017-09-27" max="2020-12-31" [(ngModel)]="event.startDate"></ion-datetime>
+        <ion-datetime name="startDate" displayFormat="MMMM DD, YYYY hh:mm a" pickerFormat="MMM DD, YYYY hh:mm a" min="2017-09-27" max="2020-12-31" [(ngModel)]="event.event_date_start"></ion-datetime>
       </ion-item>
 
       <ion-item>
         <ion-label floating>End Date</ion-label>
-        <ion-datetime name="endDate" displayFormat="MMMM DD, YYYY hh:mm a" pickerFormat="MMM DD, YYYY hh:mm a" min="2017-09-27" max="2020-12-31" [(ngModel)]="event.endDate"></ion-datetime>
+        <ion-datetime name="endDate" displayFormat="MMMM DD, YYYY hh:mm a" pickerFormat="MMM DD, YYYY hh:mm a" min="2017-09-27" max="2020-12-31" [(ngModel)]="event.event_date_end"></ion-datetime>
       </ion-item>
 
       <div id="budget-content">
         <ion-label>Budget</ion-label>
-        <ion-badge class="budget-badge" item-end color="secondary">${{event.budget}}</ion-badge>
+        <ion-badge class="budget-badge" item-end color="secondary">${{event.event_budget}}</ion-badge>
 
-        <ion-range name="budget" color="secondary" [(ngModel)]="event.budget" min="0" max="20000" step="100">
+        <ion-range name="budget" color="secondary" [(ngModel)]="event.event_budget" min="0" max="20000" step="100">
           <ion-label range-left>0</ion-label>
           <ion-label range-right>20k+</ion-label>
         </ion-range>
@@ -48,7 +48,7 @@
     </ion-list>
     <button ion-button full type="submit" [disabled]="!eventForm.form.valid">Save Event</button>
 
-    <button ion-button full type="button" *ngIf="event.eventId" color="danger" (click)="confirmDelete()">Delete</button>
+    <button ion-button full type="button" *ngIf="event.event_id" color="danger" (click)="confirmDelete()">Delete</button>
   </form>
 
 </ion-content>

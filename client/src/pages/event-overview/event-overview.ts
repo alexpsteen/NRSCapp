@@ -59,7 +59,7 @@ export class EventOverviewPage {
 
   addFeature() {
     this.navCtrl.push(FeatureSelectionPage, {
-      eventId: this.event.eventId
+      eventId: this.event.event_id
     });
   }
 
@@ -81,7 +81,7 @@ export class EventOverviewPage {
         {
           text: 'Publish',
           handler: () => {
-            this.event.status = 1;
+            this.event.event_status = 1;
             this.eventStore.updateEvent(this.event).subscribe(event => {
               if (event) {
                 this.navCtrl.pop();

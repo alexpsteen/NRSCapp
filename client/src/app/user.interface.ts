@@ -17,6 +17,11 @@ export interface IVendor {
   name:string
 }
 
+export interface UserDao {
+  user: IUser
+  vendor?: IVendor
+}
+
 export enum UserType {
   ADMIN = 0,
   CUSTOMER = 1,
