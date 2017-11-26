@@ -92,14 +92,14 @@ export class EventStore {
 
     }
 
-    editEvent (event): Observable<IEvent>{
+    updateEvent (event): Observable<IEvent>{
         let obs = this.auth.getCredentials().map(creds => this.sigv4.put(this.endpoint, `events/editProfile/${event.eventId}`, event, creds)).concatAll().share();
         return obs.map(resp => resp.status === 200 ? resp.json().event : null);
     }
 
-    assignEventPlanner(event, eventId): Observable<IEvent>{
+    assignEventPlanner(event, eventId, eventPlannerId): Observable<IEvent>{
         let id = this.getUserId();
-        let obs = this.auth.getCredentials().map(creds => this.sigv4.put(this.endpoint, `events/assignEventPlanner/${eventId}/${id}`,event,creds)).concatAll().share();
+        let obs = this.auth.getCredentials().map(creds => this.sigv4.put(this.endpoint, `events/assignEventPlanner/${eventId}/${eventPlannerId}`,event,creds)).concatAll().share();
         return obs.map(resp => resp.status === 200 ? resp.json().event : null);
     }
 
