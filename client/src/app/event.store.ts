@@ -119,10 +119,14 @@ export class EventStore {
       let observable = this.auth.getCredentials().map(creds => this.sigv4.get(this.endpoint, 'events/customer', creds)).concatAll().share();
       observable.subscribe(resp => {
         let data = resp.json();
-        if (!Array.isArray(data)) {
-          data = [data];
+        if (data) {
+          if (!Array.isArray(data)) {
+            data = [data];
+          }
+          this._events.next(List(this.sort(data)));
+        } else {
+          this._events.next(List([]));
         }
-        this._events.next(List(this.sort(data)));
       }, err => {
         // must be defined so not ignored in the chain
       });

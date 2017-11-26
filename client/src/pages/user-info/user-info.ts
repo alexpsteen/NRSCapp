@@ -53,6 +53,25 @@ export class UserInfoPage {
     this.addMode = this.user.user_id == null;
   }
 
+  ionViewDidLoad() {
+    if (this.addMode) {
+      this.auth.getCredentials().subscribe(() => {
+        this.auth.cognitoUser['getUserAttributes']((err, results) => {
+          if (err) {
+            return console.log('err getting attrs', err)
+          }
+          results.some(r => {
+            if (r.getName() === 'email') {
+              this.user.email = r.getValue();
+              return true;
+            }
+            return false;
+          });
+        })
+      });
+    }
+  }
+
   saveUser() {
     let userObj: UserDao = {user: this.user};
     if (userObj.user.user_type == UserType.VENDOR) {
