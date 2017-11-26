@@ -49,9 +49,9 @@ export class EventStore {
         return obs.map(resp => resp.status === 200 ? resp.json() : null)
     }
 
-    getEventByEventId (index): Observable<IEvent> {
+    getEventByEventId (eventId): Observable<IEvent> {
         let events = this._events.getValue().toArray();
-        let obs = this.auth.getCredentials().map(creds => this.sigv4.get(this.endpoint, `events/event/${events[index].eventId}`, creds)).concatAll().share();
+        let obs = this.auth.getCredentials().map(creds => this.sigv4.get(this.endpoint, `events/event/${eventId}`, creds)).concatAll().share();
 
         return obs.map(resp => resp.status === 200 ? resp.json() : null)
     }
