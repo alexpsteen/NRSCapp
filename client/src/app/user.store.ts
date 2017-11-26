@@ -9,7 +9,7 @@ import { Sigv4Http } from './sigv4.service'
 import _ from 'lodash'
 import { Config } from 'ionic-angular'
 import { AuthService } from './auth.service'
-import { IUser } from "./user.interface";
+import {IUser, IVendor} from "./user.interface";
 
 let userStoreFactory = (sigv4: Sigv4Http, auth: AuthService, config: Config) => { return new UserStore(sigv4, auth, config) };
 
@@ -22,29 +22,29 @@ export let UserStoreProvider = {
 @Injectable()
 export class UserStore {
 
-  // private _events: BehaviorSubject<List<IEvent>> = new BehaviorSubject(List([]));
+  private _vendors: BehaviorSubject<List<IVendor>> = new BehaviorSubject(List([]));
   private endpoint:string;
 
   constructor (private sigv4: Sigv4Http, private auth: AuthService, private config: Config) {
     this.endpoint = this.config.get('APIs')['UsersAPI'];
   }
 
-  // get events () { return Observable.create( fn => this._events.subscribe(fn) ) }
-  //
-  // refresh () : Observable<any> {
-  //   if (this.auth.isUserSignedIn()) {
-  //     let observable = this.auth.getCredentials().map(creds => this.sigv4.get(this.endpoint, 'events', creds)).concatAll().share();
-  //     observable.subscribe(resp => {
-  //       console.log(resp);
-  //       let data = resp.json();
-  //       this._events.next(List(this.sort(data.events)));
-  //     });
-  //     return observable;
-  //   } else {
-  //     this._events.next(List([]));
-  //     return Observable.from([]);
-  //   }
-  // }
+  get vendors () { return Observable.create( fn => this._vendors.subscribe(fn) ) }
+
+  refresh () : Observable<any> {
+    if (this.auth.isUserSignedIn()) {
+      let observable = this.auth.getCredentials().map(creds => this.sigv4.get(this.endpoint, 'events/all?type=vendor', creds)).concatAll().share();
+      observable.subscribe(resp => {
+        console.log(resp);
+        let data = resp.json();
+        this._vendors.next(List(this.sort(data.vendors)));
+      });
+      return observable;
+    } else {
+      this._vendors.next(List([]));
+      return Observable.from([]);
+    }
+  }
 
   addUser (user): Observable<IUser> {
     let observable = this.auth.getCredentials().map(creds => this.sigv4.post(this.endpoint, 'users', user, creds)).concatAll().share();
@@ -65,16 +65,31 @@ export class UserStore {
   // }
 
   getCurrentUser (): Observable<IUser> {
-    let obs = this.auth.getCredentials().map(creds => this.sigv4.get(this.endpoint, 'users/self', creds)).concatAll().share();
+    let obs = this.auth.getCredentials().map(creds => this.sigv4.get(this.endpoint, 'users?type=self', creds)).concatAll().share();
 
     return obs.map(resp => resp.status === 200 ? resp.json() : null)
   }
 
-  getUserById (id): Observable<IUser> {
-    let obs = this.auth.getCredentials().map(creds => this.sigv4.get(this.endpoint, `users/${id}`, creds)).concatAll().share();
+  getCurrentVendor (): Observable<IVendor> {
+    let obs = this.auth.getCredentials().map(creds => this.sigv4.get(this.endpoint,'users?type=vendorSelf', creds)).concatAll().share();
+
+    return obs.map(resp => resp.status === 200 ? resp.json() : null);
+  }
+
+
+  getVendorById (id): Observable<IUser> {
+    let obs = this.auth.getCredentials().map(creds => this.sigv4.get(this.endpoint, `users?type=vendor&id=${id}`, creds)).concatAll().share();
 
     return obs.map(resp => resp.status === 200 ? resp.json() : null)
   }
+
+  verifyVendor (id) :Observable<IVendor> {
+      let obs = this.auth.getCredentials().map(creds => this.sigv4.get(this.endpoint, `users?type=vendor&id=${id}&task=verify`, creds)).concatAll().share();
+
+      return obs.map(resp => resp.status === 200 ? resp.json() : null);
+  }
+
+  
 
   updateUser (user): Observable<IUser> {
     let obs = this.auth.getCredentials().map(creds => this.sigv4.put(
@@ -95,7 +110,7 @@ export class UserStore {
     return obs.map(resp => resp.status === 200 ? resp.json() : null)
   }
 
-  deleteEvent (userId): Observable<IUser> {
+  deleteUser (userId): Observable<IUser> {
     let obs = this.auth.getCredentials().map(creds => this.sigv4.del(this.endpoint, `users/${userId}`, creds)).concatAll().share();
 
     obs.subscribe(resp => {
@@ -106,7 +121,7 @@ export class UserStore {
     return obs.map(resp => resp.status === 200 ? resp.json() : null);
   }
 
-  private sort (users:IUser[]): IUser[] {
+  private sort (users:IVendor[]): IVendor[] {
     return _.orderBy(users, ['lastName', 'firstName'], ['asc', 'asc']);
   }
 

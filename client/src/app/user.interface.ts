@@ -9,6 +9,12 @@ export interface IUser {
 }
 
 export interface IVendor {
+  user_type:UserType
+    first_name?:string
+    last_name?:string
+    cellphone_number?:string
+    email:string
+    authentication_id?:string
   vendor_id:number
   user_id:number
   address:string
@@ -21,6 +27,7 @@ export interface UserDao {
   user: IUser
   vendor?: IVendor
 }
+
 
 export enum UserType {
   ADMIN = 0,
