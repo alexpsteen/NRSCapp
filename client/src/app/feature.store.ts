@@ -10,7 +10,7 @@ import { Sigv4Http } from './sigv4.service'
 import * as _ from 'lodash'
 import { Config } from 'ionic-angular'
 import { AuthService } from './auth.service'
-import {IFeature} from "./feature.interface";
+import {IFeatureLite, IFeatureClothing, IFeatureFood, IFeatureMusic, IFeatureVenue} from "./feature.interface";
 
 let featureStoreFactory = (sigv4: Sigv4Http, auth: AuthService, config: Config) => { return new FeatureStore(sigv4, auth, config) };
 
@@ -23,19 +23,18 @@ export let FeatureStoreProvider = {
 @Injectable()
 export class FeatureStore {
 
-  private _features: BehaviorSubject<List<IFeature>> = new BehaviorSubject(List([]));
+  private _features: BehaviorSubject<List<IFeatureLite>> = new BehaviorSubject(List([]));
   private endpoint:string;
 
   constructor (private sigv4: Sigv4Http, private auth: AuthService, private config: Config) {
     this.endpoint = this.config.get('APIs')['FeaturesAPI'];
-    this.refresh();
   }
 
   get features () { return Observable.create( fn => this._features.subscribe(fn) ) }
 
-  refresh () : Observable<any> {
+  refresh (id) : Observable<any> {
     if (this.auth.isUserSignedIn()) {
-      let observable = this.auth.getCredentials().map(creds => this.sigv4.get(this.endpoint, 'features', creds)).concatAll().share();
+      let observable = this.auth.getCredentials().map(creds => this.sigv4.get(this.endpoint, `features/all?task=event&id=${id}`, creds)).concatAll().share();
       observable.subscribe(resp => {
         console.log(resp);
         let data = resp.json();
@@ -48,7 +47,7 @@ export class FeatureStore {
     }
   }
 
-  addFeature (feature): Observable<IFeature> {
+  addFeature (feature): Observable<any> {
     let observable = this.auth.getCredentials().map(creds => this.sigv4.post(this.endpoint, 'features', feature, creds)).concatAll().share();
 
     observable.subscribe(resp => {
@@ -62,25 +61,20 @@ export class FeatureStore {
     return observable.map(resp => resp.status === 200 ? resp.json().feature : null);
   }
 
-  getFeature (index): Observable<IFeature> {
-    let features = this._features.getValue().toArray();
-    let obs = this.auth.getCredentials().map(creds => this.sigv4.get(this.endpoint, `features/${features[index].featureId}`, creds)).concatAll().share();
 
-    return obs.map(resp => resp.status === 200 ? resp.json().features[0] : null)
-  }
+    getFeature (index): Observable<any> {
+        let features = this._features.getValue().toArray();
+        let obs = this.auth.getCredentials().map(creds => this.sigv4.get(this.endpoint, `features/details?&id=${features[index].featureId}&type=${features[index].feature_type}`, creds)).concatAll().share();
 
-  getFeatureById (id): Observable<IFeature> {
-    let obs = this.auth.getCredentials().map(creds => this.sigv4.get(this.endpoint, `features/${id}`, creds)).concatAll().share();
+        return obs.map(resp => resp.status === 200 ? resp.json().features[0] : null)
+    }
 
-    return obs.map(resp => resp.status === 200 ? resp.json().features[0] : null)
-  }
-
-  updateFeature (feature): Observable<IFeature> {
+  updateFeature (feature): Observable<any> {
     // let tasks = this._tasks.getValue().toArray()
     let obs = this.auth.getCredentials().map(creds => this.sigv4.put(
       this.endpoint,
       `features/${feature.featureId}`,
-      event,
+      feature,
       creds)).concatAll().share();
 
     // obs.subscribe(resp => {
@@ -93,7 +87,7 @@ export class FeatureStore {
     return obs.map(resp => resp.status === 200 ? resp.json().feature : null)
   }
 
-  deleteFeature (featureId): Observable<IFeature> {
+  deleteFeature (featureId): Observable<IFeatureLite> {
     let features = this._features.getValue().toArray();
     let obs = this.auth.getCredentials().map(creds => this.sigv4.del(this.endpoint, `features/${featureId}`, creds)).concatAll().share();
 
@@ -101,13 +95,13 @@ export class FeatureStore {
       if (resp.status === 200) {
         let index = _.findIndex(features, (f) => {return f.featureId === featureId} );
         features.splice(index, 1)[0];
-        this._features.next(List(<IFeature[]>features));
+        this._features.next(List(<IFeatureLite[]>features));
       }
     });
     return obs.map(resp => resp.status === 200 ? resp.json().feature : null)
   }
 
-  private sort (features:IFeature[]): IFeature[] {
+  private sort (features:IFeatureLite[]): IFeatureLite[] {
     return _.orderBy(features, ['type'], ['asc'])
   }
 
