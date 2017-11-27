@@ -12,13 +12,21 @@
     <ion-list inset>
 
       <ion-item>
-        <ion-label floating>Location</ion-label>
-        <ion-input name="location" [(ngModel)]="feature.location"></ion-input>
+        <ion-label>Music Type</ion-label>
+        <ion-select name="musicType"[(ngModel)]="feature.musicType">
+          <ion-option value="band">Band</ion-option>
+          <ion-option value="dj">DJ</ion-option>
+        </ion-select>
       </ion-item>
 
       <ion-item>
-        <ion-label floating>Food Category</ion-label>
-        <ion-textarea name="foodCategory" [(ngModel)]="feature.foodCategory"></ion-textarea>
+        <ion-label floating>Musician Name</ion-label>
+        <ion-textarea name="musician" [(ngModel)]="feature.musician"></ion-textarea>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Music Genre</ion-label>
+        <ion-textarea name="musicGenre" [(ngModel)]="feature.musicGenre"></ion-textarea>
       </ion-item>
 
       <ion-item>
