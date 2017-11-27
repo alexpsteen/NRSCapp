@@ -1,6 +1,6 @@
 import {UserType} from "./user.interface";
 
-export interface IFeatureLite {
+export interface IFeature {
   feature_id:number,
   event_id:string,
   feature_type:number,

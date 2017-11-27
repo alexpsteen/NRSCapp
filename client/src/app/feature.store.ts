@@ -11,7 +11,7 @@ import * as _ from 'lodash'
 import { Config } from 'ionic-angular'
 import { AuthService } from './auth.service'
 import {
-    IFeatureLite, IFeatureClothing, IFeatureFood, IFeatureMusic, IFeatureVenue,
+    IFeature, IFeatureClothing, IFeatureFood, IFeatureMusic, IFeatureVenue,
     IRecommendation, IBid, IVendorBid
 } from "./feature.interface";
 import {IVendorLite} from "./user.interface";
@@ -27,7 +27,7 @@ export let FeatureStoreProvider = {
 @Injectable()
 export class FeatureStore {
 
-  private _features: BehaviorSubject<List<IFeatureLite>> = new BehaviorSubject(List([]));
+  private _features: BehaviorSubject<List<IFeature>> = new BehaviorSubject(List([]));
   private _vendors: BehaviorSubject<List<IBid>> = new BehaviorSubject(List([]));
   private endpoint:string;
 
@@ -142,7 +142,7 @@ export class FeatureStore {
       return obs.map(resp => resp.status === 200 ? resp.json() : null);
   }
 
-  deleteFeature (featureId): Observable<IFeatureLite> {
+  deleteFeature (featureId): Observable<IFeature> {
     let features = this._features.getValue().toArray();
     let obs = this.auth.getCredentials().map(creds => this.sigv4.del(this.endpoint, `features?id=${featureId}`, creds)).concatAll().share();
 
@@ -150,7 +150,7 @@ export class FeatureStore {
       if (resp.status === 200) {
         let index = _.findIndex(features, (f) => {return f.featureId === featureId} );
         features.splice(index, 1)[0];
-        this._features.next(List(<IFeatureLite[]>features));
+        this._features.next(List(<IFeature[]>features));
       }
     });
     return obs.map(resp => resp.status === 200 ? resp.json().feature : null)
@@ -160,7 +160,7 @@ export class FeatureStore {
     return _.orderBy(vendors, ['vendor_id'], ['asc'])
   }
 
-  private sort (features:IFeatureLite[]): IFeatureLite[] {
+  private sort (features:IFeature[]): IFeature[] {
     return _.orderBy(features, ['type'], ['asc'])
   }
 
