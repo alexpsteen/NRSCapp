@@ -49,11 +49,6 @@ export class ReadMessage {
         }
     }
 
-    openLoginModal () {
-        let modal = this.modalCtrl.create(this.auth.isUserSignedIn() ? LogoutModal : LoginModal);
-        modal.present()
-    }
-
     load() {
         document.getElementById("message").innerHTML = "Message";
     }

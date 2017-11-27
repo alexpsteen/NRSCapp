@@ -38,10 +38,6 @@ export class ClothingDetailsPage {
 
   get title():string { return this.feature.featureId ? 'Edit Feature' : 'Create Feature' }
 
-  get userColor ():string {
-    return this.auth.isUserSignedIn() ? 'secondary' : 'primary'
-  }
-
   saveFeature () {
     if (this.feature.featureId) {
       this.featureStore.updateFeature(this.feature).subscribe(feature => {

@@ -1,13 +1,4 @@
-<ion-header>
-  <ion-navbar>
-    <!--<ion-title></ion-title>-->
-    <ion-buttons end>
-      <button ion-button icon-only clear (click)="openLoginModal()"  [color]="userColor">
-        <ion-icon name="person"></ion-icon>
-      </button>
-    </ion-buttons>
-  </ion-navbar>
-</ion-header>
+<header-bar title="Overview"></header-bar>
 
 <ion-content>
 
@@ -16,6 +7,15 @@
     <button class="settings" ion-button clear icon-only (click)="editEvent()">
       <ion-icon name='settings'></ion-icon>
     </button>
+    <div class="overview-row" *ngIf="!isAdmin">
+      <span class="time-period">Your Assigned Planner: {{getPlanner()}}</span>
+    </div>
+    <ion-item *ngIf="isAdmin">
+      <ion-label>Event Planner</ion-label>
+      <ion-select name="plannerId" [(ngModel)]="event.event_planner_id" (ionChange)="assignPlanner($event)" okText="Save">
+        <ion-option *ngFor="let p of planners | async" [value]="p.user_id">{{getName(p)}}</ion-option>
+      </ion-select>
+    </ion-item>
     <div class="overview-row">
       <span class="time-period">Start: <span class="time">{{event.event_date_start | date: 'short'}}</span></span>
     </div>

@@ -72,9 +72,4 @@ export class EventList {
                 return 'alert';
         }
     }
-
-    openLoginModal () {
-        let modal = this.modalCtrl.create(this.auth.isUserSignedIn() ? LogoutModal : LoginModal);
-        modal.present()
-    }
 }

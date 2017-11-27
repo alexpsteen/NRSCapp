@@ -11,6 +11,10 @@ import UUID from 'uuid'
 import {EventStore} from "../../app/event.store";
 import {IEvent} from "../../app/event.interface";
 import {EventOverviewPage} from "../event-overview/event-overview";
+import {List} from "immutable";
+import {BehaviorSubject} from "rxjs/BehaviorSubject";
+import {IUser} from "../../app/user.interface";
+import {UserStore} from "../../app/user.store";
 
 @Component({
   selector: 'page-event-details',
@@ -34,6 +38,7 @@ export class EventDetailsPage {
     private viewCtrl: ViewController,
     public auth: AuthService,
     public eventStore: EventStore,
+    public userStore: UserStore,
     public navParams: NavParams,
     public alertCtrl: AlertController,
     public toastCtrl: ToastController) {

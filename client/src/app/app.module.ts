@@ -8,20 +8,14 @@ import { FormsModule } from '@angular/forms'
 
 import { MyApp } from './app.component'
 
-import { TasksPage } from '../pages/tasks/tasks'
-import { ProjectOverviewPage } from '../pages/project-overview/project-overview'
-import { TabsPage } from '../pages/tabs/tabs'
 import { LoginModal } from '../modal/login/login'
 import { LogoutModal } from '../modal/logout/logout'
-import { AddTaskModal } from '../modal/addtask/addtask'
 
 import { LoginPage } from "../pages/login/login";
 import { HomePage } from "../pages/home/home";
 
 import { AwsConfig } from './app.config'
 import { AuthService, AuthServiceProvider } from './auth.service'
-import { ProjectStore, ProjectStoreProvider } from './project.store'
-import { TaskStore, TaskStoreProvider } from './task.store'
 import { EventStore, EventStoreProvider } from "./event.store";
 import { UserStore, UserStoreProvider } from "./user.store";
 import { Sigv4Http, Sigv4HttpProvider } from './sigv4.service'
@@ -52,6 +46,7 @@ import {EditVendorProfilePage} from "../pages/edit-vendor-profile/edit-vendor-pr
 import {VendorEventOverviewPage} from "../pages/vendor-event-overview/vendor-event-overview";
 import {VendorProfilePage} from "../pages/vendor-profile/vendor-profile";
 import {EventPlannerHomePage} from "../pages/event-planner-home/event-planner-home";
+import {HeaderBar} from "../components/header-bar/header-bar";
 
 
 @NgModule({
@@ -60,15 +55,12 @@ import {EventPlannerHomePage} from "../pages/event-planner-home/event-planner-ho
     LoginPage,
     HomePage,
     EventDetailsPage,
-    TasksPage,
-    ProjectOverviewPage,
-    TabsPage,
     LoginModal,
     LogoutModal,
-    AddTaskModal,
     momentFromNowPipe,
     EventOverviewPage,
     FeatureCard,
+    HeaderBar,
     FeatureDetailsPage,
     FeatureSelectionPage,
     FoodDetailsPage,
@@ -98,12 +90,8 @@ import {EventPlannerHomePage} from "../pages/event-planner-home/event-planner-ho
     LoginPage,
     HomePage,
     EventDetailsPage,
-    TasksPage,
-    ProjectOverviewPage,
-    TabsPage,
     LoginModal,
     LogoutModal,
-    AddTaskModal,
     EventOverviewPage,
     FeatureDetailsPage,
     FeatureSelectionPage,
@@ -126,8 +114,6 @@ import {EventPlannerHomePage} from "../pages/event-planner-home/event-planner-ho
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthService, AuthServiceProvider,
-    ProjectStore, ProjectStoreProvider,
-    TaskStore, TaskStoreProvider,
     EventStore, EventStoreProvider,
     FeatureStore, FeatureStoreProvider,
     UserStore, UserStoreProvider,

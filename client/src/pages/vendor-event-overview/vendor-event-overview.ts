@@ -104,13 +104,4 @@ export class VendorEventOverviewPage {
 
         alert.present();
     }
-
-    openLoginModal () {
-        let modal = this.modalCtrl.create(this.auth.isUserSignedIn() ? LogoutModal : LoginModal);
-        modal.present()
-    }
-
-    get userColor ():string {
-        return this.auth.isUserSignedIn() ? 'secondary' : 'primary'
-    }
 }

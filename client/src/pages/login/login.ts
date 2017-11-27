@@ -5,6 +5,8 @@ import { UserStore } from "../../app/user.store";
 import { HomePage } from "../home/home";
 import {IUser, UserType} from "../../app/user.interface";
 import {UserInfoPage} from "../user-info/user-info";
+import {VendorHomePage} from "../vendor-home/vendor-home";
+import {EventPlannerHomePage} from "../event-planner-home/event-planner-home";
 
 @Component({
   selector: 'login-page',
@@ -37,9 +39,24 @@ export class LoginPage {
       this.userStore.getCurrentUser().subscribe(user => {
         if (user) {
           console.log(`user found: ${user}`);
-          this.navCtrl.setRoot(HomePage, {
-            user: user
-          });
+          switch (user.user_type) {
+            case UserType.PLANNER:
+              this.navCtrl.setRoot(EventPlannerHomePage, {
+                user: user
+              });
+              break;
+            case UserType.CUSTOMER:
+              this.navCtrl.setRoot(HomePage, {
+                user: user
+              });
+              break;
+            case UserType.VENDOR:
+              this.navCtrl.setRoot(VendorHomePage, {
+                user: user
+              });
+              break;
+          }
+
         } else {
           console.log('Need to fill in user info');
           this.navCtrl.setRoot(UserInfoPage);
