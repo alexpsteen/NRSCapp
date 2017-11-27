@@ -9,7 +9,7 @@
     <ion-list-header>
       My Events
     </ion-list-header>
-    <button ion-item *ngFor="let ev of eventStore.events | async" (click)="editEvent(ev.event_id)">
+    <button ion-item *ngFor="let ev of eventStore.events | async" (click)="gotoEvent(ev.event_id)">
       <ion-icon [name]="getIcon(ev)" [color]="getIconColor(ev)" item-start></ion-icon>
       <span>{{ev.event_name}}</span>
       <ion-note item-end>{{ev.event_date_start | date: 'M/d/yy'}}</ion-note>

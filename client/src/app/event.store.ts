@@ -30,84 +30,89 @@ export class EventStore {
     this.refresh();
   }
 
-   get events () { return Observable.create( fn => this._events.subscribe(fn) ) }
+  get events () { return Observable.create( fn => this._events.subscribe(fn) ) }
 
-    getEventByCustomerId (): Observable<IEvent> {
-        let obs = this.auth.getCredentials().map(creds => this.sigv4.get(this.endpoint, `events/customer`, creds)).concatAll().share();
+  getEventsByCustomerId (): Observable<IEvent[]> {
+    return this.auth.getCredentials().map(creds =>
+        this.sigv4.get(this.endpoint, `events/customer`, creds)).concatAll().share().map(this.multipleResult);
+  }
 
-        return obs.map(resp => resp.status === 200 ? resp.json() : null)
-    }
+  getAllEvents (): Observable<IEvent[]> {
+    return this.auth.getCredentials().map(creds =>
+        this.sigv4.get(this.endpoint, `events/all`, creds)).concatAll().share().map(this.multipleResult);
+  }
 
-    getAllEvents (): Observable<IEvent> {
-        let obs = this.auth.getCredentials().map(creds => this.sigv4.get(this.endpoint, `events/all`, creds)).concatAll().share();
+  getEventByEventId (eventId): Observable<IEvent> {
+    return this.auth.getCredentials().map(creds =>
+        this.sigv4.get(this.endpoint, `events/event/${eventId}`, creds)).concatAll().share().map(this.singularResult);
+  }
 
-        return obs.map(resp => resp.status === 200 ? resp.json() : null)
-    }
+  getEventsByEventPlannerId (): Observable<IEvent[]> {
+    return this.auth.getCredentials().map(creds =>
+        this.sigv4.get(this.endpoint, `events/eventPlanner`, creds)).concatAll().share().map(this.multipleResult);
+  }
 
-    getEventByEventId (eventId): Observable<IEvent> {
+  getPublishedEvents (): Observable<IEvent[]> {
+    return this.auth.getCredentials().map(creds =>
+        this.sigv4.get(this.endpoint, `events/published`, creds)).concatAll().share().map(this.multipleResult);
+  }
+
+  getInProgressEvents (): Observable<IEvent[]> {
+    return this.auth.getCredentials().map(creds =>
+        this.sigv4.get(this.endpoint, `events/inProgress`, creds)).concatAll().share().map(this.multipleResult);
+  }
+
+  addEvent (event): Observable<IEvent> {
+    let observable = this.auth.getCredentials().map(creds => this.sigv4.post(this.endpoint, `events`, event, creds)).concatAll().share();
+
+    observable.subscribe(resp => {
+      if (resp.status === 200 && resp.json() == 1) {
         let events = this._events.getValue().toArray();
-        let obs = this.auth.getCredentials().map(creds => this.sigv4.get(this.endpoint, `events/event/${eventId}`, creds)).concatAll().share();
+        events.push(event);
+        this._events.next(List(this.sort(events)));
+      }
+    });
+    return observable.map(resp => resp.status === 200 ? resp.json() : null);
+  }
 
-        return obs.map(resp => resp.status === 200 ? resp.json() : null)
+  updateEvent (event): Observable<IEvent>{
+    return this.auth.getCredentials().map(creds =>
+        this.sigv4.put(this.endpoint, `events/editProfile/${event.event_id}`, event, creds)).concatAll().share().map(this.singularResult);
+  }
+
+  assignEventPlanner(event, eventPlannerId): Observable<IEvent>{
+    return this.auth.getCredentials().map(creds =>
+        this.sigv4.put(this.endpoint, `events/assignEventPlanner/${event.event_id}/${eventPlannerId}`,event,creds)).concatAll().share().map(this.singularResult);
+  }
+
+  publishEvent(event): Observable<IEvent>{
+    return this.auth.getCredentials().map(creds =>
+        this.sigv4.put(this.endpoint, `events/publishEvent/${event.event_id}`, event, creds)).concatAll().share().map(this.singularResult);
+  }
+
+  deleteEvent(eventId): Observable<IEvent>{
+    return this.auth.getCredentials().map(creds =>
+        this.sigv4.del(this.endpoint, `events/deleteEvent/${eventId}`, creds)).concatAll().share().map(this.singularResult);
+  }
+
+  private sort (events:IEvent[]): IEvent[] {
+    return _.orderBy(events, ['event_date_start', 'event_name'], ['asc', 'asc'])
+  }
+
+  private singularResult(resp) {
+    return resp.status === 200 ? resp.json() : null;
+  }
+
+  private multipleResult(resp) {
+    if (resp.status === 200) {
+      let data = resp.json();
+      if (data && !Array.isArray(data)) {
+        return [data];
+      }
+      return data;
     }
-
-    getEventByEventPlannerId (): Observable<IEvent> {
-        let obs = this.auth.getCredentials().map(creds => this.sigv4.get(this.endpoint, `events/eventPlanner`, creds)).concatAll().share();
-
-        return obs.map(resp => resp.status === 200 ? resp.json() : null)
-    }
-
-    getCompletedEvents (): Observable<IEvent> {
-        let obs = this.auth.getCredentials().map(creds => this.sigv4.get(this.endpoint, `events/completed`, creds)).concatAll().share();
-
-        return obs.map(resp => resp.status === 200 ? resp.json() : null)
-    }
-
-    getInProgressEvents (): Observable<IEvent> {
-        let obs = this.auth.getCredentials().map(creds => this.sigv4.get(this.endpoint, `events/inProgress`, creds)).concatAll().share();
-
-        return obs.map(resp => resp.status === 200 ? resp.json() : null)
-    }
-
-    addEvent (event): Observable<IEvent> {
-        let observable = this.auth.getCredentials().map(creds => this.sigv4.post(this.endpoint, `events`, event, creds)).concatAll().share();
-
-        observable.subscribe(resp => {
-            if (resp.status === 200 && resp.json() == 1) {
-                let events = this._events.getValue().toArray();
-                events.push(event);
-                this._events.next(List(this.sort(events)));
-            }
-        });
-        return observable.map(resp => resp.status === 200 ? resp.json() : null);
-
-
-    }
-
-    updateEvent (event): Observable<IEvent>{
-        let obs = this.auth.getCredentials().map(creds => this.sigv4.put(this.endpoint, `events/editProfile/${event.event_id}`, event, creds)).concatAll().share();
-        return obs.map(resp => resp.status === 200 ? resp.json() : null);
-    }
-
-    assignEventPlanner(event, eventPlannerId): Observable<IEvent>{
-        let obs = this.auth.getCredentials().map(creds => this.sigv4.put(this.endpoint, `events/assignEventPlanner/${event.event_id}/${eventPlannerId}`,event,creds)).concatAll().share();
-        return obs.map(resp => resp.status === 200 ? resp.json() : null);
-    }
-
-    completeEvent(event,): Observable<IEvent>{
-        let obs = this.auth.getCredentials().map(creds => this.sigv4.put(this.endpoint, `events/completeEvent/${event.event_id}`, event, creds)).concatAll().share();
-        return obs.map(resp => resp.status === 200 ? resp.json() : null);
-    }
-
-    deleteEvent(eventId): Observable<IEvent>{
-      let obs = this.auth.getCredentials().map(creds => this.sigv4.del(this.endpoint, `events/deleteEvent/${eventId}`, creds)).concatAll().share();
-      return obs.map(resp => resp.status === 200 ? resp.json() : null);
-    }
-
-    private sort (events:IEvent[]): IEvent[] {
-        return _.orderBy(events, ['event_date_start', 'event_name'], ['asc', 'asc'])
-    }
-
+    return [];
+  }
 
 
 

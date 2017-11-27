@@ -38,14 +38,14 @@ export class HomePage {
     });
   }
 
-  editEvent(eventId) {
+  gotoEvent(eventId) {
     this.eventStore.getEventByEventId(eventId).subscribe(event => {
       if (!event) { return console.log('could not find event. Please check logs') }
 
       this.navCtrl.push(EventOverviewPage, {
         event: event
       });
-    })
+    });
   }
 
   getIconColor(event) {

@@ -9,11 +9,15 @@ import { AuthService } from '../../app/auth.service'
 import UUID from 'uuid'
 
 import {EventStore} from "../../app/event.store";
-import {IEvent} from "../../app/event.interface";
+import {EventStatus, IEvent} from "../../app/event.interface";
 import {EventDetailsPage} from "../event-details/event-details";
 import {FeatureDetailsPage} from "../feature-details/feature-details";
 import {FeatureSelectionPage} from "../feature-selection/feature-selection";
 import {FeatureStore} from "../../app/feature.store";
+import {UserStore} from "../../app/user.store";
+import {BehaviorSubject} from "rxjs/BehaviorSubject";
+import {List} from "immutable";
+import {IUser} from "../../app/user.interface";
 
 @Component({
   selector: 'page-event-overview',
@@ -22,12 +26,17 @@ import {FeatureStore} from "../../app/feature.store";
 export class EventOverviewPage {
   public event:IEvent;
   public featureStatus:string = 'all';
+  public planner = 'NONE';
+
+  planners: BehaviorSubject<List<IUser>> = new BehaviorSubject(List([]));
+  isAdmin: boolean = false;
 
   constructor(
     public navCtrl: NavController,
     public auth: AuthService,
     public modalCtrl: ModalController,
     public eventStore: EventStore,
+    public userStore: UserStore,
     public featureStore: FeatureStore,
     public navParams: NavParams,
     public alertCtrl: AlertController,
@@ -35,6 +44,22 @@ export class EventOverviewPage {
     if (this.navParams.get('event')) {
       this.event = this.navParams.get('event');
     }
+  }
+
+  ionViewDidLoad() {
+    if (this.event.event_status == EventStatus.PUBLISHED) {
+      this.userStore.getUserById(this.event.event_planner_id).subscribe(user => {
+        if (user) {
+          this.planner = `${user.first_name} ${user.last_name}`;
+        }
+      });
+    }
+    this.userStore.getCurrentUser().subscribe(user => {
+      this.isAdmin = user.user_type === 0;
+    });
+    this.userStore.getPlanners().subscribe(planners => {
+      this.planners.next(List(planners));
+    });
   }
 
   editEvent() {
@@ -69,6 +94,14 @@ export class EventOverviewPage {
     });
   }
 
+  getPlanner() {
+    if (this.event.event_status == EventStatus.NOT_PUBLISHED) {
+      return 'NONE'
+    } else {
+      return
+    }
+  }
+
   plan() {
     const alert = this.alertCtrl.create({
       title: "Let's Plan",
@@ -100,5 +133,13 @@ export class EventOverviewPage {
     });
 
     alert.present();
+  }
+
+  getName(user) {
+    return `${user.first_name} ${user.last_name}`;
+  }
+
+  assignPlanner(plannerId) {
+    this.eventStore.assignEventPlanner(this.event, plannerId).subscribe();
   }
 }

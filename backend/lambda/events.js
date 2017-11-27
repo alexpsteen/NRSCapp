@@ -15,23 +15,23 @@ function handleEventsGET (httpEvent, context) {
   console.log("task type");
   console.log(taskType);
   console.log("id", id);
-  if(taskType == "customer") {
+  if(taskType === "customer") {
     q = 'SELECT e.* FROM event e, user u WHERE e.customer_id = u.user_id AND u.authentication_id = ?';
     const inserts = [httpEvent.requestContext.identity.cognitoIdentityId];
     q = mysql.format(q, inserts);
-  } else if(taskType == "all") {
+  } else if(taskType === "all") {
     q = 'SELECT * FROM event';
-  } else if(taskType == "event") {
+  } else if(taskType === "event") {
     q = 'SELECT * FROM event WHERE event_id = ?';
     const inserts = [id];
     q = mysql.format(q, inserts);
-  } else if(taskType == "eventPlanner") {
+  } else if(taskType === "eventPlanner") {
     q = 'SELECT e.* FROM event e, user u WHERE e.event_planner_id = u.user_id AND u.authentication_id = ?';
     const inserts = [httpEvent.requestContext.identity.cognitoIdentityId];
     q = mysql.format(q, inserts);
-  } else if(taskType == "completed") {
+  } else if(taskType === "published") {
     q = 'SELECT * FROM event WHERE event_status = 1';
-  } else if(taskType == "inProgress") {
+  } else if(taskType === "inProgress") {
     q = 'SELECT * FROM event WHERE event_status = 0';
   }
   runFinalQuery(context, q);
@@ -52,7 +52,7 @@ function handleEventsPUT (httpEvent, context) {
   const eventId = getId(httpEvent.path);
   let q = 'UPDATE event SET ';
   let inserts = [];
-  if(taskType == 'editProfile') {
+  if(taskType === 'editProfile') {
     let event = JSON.parse(httpEvent.body);
     q +=  'event_name = ?, event_date_start = ?, event_date_end = ?, event_budget = ?';
     inserts.push(event.event_name);
@@ -60,11 +60,11 @@ function handleEventsPUT (httpEvent, context) {
     inserts.push(event.event_date_end);
     inserts.push(event.event_budget);
     inserts.push(eventId);
-  } else if(taskType == 'assignEventPlanner') {
+  } else if(taskType === 'assignEventPlanner') {
     const eventPlannerId = getAdditional(httpEvent.path);
-    q += 'event_planner_id = ?'
+    q += 'event_planner_id = ?';
     inserts = [eventPlannerId, eventId];
-  } else if(taskType == 'completeEvent') {
+  } else if(taskType === 'publishEvent') {
     q += 'event_status = ?';
     inserts = [1, eventId];
   }
@@ -75,8 +75,8 @@ function handleEventsPUT (httpEvent, context) {
 
 function handleEventsDELETE (httpEvent, context) {
   let id = getId(httpEvent.path);
-  let q = 'DELETE FROM event WHERE event_id = ?'
-  const inserts = [id]
+  let q = 'DELETE FROM event WHERE event_id = ?';
+  const inserts = [id];
   q = mysql.format(q, inserts);
   runFinalQuery(context, q);
 }
