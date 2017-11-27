@@ -12,6 +12,7 @@ import {EventStore} from "../../app/event.store";
 import {EventOverviewPage} from "../event-overview/event-overview"
 import {EventList} from "../event-list/event-list"
 import {ReadMessage} from "../read-message/read-message"
+import {VendorProfilePage} from "../vendor-profile/vendor-profile";
 
 @Component({
     selector: 'page-vendor-home',
@@ -79,5 +80,9 @@ export class VendorHomePage {
 
     openMessage() {
         this.navCtrl.push(ReadMessage)
+    }
+
+    openProfile() {
+        this.navCtrl.push(VendorProfilePage)
     }
 }
