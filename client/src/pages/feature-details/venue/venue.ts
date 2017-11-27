@@ -11,10 +11,11 @@ import {FeatureStore} from "../../../app/feature.store";
 })
 export class VenueDetailsPage {
   feature:IFeature = {
-    featureId: null,
-    eventId: null,
-    type: null,
-    status: 0
+      feature_id:null,
+      event_id:null,
+      feature_type:null,
+      status:0,
+      additional_requests:null
   };
 
   constructor(
@@ -29,17 +30,17 @@ export class VenueDetailsPage {
       this.feature = this.navParams.get('feature');
     }
     if (this.navParams.get('type')) {
-      this.feature.type = this.navParams.get('type');
+      this.feature.feature_type = this.navParams.get('type');
     }
     if (this.navParams.get('eventId')) {
-      this.feature.eventId = this.navParams.get('eventId');
+      this.feature.event_id = this.navParams.get('eventId');
     }
   }
 
-  get title():string { return this.feature.featureId ? 'Edit Feature' : 'Create Feature' }
+  get title():string { return this.feature.feature_id ? 'Edit Feature' : 'Create Feature' }
 
   saveFeature () {
-    if (this.feature.featureId) {
+    if (this.feature.feature_id) {
       this.featureStore.updateFeature(this.feature).subscribe(feature => {
         if (feature) {
           this.navCtrl.pop();
@@ -50,7 +51,7 @@ export class VenueDetailsPage {
       });
     } else {
       console.log('creating feature', this.feature);
-      this.feature.featureId = UUID.v4();
+      this.feature.feature_id = UUID.v4();
       this.featureStore.addFeature(this.feature).subscribe(feature => {
         if (feature) {
           this.navCtrl.pop();
@@ -74,7 +75,7 @@ export class VenueDetailsPage {
         {
           text: 'Delete',
           handler: () => {
-            this.featureStore.deleteFeature(this.feature.featureId).subscribe(feature => {
+            this.featureStore.deleteFeature(this.feature.feature_id).subscribe(feature => {
               if (feature) {
                 this.navCtrl.pop();
                 this.doToast('Feature deleted successfully');
