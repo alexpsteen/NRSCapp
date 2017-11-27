@@ -1,25 +1,27 @@
+import {UserType} from "./user.interface";
+
 export interface IFeatureLite {
-  featureId:number,
-  eventId:string,
+  feature_id:number,
+  event_id:string,
   feature_type:number,
   status:number,
     additional_requests:string
 }
 
 export interface IFeatureFood{
-    featureId:number,
-    eventId:string,
+    feature_id:number,
+    event_id:string,
     feature_type:number,
     status:number,
     additional_requests:string,
-    foodId:number,
+    food_id:number,
     category:number,
     wait_staff:number
 }
 
 export interface IFeatureMusic{
-    featureId:number,
-    eventId:string,
+    feature_id:number,
+    event_id:string,
     feature_type:number,
     status:number,
     additional_requests:string,
@@ -29,8 +31,8 @@ export interface IFeatureMusic{
 }
 
 export interface IFeatureVenue{
-    featureId:number,
-    eventId:string,
+    feature_id:number,
+    event_id:string,
     feature_type:number,
     status:number,
     additional_requests:string,
@@ -41,8 +43,8 @@ export interface IFeatureVenue{
 }
 
 export interface IFeatureClothing{
-    featureId:number,
-    eventId:string,
+    feature_id:number,
+    event_id:string,
     feature_type:number,
     status:number,
     additional_requests:string,
@@ -50,4 +52,30 @@ export interface IFeatureClothing{
     color:number,
     gender:number
 
+}
+
+export interface IBid {
+  feature_id:number,
+    vendor_id:number,
+    interested_id:number,
+    bid:string
+
+}
+
+export interface IRecommendation {
+  recommend_id:number,
+    feature_id:number,
+    vendor_id:number,
+    confirm:number
+}
+
+export interface IVendorBid {
+    cellphone_number?:string
+    email:string
+    vendor_id:number
+    address:string
+    description:string
+    name:string
+    feature_id:number,
+    bid:string
 }
