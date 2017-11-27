@@ -1,13 +1,4 @@
-<ion-header>
-    <ion-navbar>
-        <ion-title>Events</ion-title>
-        <ion-buttons end>
-            <button ion-button icon-only clear (click)="openLoginModal()"  [color]="userColor">
-                <ion-icon name="person"></ion-icon>
-            </button>
-        </ion-buttons>
-    </ion-navbar>
-</ion-header>
+<header-bar title="Events"></header-bar>
 
 <ion-content>
     <ion-refresher (ionRefresh)="doRefresh($event)">

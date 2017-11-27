@@ -39,7 +39,7 @@ export interface UserDao {
 
 
 export enum UserType {
-  ADMIN = 0,
+  PLANNER = 0,
   CUSTOMER = 1,
   VENDOR = 2
 }

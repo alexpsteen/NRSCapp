@@ -52,13 +52,4 @@ export class InboxHomePage {
                 return 'primary';
         }
     }
-
-    openLoginModal () {
-        let modal = this.modalCtrl.create(this.auth.isUserSignedIn() ? LogoutModal : LoginModal);
-        modal.present()
-    }
-
-    get userColor ():string {
-        return this.auth.isUserSignedIn() ? 'secondary' : 'primary'
-    }
 }

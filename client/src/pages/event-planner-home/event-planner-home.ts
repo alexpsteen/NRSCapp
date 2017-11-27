@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {IonicPage, ModalController, NavController, NavParams} from 'ionic-angular';
+import {LogoutModal} from "../../modal/logout/logout";
+import {LoginModal} from "../../modal/login/login";
+import {AuthService} from "../../app/auth.service";
 
 /**
  * Generated class for the EventPlannerHomePage page.
@@ -15,13 +18,13 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class EventPlannerHomePage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public modalCtrl: ModalController,
+              public auth: AuthService,
+              public navCtrl: NavController,
+              public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad EventPlannerHomePage');
   }
-
-
-
 }

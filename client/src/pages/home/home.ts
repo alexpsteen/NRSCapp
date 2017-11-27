@@ -1,11 +1,6 @@
 import { Component } from '@angular/core'
 
 import { NavController } from 'ionic-angular'
-import { ModalController } from 'ionic-angular'
-
-import { LoginModal } from '../../modal/login/login'
-import { LogoutModal } from '../../modal/logout/logout'
-import { AuthService } from '../../app/auth.service'
 
 import {EventDetailsPage} from "../event-details/event-details";
 import {EventStore} from "../../app/event.store";
@@ -18,8 +13,6 @@ import {EventOverviewPage} from "../event-overview/event-overview";
 export class HomePage {
   constructor(
     public navCtrl: NavController,
-    public modalCtrl: ModalController,
-    public auth: AuthService,
     public eventStore: EventStore) { }
 
   doRefresh (refresher?) {
@@ -75,14 +68,5 @@ export class HomePage {
       default:
         return 'alert';
     }
-  }
-
-  openLoginModal () {
-    let modal = this.modalCtrl.create(this.auth.isUserSignedIn() ? LogoutModal : LoginModal);
-    modal.present()
-  }
-
-  get userColor ():string {
-    return this.auth.isUserSignedIn() ? 'secondary' : 'primary'
   }
 }
