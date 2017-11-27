@@ -15,7 +15,9 @@
 
   <ion-item name="subject">
     <ion-label stacked>Subject</ion-label>
-    <ion-input type="text" value="" ></ion-input>
+    <ion-select [(ngModel)]="subject">
+      <ion-input type="text" value="" ></ion-input>
+    </ion-select>
   </ion-item>
 
   <ion-item>
