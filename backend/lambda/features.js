@@ -22,17 +22,14 @@ function handleFeaturesGET (httpEvent, context) {
         if(params.task === "feature") {
             if(params.type === 0) {
                 q = 'SELECT f.*, food.* FROM feature f, food WHERE f.feature_id = food.feature_id AND f.feature_id = ?';
-                inserts.append(params.id);
             } else if(params.type === 1) {
                 q = 'SELECT f.*, m.* FROM feature f, music m WHERE f.feature_id = music.feature_id AND f.feature_id = ?';
-                inserts.append(params.id);
             } else if(params.type === 2) {
                 q = 'SELECT f.*, v.* FROM feature f, venue v WHERE f.feature_id = v.feature_id and f.feature_id = ?';
-                inserts.append(params.id);
             } else if(params.type === 3) {
                 q = 'SELECT f.*, c.* FROM feature f, clothing c WHERE f.feature_id = c.feature_id and f.feature_id = ?';
-                inserts.append(params.id);
             }
+            inserts = [params.id];
             q = mysql.format(q, inserts);
             runFinalQuery(context, q);
         } else if(params.task === "vendorBid"){
