@@ -20,13 +20,13 @@ function handleEventsGET (httpEvent, context) {
         const inserts = [httpEvent.requestContext.identity.cognitoIdentityId];
         q = mysql.format(q, inserts);
     } else if(taskType === "all") {
-        q = 'SELECT * FROM event';
+        q = 'SELECT * FROM event WHERE event_status = 1';
     } else if(taskType === "event") {
         q = 'SELECT * FROM event WHERE event_id = ?';
         const inserts = [id];
         q = mysql.format(q, inserts);
     } else if(taskType === "eventPlanner") {
-        q = 'SELECT e.* FROM event e, user u WHERE e.event_planner_id = u.user_id AND u.authentication_id = ?';
+        q = 'SELECT e.* FROM event e, user u WHERE e.event_planner_id = u.user_id AND u.authentication_id = ? AND e.event_status = 1';
         const inserts = [httpEvent.requestContext.identity.cognitoIdentityId];
         q = mysql.format(q, inserts);
     } else if(taskType === "published") {
