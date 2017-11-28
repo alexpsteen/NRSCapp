@@ -65,12 +65,12 @@ export class UserStore {
 
   verifyVendor (id) :Observable<IVendor> {
     return this.auth.getCredentials().map(creds =>
-        this.sigv4.get(this.endpoint, `users?type=vendor&id=${id}&task=verify`, creds)).concatAll().share().map(this.singularResult);
+        this.sigv4.put(this.endpoint, `users?type=vendor&id=${id}&task=verify`, null, creds)).concatAll().share().map(this.singularResult);
   }
 
   deactivateVendor (id) :Observable<IVendor> {
     return this.auth.getCredentials().map(creds =>
-        this.sigv4.get(this.endpoint, `users?type=vendor&id=${id}&task=deactivate`, creds)).concatAll().share().map(this.singularResult);
+        this.sigv4.put(this.endpoint, `users?type=vendor&id=${id}&task=deactivate`, null, creds)).concatAll().share().map(this.singularResult);
   }
 
   updateUser (user): Observable<IUser> {
