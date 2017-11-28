@@ -12,13 +12,16 @@
     <ion-list>
 
       <ion-item>
-        <ion-label floating>Location</ion-label>
-        <ion-input name="location" [(ngModel)]="feature.location"></ion-input>
+        <ion-label>Gender</ion-label>
+        <ion-select name="gender"[(ngModel)]="feature.gender">
+          <ion-option value="f">Female</ion-option>
+          <ion-option value="m">Male</ion-option>
+        </ion-select>
       </ion-item>
 
       <ion-item>
-        <ion-label floating>Food Category</ion-label>
-        <ion-textarea name="foodCategory" [(ngModel)]="feature.foodCategory"></ion-textarea>
+        <ion-label floating>Clothing Color</ion-label>
+        <ion-textarea name="clothingColor" [(ngModel)]="feature.clothingColor"></ion-textarea>
       </ion-item>
 
       <ion-item>

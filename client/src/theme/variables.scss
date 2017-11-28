@@ -68,8 +68,12 @@ $color1: #3aa6ff;
 // Windows only Sass variables can go here
 
 $toolbar-background: $color1;
-
-
+header-bar {
+  text-align: center;
+}
+.noLeftArrow {
+  margin-left: 10px;
+}
 
 // App Theme
 // --------------------------------------------------
