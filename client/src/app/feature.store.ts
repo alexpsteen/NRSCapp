@@ -136,12 +136,12 @@ export class FeatureStore {
   }
 
   confirmRecommendation(featureId): Observable<IRecommendation> {
-    let obs = this.auth.getCredentials().map(creds => this.sigv4.put(this.endpoint, `features?task=confirm`, featureId,creds)).concatAll().share();
+    let obs = this.auth.getCredentials().map(creds => this.sigv4.put(this.endpoint, `features?task=confirm&featureId=${featureId}`, null,creds)).concatAll().share();
     return obs.map(resp => resp.status === 200 ? resp.json() : null);
   }
 
   rejectRecommendation(featureId): Observable<IRecommendation> {
-    let obs = this.auth.getCredentials().map(creds => this.sigv4.put(this.endpoint, `features?task=reject`, featureId, creds)).concatAll().share();
+    let obs = this.auth.getCredentials().map(creds => this.sigv4.put(this.endpoint, `features?task=reject&featureId=${featureId}`, null, creds)).concatAll().share();
     return obs.map(resp => resp.status === 200 ? resp.json() : null);
   }
 
