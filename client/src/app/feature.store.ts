@@ -69,6 +69,19 @@ export class FeatureStore {
     }
   }
 
+  getBiddingVendors(id): Observable<any> {
+      let observable = this.auth.getCredentials().map(creds => this.sigv4.get(this.endpoint, `features/all?task=bid&id=${id}`, creds)).concatAll().share();
+
+      return observable.map(resp => resp.status === 200 ? resp.json() : null);
+
+  }
+
+  getFeatures(id): Observable<any> {
+      let observable = this.auth.getCredentials().map(creds => this.sigv4.get(this.endpoint, `features/all?task=event&id=${id}`, creds)).concatAll().share();
+
+      return observable.map(resp => resp.status === 200 ? resp.json() : null);
+  }
+
   addFeature (feature): Observable<any> {
     let observable = this.auth.getCredentials().map(creds => this.sigv4.post(this.endpoint, 'features?task=feature', feature, creds)).concatAll().share();
 
@@ -93,7 +106,7 @@ export class FeatureStore {
 
     getVendorDetails(index, featureId):Observable<any> {
       let vendors = this._vendors.getValue().toArray();
-      let obs = this.auth.getCredentials().map(creds => this.sigv4.get(this.endpoint, `features/details?task=vendorBid&id=${featureId}`,creds)).concatAll().share();
+      let obs = this.auth.getCredentials().map(creds => this.sigv4.get(this.endpoint, `features/details?task=vendorBid&featureId=${featureId}&vendorId=${vendors[index].feature_id}`,creds)).concatAll().share();
 
       return obs.map(resp => resp.status === 200 ? resp.json() : null);
     }

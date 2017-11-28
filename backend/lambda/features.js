@@ -33,14 +33,13 @@ function handleFeaturesGET (httpEvent, context) {
             q = mysql.format(q, inserts);
             runFinalQuery(context, q);
         } else if(params.task === "vendorBid"){
-            q = 'SELECT * FROM user u, vendor v, interested i WHERE u.user_id = v.user_id AND v.vendor_id = i.vendor_id AND i.feature_id = ?'
-            inserts.append(params.id);
+            q = 'SELECT * FROM user u, vendor v, interested i WHERE u.user_id = v.user_id AND v.vendor_id = i.vendor_id AND i.feature_id = ? AND i.vendor_id = ?';
+            inserts = [params.featureId, params.vendorId];
             q = mysql.format(q, inserts);
             runFinalQuery(context, q);
         } else if(params.task === "recommendation") {
             q = 'SELECT * FROM user u, vendor v, interested i WHERE u.user_id = v.user_id AND v.vendor_id = i.vendor_id AND  i.feature_id = ? AND i.vendor_id = (SELECT vendor_id FROM recommend WHERE feature_id = ?)';
-            inserts.append(params.id);
-            inserts.append(params.id);
+            inserts = [params.id, params.id];
             q = mysql.format(q, inserts);
             runFinalQuery(context, q);
         }
