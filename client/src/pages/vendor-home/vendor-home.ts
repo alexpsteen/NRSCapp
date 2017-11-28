@@ -1,6 +1,6 @@
 import { Component } from '@angular/core'
 
-import { NavController } from 'ionic-angular'
+import {NavController, NavParams} from 'ionic-angular'
 import { ModalController } from 'ionic-angular'
 
 import { LoginModal } from '../../modal/login/login'
@@ -12,17 +12,28 @@ import {EventStore} from "../../app/event.store";
 import {EventOverviewPage} from "../event-overview/event-overview"
 import {EventList} from "../event-list/event-list"
 import {ReadMessage} from "../read-message/read-message"
+import {VendorProfilePage} from "../vendor-profile/vendor-profile";
+import {IVendorLite} from "../../app/user.interface";
 
 @Component({
     selector: 'page-vendor-home',
     templateUrl: 'vendor-home.html'
 })
 export class VendorHomePage {
+
+    public vendor:IVendorLite;
+
     constructor(
         public navCtrl: NavController,
         public modalCtrl: ModalController,
         public auth: AuthService,
-        public eventStore: EventStore) { }
+        public eventStore: EventStore,
+        public navParams: NavParams,
+        ) {
+        if (this.navParams.get('vendor')) {
+            this.vendor = this.navParams.get('vendor');
+        }
+    }
 
     doRefresh (refresher?) {
         let subscription = this.eventStore.refresh().subscribe({
@@ -33,6 +44,10 @@ export class VendorHomePage {
                 }
             }
         })
+    }
+
+    goToProfilePage() {
+        this.navCtrl.push(VendorProfilePage, {vendor:this.vendor});
     }
 
     openEventList() {
