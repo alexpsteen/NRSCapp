@@ -48,7 +48,7 @@ function handleFeaturesGET (httpEvent, context) {
 
 function handleFeaturesPOST (httpEvent, context) {
     const task = httpEvent.queryStringParameters.task;
-    if(task == "feature") {
+    if(task === "feature") {
         let feature = JSON.parse(httpEvent.body);
         const type = feature.feature_type;
         let featureQuery = 'INSERT INTO feature SET event_id = ?, status = ?, additional_requests = ?, feature_type = ?';
@@ -111,6 +111,7 @@ function handleFeaturesPOST (httpEvent, context) {
 
 function handleFeaturesPUT (httpEvent, context) {
     const task = httpEvent.queryStringParameters.task;
+    console.log("TASK:", task);
     if(task === "feature") {
         let feature = JSON.parse(httpEvent.body);
         const type = feature.feature_type;
@@ -157,13 +158,13 @@ function handleFeaturesPUT (httpEvent, context) {
             errorResponse(context, err);
         }
     } else if(task === "confirm") {
-        let id = httpEvent.body;
+        let id = httpEvent.queryStringParameters.featureId;
         let q = 'UPDATE recommend SET confirm = 1 WHERE feature_id = ?';
         let inserts = [id];
         q = mysql.format(q, inserts);
         runFinalQuery(context, q);
     } else if(task === "reject") {
-        let id = httpEvent.body;
+        let id = httpEvent.queryStringParameters.featureId;
         let q = 'DELETE FROM recommend WHERE feature_id = ?';
         let inserts = [id];
         q = mysql.format(q, inserts);
