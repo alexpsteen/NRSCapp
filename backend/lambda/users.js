@@ -38,6 +38,11 @@ function handleUsersGET (httpEvent, context) {
       const inserts = [params.id];
       q = mysql.format(q, inserts);
       runFinalQuery(context, q);
+    } else if(params.type === 'vendorLite') {
+      q = 'SELECT * FROM vendor WHERE user_id = ?';
+      const inserts = [params.id];
+      q = mysql.format(q, inserts);
+      runFinalQuery(context, q);
     }
   }
 
@@ -86,7 +91,7 @@ function handleUsersPUT (httpEvent, context) {
   console.log('Users PUT');
   const params =  httpEvent.queryStringParameters;
   let q;
-  if(params.type === "vendor") {
+  if(params && params.type === "vendor") {
     if(params.task === "verify") {
       q = 'UPDATE vendor SET approved = 1 WHERE vendor_id = ?';
       const inserts = [params.id];

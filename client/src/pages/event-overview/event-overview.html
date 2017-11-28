@@ -8,7 +8,7 @@
       <ion-icon name='settings'></ion-icon>
     </button>
     <div class="overview-row" *ngIf="!isAdmin">
-      <span class="time-period">Your Assigned Planner: {{getPlanner()}}</span>
+      <span class="time-period">Your Assigned Planner: {{planner}}</span>
     </div>
     <ion-item *ngIf="isAdmin">
       <ion-label>Event Planner</ion-label>
@@ -59,7 +59,7 @@
 
   <ion-footer>
     <ion-toolbar>
-      <button ion-button icon-left (click)="addFeature()" color="primary">
+      <button ion-button icon-left (click)="addFeature()" color="light">
         <ion-icon name="add"></ion-icon>
         Add Feature
       </button>

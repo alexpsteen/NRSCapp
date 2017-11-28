@@ -1,6 +1,9 @@
 import { Component } from '@angular/core'
 
-import {AlertController, ModalController, NavController, NavParams, ToastController} from 'ionic-angular'
+import {
+  AlertController, ModalController, NavController, NavParams, ToastController,
+  ViewController
+} from 'ionic-angular'
 
 import { LoginModal } from '../../modal/login/login'
 import { LogoutModal } from '../../modal/logout/logout'
@@ -9,6 +12,7 @@ import { AuthService } from '../../app/auth.service'
 import {UserStore} from "../../app/user.store";
 import { HomePage } from "../home/home";
 import {IUser, IVendor, IVendorLite, UserDao, UserType} from "../../app/user.interface";
+import {LoginPage} from "../login/login";
 
 @Component({
   selector: 'page-user-info',
@@ -38,6 +42,7 @@ export class UserInfoPage {
 
   constructor(
       public navCtrl: NavController,
+      public viewCtrl: ViewController,
       public auth: AuthService,
       public modalCtrl: ModalController,
       public userStore: UserStore,
@@ -89,10 +94,15 @@ export class UserInfoPage {
       });
     } else {
       this.userStore.updateUser(userObj).subscribe(user => {
-        this.navCtrl.setRoot(HomePage, {
-          user: user
-        });
+        this.dismiss();
       });
     }
   }
+
+  signout () {
+    this.auth.signout();
+    this.navCtrl.setRoot(LoginPage);
+  }
+
+  dismiss() { this.viewCtrl.dismiss() }
 }

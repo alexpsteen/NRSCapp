@@ -23,13 +23,9 @@ export class FeatureCard {
       case 1:
         return 'Food';
       case 2:
-        return 'Drinks';
-      case 3:
-        return 'Cake';
-      case 4:
-        return 'Flowers';
-      case 5:
         return 'Music';
+      case 3:
+        return 'Clothing';
       default:
         return '[Unknown]';
     }
@@ -42,13 +38,9 @@ export class FeatureCard {
       case 1:
         return 'restaurant';
       case 2:
-        return 'wine';
-      case 3:
-        return 'aperture';
-      case 4:
-        return 'rose';
-      case 5:
         return 'musical-notes';
+      case 3:
+        return 'bowtie';
       default:
         return 'bug';
     }
