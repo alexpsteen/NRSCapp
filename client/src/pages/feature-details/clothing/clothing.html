@@ -20,8 +20,15 @@
       </ion-item>
 
       <ion-item>
-        <ion-label floating>Clothing Color</ion-label>
-        <ion-textarea name="clothingColor" [(ngModel)]="feature.clothingColor"></ion-textarea>
+        <ion-label>Clothing Color</ion-label>
+        <ion-select name="color"[(ngModel)]="feature.color">
+          <ion-option value="red">Red</ion-option>
+          <ion-option value="blue">Blue</ion-option>
+          <ion-option value="green">Green</ion-option>
+          <ion-option value="yellow">Yellow</ion-option>
+          <ion-option value="orange">Orange</ion-option>
+          <ion-option value="black">Black</ion-option>
+        </ion-select>
       </ion-item>
 
       <ion-item>

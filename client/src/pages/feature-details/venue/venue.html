@@ -12,13 +12,24 @@
     <ion-list>
 
       <ion-item>
-        <ion-label floating>Type of Location</ion-label>
-        <ion-input name="locationType" [(ngModel)]="feature.locationType"></ion-input>
+        <ion-label>Type of Location</ion-label>
+        <ion-select name="locationType"[(ngModel)]="feature.locationType">
+          <ion-option value="church">Church</ion-option>
+          <ion-option value="theater">Theater</ion-option>
+          <ion-option value="farm">Farm</ion-option>
+          <ion-option value="beach">Beach</ion-option>
+          <ion-option value="other">Other</ion-option>
+        </ion-select>
       </ion-item>
 
       <ion-item>
-        <ion-label floating>Number of People</ion-label>
-        <ion-textarea name="numPeople" [(ngModel)]="feature.numPeople"></ion-textarea>
+        <ion-label>Number of People</ion-label>
+        <ion-select name="numPeople"[(ngModel)]="feature.numPeople">
+          <ion-option value="1-10">1-10</ion-option>
+          <ion-option value="11-25">11-25</ion-option>
+          <ion-option value="25-49">25-49</ion-option>
+          <ion-option value="50up">50+</ion-option>
+        </ion-select>
       </ion-item>
 
       <ion-item>
