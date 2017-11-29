@@ -36,12 +36,21 @@
       </button>
     </ion-list>
 
-    <ion-list *ngSwitchCase="'vendors'">
-      <button ion-item *ngFor="let v of vendors | async" (click)="gotoVendor(v)">
-        <ion-icon *ngIf="v.approved == 0" name="alert" color="danger" item-start></ion-icon>
-        <span>{{v.name}}</span>
-      </button>
-    </ion-list>
+    <div *ngSwitchCase="'vendors'">
+      <ion-list>
+        <button ion-item *ngFor="let v of vendors | async" (click)="gotoVendor(v)">
+          <ion-icon *ngIf="v.approved == 0" name="alert" color="danger" item-start></ion-icon>
+          <span>{{v.name}}</span>
+        </button>
+      </ion-list>
+      <ion-row>
+        <ion-col>
+          <ion-icon name="alert" color="danger"></ion-icon>
+          Awaiting approval
+        </ion-col>
+      </ion-row>
+    </div>
+
   </div>
 
 </ion-content>

@@ -121,8 +121,8 @@ function handleUsersPUT (httpEvent, context) {
           }
 
           let userResult = results[0];
-          let vendorUpdate = 'UPDATE vendor SET address = ?, description = ?, name = ?'
-          const vendorInserts = [vendor.address, vendor.description, vendor.name];
+          let vendorUpdate = 'UPDATE vendor SET address = ?, description = ?, name = ? WHERE vendor_id = ?'
+          const vendorInserts = [vendor.address, vendor.description, vendor.name, vendor.vendor_id];
           vendorUpdate = mysql.format(vendorUpdate, vendorInserts);
           console.log('running vendor query:', vendorUpdate);
           pool.query(vendorUpdate, user, (error2, results2) => {

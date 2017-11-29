@@ -80,7 +80,7 @@ export class UserInfoPage {
       },
       'region': aws_user_files_s3_bucket_region
     });
-    this.sub = AWS.config.credentials.identityId;
+    this.sub = this.user.authentication_id;
     this.refreshAvatar();
   }
 
@@ -121,6 +121,8 @@ export class UserInfoPage {
     } else {
       this.userStore.updateUser(userObj).subscribe(user => {
         this.dismiss();
+      }, err => {
+        console.error('user save error...', err);
       });
     }
   }
