@@ -8,32 +8,32 @@
       </ion-card-content>
     </ion-card>
 
+  <ion-list>
+    <!--<ion-list-header class="myEventContainer">-->
+      <!--<div id="myEventText" class="zero"></div>-->
+    <!--</ion-list-header>-->
+    <ul class="zero">
+      <button class="zero eventName" ion-item *ngFor="let ev of eventStore.events | async">
+        <div>{{featureString}} Feature for {{ev.event_name}}</div>
+      </button>
+    </ul>
+  </ion-list>
+
     <ion-list>
 
       <ion-item>
-        <div>{{field1}}</div>
-        <div>{{field1Descript}}</div>
+        <div class="fieldTitle">{{field1}}</div>
+        <div class="fieldDesc">{{field1Descript}}</div>
 
-        <div>{{field2}}</div>
-        <div>{{field2Descript}}</div>
+        <div class="fieldTitle">{{field2}}</div>
+        <div class="fieldDesc">{{field2Descript}}</div>
       </ion-item>
 
     </ion-list>
 
-  <ion-list>
-    <ion-list-header class="myEventContainer">
-      <div id="myEventText">Events</div>
-    </ion-list-header>
-    <ul>
-    <button ion-item *ngFor="let ev of eventStore.events | async" (click)="gotoEvent(ev.event_id)">
-      <li>{{ev.event_name}}</li>
-    </button>
-    </ul>
-  </ion-list>
-
 
   <ion-row>
-    <button ion-button full-type="button" *ngIf="user_type == 1" (click)="showRecommended(feature.feature_id)">Show Recommended Vendor</button>
+    <button ion-button full type="button" *ngIf="user_type == 1" (click)="showRecommended(feature.feature_id)">Show Recommended Vendor</button>
   </ion-row>
 
     <ion-row>
