@@ -2,10 +2,10 @@
   <ion-toolbar>
     <ion-segment [(ngModel)]="page" (ionChange)="reset()">
       <ion-segment-button value="login">
-        Sign In
+        <p class="top-bar">Sign In</p>
       </ion-segment-button>
       <ion-segment-button value="register">
-        Register
+        <p class="top-bar">Register</p>
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
@@ -13,7 +13,11 @@
 
 <ion-content padding>
 
-  <h1 class="app-name jumbo">Northern Roots<br>Southern Charm</h1>
+  <div class="logoContainer">
+    <ion-img class="logo" src="../../assets/tree_tran.png"></ion-img>
+  </div>
+
+  <h1 class="app-name jumbo coName">Northern Roots<br>Southern Charm</h1>
 
   <div [ngSwitch]="page">
     <div class="container" *ngSwitchCase="'login'">

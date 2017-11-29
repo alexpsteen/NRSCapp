@@ -9,16 +9,26 @@
       </ion-card-content>
     </ion-card>
 
-    <ion-list inset>
+    <ion-list>
 
       <ion-item>
-        <ion-label floating>Location</ion-label>
-        <ion-input name="location" [(ngModel)]="feature.location"></ion-input>
+        <ion-label>Dietary Restrictions</ion-label>
+        <ion-select name="restrictions"[(ngModel)]="feature.restrictions">
+          <ion-option value="nuts">Nuts</ion-option>
+          <ion-option value="gluten">Gluten</ion-option>
+          <ion-option value="dairy">Dairy</ion-option>
+          <ion-option value="other">Other</ion-option>
+        </ion-select>
       </ion-item>
 
       <ion-item>
-        <ion-label floating>Food Category</ion-label>
-        <ion-textarea name="foodCategory" [(ngModel)]="feature.foodCategory"></ion-textarea>
+        <ion-label>Dietary Restrictions</ion-label>
+        <ion-select name="restrictions"[(ngModel)]="feature.restrictions">
+          <ion-option value="nuts">Nuts</ion-option>
+          <ion-option value="gluten">Gluten</ion-option>
+          <ion-option value="dairy">Dairy</ion-option>
+          <ion-option value="other">Other</ion-option>
+        </ion-select>
       </ion-item>
 
       <ion-item>

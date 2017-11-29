@@ -1,4 +1,4 @@
-<header-bar title="Home"></header-bar>
+<header-bar class="noLeftArrow" title="Home"></header-bar>
 
 <ion-content>
   <ion-refresher (ionRefresh)="doRefresh($event)">
@@ -6,8 +6,8 @@
   </ion-refresher>
 
   <ion-list>
-    <ion-list-header>
-      My Events
+    <ion-list-header class="myEventContainer">
+      <div id="myEventText">My Events</div>
     </ion-list-header>
     <button ion-item *ngFor="let ev of eventStore.events | async" (click)="gotoEvent(ev.event_id)">
       <ion-icon [name]="getIcon(ev)" [color]="getIconColor(ev)" item-start></ion-icon>

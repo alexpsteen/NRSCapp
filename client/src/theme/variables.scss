@@ -43,6 +43,11 @@ $color1: #3aa6ff;
   color: #ccc;
 }
 
+@font-face {
+  font-family: 'Allura';
+  src: url("../assets/fonts/Allura-Regular.ttf") format('truetype');
+}
+
 
 // App iOS Variables
 // --------------------------------------------------
@@ -63,8 +68,12 @@ $color1: #3aa6ff;
 // Windows only Sass variables can go here
 
 $toolbar-background: $color1;
-
-
+header-bar {
+  text-align: center;
+}
+.noLeftArrow {
+  margin-left: 20px;
+}
 
 // App Theme
 // --------------------------------------------------

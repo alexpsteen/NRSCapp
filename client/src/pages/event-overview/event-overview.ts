@@ -18,6 +18,11 @@ import {UserStore} from "../../app/user.store";
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
 import {List} from "immutable";
 import {IUser} from "../../app/user.interface";
+import {VenueDetailsPage} from "../feature-details/venue/venue";
+import {FoodDetailsPage} from "../feature-details/food/food";
+import {MusicDetailsPage} from "../feature-details/music/music";
+import {ClothingDetailsPage} from "../feature-details/clothing/clothing";
+import {IFeature} from "../../app/feature.interface";
 
 @Component({
   selector: 'page-event-overview',
@@ -29,6 +34,7 @@ export class EventOverviewPage {
   public planner = 'NONE';
 
   planners: BehaviorSubject<List<IUser>> = new BehaviorSubject(List([]));
+  myFeatures: BehaviorSubject<List<IFeature>> = new BehaviorSubject(List([]));
   isAdmin: boolean = false;
 
   constructor(
@@ -60,6 +66,9 @@ export class EventOverviewPage {
     this.userStore.getPlanners().subscribe(planners => {
       this.planners.next(List(planners));
     });
+    this.featureStore.getFeatures(this.event.event_id).subscribe(features => {
+      this.myFeatures.next(List(features));
+    })
   }
 
   editEvent() {
@@ -89,17 +98,24 @@ export class EventOverviewPage {
   }
 
   editFeature(feature) {
-    this.navCtrl.push(FeatureDetailsPage, {
+    let page: any = FeatureDetailsPage;
+    switch (feature.feature_type) {
+      case 0:
+        page = VenueDetailsPage;
+        break;
+      case 1:
+        page = FoodDetailsPage;
+        break;
+      case 2:
+        page = MusicDetailsPage;
+        break;
+      case 3:
+        page = ClothingDetailsPage;
+        break;
+    }
+    this.navCtrl.push(page, {
       feature: feature
     });
-  }
-
-  getPlanner() {
-    if (this.event.event_status == EventStatus.NOT_PUBLISHED) {
-      return 'NONE'
-    } else {
-      return
-    }
   }
 
   plan() {
@@ -115,11 +131,11 @@ export class EventOverviewPage {
           text: 'Publish',
           handler: () => {
             this.event.event_status = 1;
-            this.eventStore.updateEvent(this.event).subscribe(event => {
+            this.eventStore.publishEvent(this.event).subscribe(event => {
               if (event) {
                 this.navCtrl.pop();
                 this.toastCtrl.create({
-                  message: 'Event succesfully published to the event planners. One will contact you shortly.',
+                  message: 'Event succesfully published to the event planners. One will be assigned to you shortly.',
                   position: 'top',
                   duration: 3000
                 }).present();

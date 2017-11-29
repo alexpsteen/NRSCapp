@@ -1,8 +1,24 @@
-<header-bar title="User Info"></header-bar>
+<header-bar *ngIf="addMode" title="User Info"></header-bar>
+
+<ion-header *ngIf="!addMode">
+  <ion-navbar color="darkbar">
+    <ion-buttons start>
+      <button ion-button icon-only (click)="dismiss()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>Your Account</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="signout()" color='danger'>
+        Sign Out
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
 
 <ion-content padding>
 
-  <h3>Please finish setting up your account</h3>
+  <h3 *ngIf="addMode">Please finish setting up your account</h3>
 
   <form (ngSubmit)="saveUser()" #userForm="ngForm">
     <ion-card *ngIf="message" color='secondary'>
@@ -11,9 +27,9 @@
       </ion-card-content>
     </ion-card>
 
-    <ion-list inset>
+    <ion-list>
 
-      <ion-list radio-group [(ngModel)]="user.user_type" name="userType">
+      <ion-list *ngIf="addMode" radio-group [(ngModel)]="user.user_type" name="userType">
         <ion-item>
           <ion-label>I am a Customer</ion-label>
           <ion-radio value="1" checked></ion-radio>
@@ -31,17 +47,17 @@
 
       <ion-item>
         <ion-label floating>Last Name</ion-label>
-        <ion-input name="lastName" [(ngModel)]="user.last_name" required></ion-input>
+        <ion-input name="lastName" [(ngModel)]="user.last_name"></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label floating>Email Address</ion-label>
-        <ion-input name="email" [(ngModel)]="user.email" required></ion-input>
+        <ion-input name="email" [(ngModel)]="user.email"></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label floating>Phone Number</ion-label>
-        <ion-input name="phoneNumber" [(ngModel)]="user.cellphone_number" required></ion-input>
+        <ion-input name="phoneNumber" [(ngModel)]="user.cellphone_number"></ion-input>
       </ion-item>
 
       <div [hidden]="user.user_type == 1" class="vendor-section">

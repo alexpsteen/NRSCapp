@@ -3,7 +3,7 @@ import { NavController, NavParams, ViewController } from 'ionic-angular'
 import { AuthService } from '../../app/auth.service'
 import { UserStore } from "../../app/user.store";
 import { HomePage } from "../home/home";
-import {IUser, UserType} from "../../app/user.interface";
+import {IUser, IVendor, IVendorLite, UserType} from "../../app/user.interface";
 import {UserInfoPage} from "../user-info/user-info";
 import {VendorHomePage} from "../vendor-home/vendor-home";
 import {EventPlannerHomePage} from "../event-planner-home/event-planner-home";
@@ -21,6 +21,21 @@ export class LoginPage {
     user_type: UserType.CUSTOMER,
     email: null
   };
+
+    vendor: IVendor = {
+        user_type:UserType.VENDOR,
+        first_name:null,
+        last_name:null,
+        cellphone_number:null,
+        email:null,
+        authentication_id:null,
+        vendor_id:null,
+        user_id:null,
+        address:null,
+        description:null,
+        approved:null,
+        name:null
+};
   message: string;
   error: string;
 
@@ -51,9 +66,13 @@ export class LoginPage {
               });
               break;
             case UserType.VENDOR:
-              this.navCtrl.setRoot(VendorHomePage, {
-                user: user
-              });
+              this.userStore.getCurrentVendor().subscribe(vendor => {
+                if(vendor) {
+                    this.navCtrl.setRoot(VendorHomePage, {
+                        vendor: vendor
+                    });
+                }
+              })
               break;
           }
 

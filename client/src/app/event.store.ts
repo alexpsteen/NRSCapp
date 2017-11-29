@@ -80,14 +80,14 @@ export class EventStore {
         this.sigv4.put(this.endpoint, `events/editProfile/${event.event_id}`, event, creds)).concatAll().share().map(this.singularResult);
   }
 
-  assignEventPlanner(event, eventPlannerId): Observable<IEvent>{
+  assignEventPlanner(eventId, eventPlannerId): Observable<IEvent>{
     return this.auth.getCredentials().map(creds =>
-        this.sigv4.put(this.endpoint, `events/assignEventPlanner/${event.event_id}/${eventPlannerId}`,event,creds)).concatAll().share().map(this.singularResult);
+        this.sigv4.put(this.endpoint, `events/assignEventPlanner/${eventId}/${eventPlannerId}`,null,creds)).concatAll().share().map(this.singularResult);
   }
 
-  publishEvent(event): Observable<IEvent>{
+  publishEvent(eventId): Observable<IEvent>{
     return this.auth.getCredentials().map(creds =>
-        this.sigv4.put(this.endpoint, `events/publishEvent/${event.event_id}`, event, creds)).concatAll().share().map(this.singularResult);
+        this.sigv4.put(this.endpoint, `events/publishEvent/${eventId}`, null, creds)).concatAll().share().map(this.singularResult);
   }
 
   deleteEvent(eventId): Observable<IEvent>{

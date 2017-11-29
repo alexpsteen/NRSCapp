@@ -58,6 +58,11 @@ export class UserStore {
         this.sigv4.get(this.endpoint,`users?type=any&id=${id}`, creds)).concatAll().share().map(this.singularResult);
   }
 
+  getVendorLiteById (id): Observable<IVendor> {
+    return this.auth.getCredentials().map(creds =>
+      this.sigv4.get(this.endpoint, `users?type=vendorLite&id=${id}`, creds)).concatAll().share().map(this.singularResult);
+  }
+
   getVendorById (id): Observable<IVendor> {
     return this.auth.getCredentials().map(creds =>
         this.sigv4.get(this.endpoint, `users?type=vendor&id=${id}`, creds)).concatAll().share().map(this.singularResult);
@@ -65,17 +70,17 @@ export class UserStore {
 
   verifyVendor (id) :Observable<IVendor> {
     return this.auth.getCredentials().map(creds =>
-        this.sigv4.get(this.endpoint, `users?type=vendor&id=${id}&task=verify`, creds)).concatAll().share().map(this.singularResult);
+        this.sigv4.put(this.endpoint, `users?type=vendor&id=${id}&task=verify`, null, creds)).concatAll().share().map(this.singularResult);
   }
 
   deactivateVendor (id) :Observable<IVendor> {
     return this.auth.getCredentials().map(creds =>
-        this.sigv4.get(this.endpoint, `users?type=vendor&id=${id}&task=deactivate`, creds)).concatAll().share().map(this.singularResult);
+        this.sigv4.put(this.endpoint, `users?type=vendor&id=${id}&task=deactivate`, null, creds)).concatAll().share().map(this.singularResult);
   }
 
-  updateUser (user): Observable<IUser> {
+  updateUser (userObj): Observable<IUser> {
     return this.auth.getCredentials().map(creds =>
-        this.sigv4.put(this.endpoint, `users/${user.userId}`, user, creds)).concatAll().share().map(this.singularResult);
+        this.sigv4.put(this.endpoint, `users/${userObj.user.user_id}`, userObj, creds)).concatAll().share().map(this.singularResult);
   }
 
   deleteUser (userId): Observable<IUser> {

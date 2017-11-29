@@ -9,16 +9,26 @@
       </ion-card-content>
     </ion-card>
 
-    <ion-list inset>
+    <ion-list>
 
       <ion-item>
-        <ion-label floating>Location</ion-label>
-        <ion-input name="location" [(ngModel)]="feature.location"></ion-input>
+        <ion-label>Gender</ion-label>
+        <ion-select name="gender"[(ngModel)]="feature.gender">
+          <ion-option value="f">Female</ion-option>
+          <ion-option value="m">Male</ion-option>
+        </ion-select>
       </ion-item>
 
       <ion-item>
-        <ion-label floating>Food Category</ion-label>
-        <ion-textarea name="foodCategory" [(ngModel)]="feature.foodCategory"></ion-textarea>
+        <ion-label>Clothing Color</ion-label>
+        <ion-select name="color"[(ngModel)]="feature.color">
+          <ion-option value="red">Red</ion-option>
+          <ion-option value="blue">Blue</ion-option>
+          <ion-option value="green">Green</ion-option>
+          <ion-option value="yellow">Yellow</ion-option>
+          <ion-option value="orange">Orange</ion-option>
+          <ion-option value="black">Black</ion-option>
+        </ion-select>
       </ion-item>
 
       <ion-item>

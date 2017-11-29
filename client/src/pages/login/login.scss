@@ -1,6 +1,30 @@
 login-page {
   .app-name.jumbo {
     text-align: center;
-    margin: 20px 0 40px;
+    margin: 0px 0 10px;
+  }
+  .top-bar {
+    color: white;
+  }
+  .coName {
+    color: #222222;
+    font-family: 'Allura';
+  }
+  .logoContainer {
+    width: 100%;
+    margin: auto;
+  }
+  .logo {
+    width: 140px;
+    height: 140px;
+    display: inline;
+    float: none;
+    margin: auto;
+    background: #fff; //change with background color
+  }
+  h3 {
+    text-align: center;
+    font-size: medium;
+    font-style: none;
   }
 }
