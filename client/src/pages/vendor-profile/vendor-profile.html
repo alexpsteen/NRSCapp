@@ -6,6 +6,11 @@
 
 <ion-content padding>
 
+  <div *ngIf="currentUser.user_type == 0">
+    <button *ngIf="!vendor.approved" full ion-button color="secondary" (click)="updateVendorStatus(1)">Approve</button>
+    <button *ngIf="vendor.approved" full ion-button color="warning" (click)="updateVendorStatus(0)">Deactivate</button>
+  </div>
+
   <div padding text-center>
     <div *ngIf="avatarPhoto" class="avatar" [style.background-image]="'url('+ avatarPhoto +')'">
     </div>

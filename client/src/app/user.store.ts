@@ -85,7 +85,12 @@ export class UserStore {
 
   deleteUser (userId): Observable<IUser> {
     return this.auth.getCredentials().map(creds =>
-        this.sigv4.del(this.endpoint, `users/${userId}`, creds)).concatAll().share().map(this.singularResult);
+        this.sigv4.del(this.endpoint, `users?id=${userId}&type=user`, creds)).concatAll().share().map(this.singularResult);
+  }
+
+  deleteVendor (userId): Observable<IUser> {
+    return this.auth.getCredentials().map(creds =>
+        this.sigv4.del(this.endpoint, `users?id=${userId}&type=vendor`, creds)).concatAll().share().map(this.singularResult);
   }
 
   private sort (users:IVendor[]): IVendor[] {
