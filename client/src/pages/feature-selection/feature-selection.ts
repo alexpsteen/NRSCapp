@@ -48,7 +48,8 @@ export class FeatureSelectionPage {
         break;
     }
     this.navCtrl.push(page, {
-      eventId: this.eventId
+      eventId: this.eventId,
+        type: type
     }).then(() => {
       const index = this.viewCtrl.index;
       this.navCtrl.remove(index);
