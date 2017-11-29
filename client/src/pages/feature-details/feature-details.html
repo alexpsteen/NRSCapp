@@ -20,6 +20,17 @@
 
     </ion-list>
 
+  <ion-list>
+    <ion-list-header class="myEventContainer">
+      <div id="myEventText">Events</div>
+    </ion-list-header>
+    <ul>
+    <button ion-item *ngFor="let ev of eventStore.events | async" (click)="gotoEvent(ev.event_id)">
+      <li>{{ev.event_name}}</li>
+    </button>
+    </ul>
+  </ion-list>
+
 
   <ion-row>
     <button ion-button full-type="button" *ngIf="user_type == 1" (click)="showRecommended(feature.feature_id)">Show Recommended Vendor</button>

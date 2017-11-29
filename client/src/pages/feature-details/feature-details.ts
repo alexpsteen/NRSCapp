@@ -4,6 +4,7 @@ import { AuthService } from '../../app/auth.service'
 import UUID from 'uuid'
 import {IFeature} from "../../app/feature.interface";
 import {FeatureStore} from "../../app/feature.store";
+import {EventStore} from "../../app/event.store";
 import {VendorProfilePage} from "../vendor-profile/vendor-profile";
 
 @Component({
@@ -23,6 +24,7 @@ export class FeatureDetailsPage {
     public navCtrl: NavController,
     public auth: AuthService,
     public featureStore: FeatureStore,
+    public eventStore: EventStore,
     public navParams: NavParams,
     public alertCtrl: AlertController,
     private viewCtrl: ViewController,
