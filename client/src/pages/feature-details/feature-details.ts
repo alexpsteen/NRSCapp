@@ -39,9 +39,32 @@ export class FeatureDetailsPage {
             //food
               this.featureString = "Food";
               this.field1 = "Food Category";
-              this.field1Descript = this.feature.category;
+              switch(this.feature.category) {
+                  case 0:
+                      this.field1Descript = "Asian";
+                      break;
+                  case 1:
+                      this.field1Descript = "Hispanic";
+                      break;
+                  case 2:
+                      this.field1Descript = "American";
+                      break;
+                  case 3:
+                      this.field1Descript = "Italian";
+                      break;
+              }
               this.field2 = "Wait Staff";
-              this.field2Descript = this.feature.wait_staff;
+              switch(this.feature.wait_staff){
+                  case 0:
+                      this.field2Descript = "None";
+                      break;
+                  case 1:
+                      this.field2Descript = "0-20";
+                      break;
+                  case 2:
+                      this.field2Descript = "20-50";
+                      break;
+              }
             break;
           case 1:
               //venue
