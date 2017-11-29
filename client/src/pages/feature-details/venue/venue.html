@@ -13,7 +13,7 @@
 
       <ion-item>
         <ion-label>Type of Location</ion-label>
-        <ion-select name="locationType"[(ngModel)]="feature.locationType">
+        <ion-select name="locationType"[(ngModel)]="feature.type_of_location">
           <ion-option value="church">Church</ion-option>
           <ion-option value="theater">Theater</ion-option>
           <ion-option value="farm">Farm</ion-option>
@@ -24,7 +24,7 @@
 
       <ion-item>
         <ion-label>Number of People</ion-label>
-        <ion-select name="numPeople"[(ngModel)]="feature.numPeople">
+        <ion-select name="numPeople"[(ngModel)]="feature.num_of_people">
           <ion-option value="1-10">1-10</ion-option>
           <ion-option value="11-25">11-25</ion-option>
           <ion-option value="25-49">25-49</ion-option>
@@ -34,7 +34,7 @@
 
       <ion-item>
         <ion-label floating>Addtional Details</ion-label>
-        <ion-textarea name="addtionalDetails" [(ngModel)]="feature.addtionalDetails"></ion-textarea>
+        <ion-textarea name="addtionalDetails" [(ngModel)]="feature.additional_requests"></ion-textarea>
       </ion-item>
 
     </ion-list>

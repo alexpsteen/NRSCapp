@@ -38,7 +38,6 @@ export interface IFeatureVenue{
     additional_requests:string,
     venue_id:number,
     num_of_people:number,
-    outdoors:number,
     type_of_location:number
 }
 
