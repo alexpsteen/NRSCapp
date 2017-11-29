@@ -14,26 +14,26 @@
       <ion-item>
         <ion-label>Gender</ion-label>
         <ion-select name="gender"[(ngModel)]="feature.gender">
-          <ion-option value="f">Female</ion-option>
-          <ion-option value="m">Male</ion-option>
+          <ion-option value=0>Female</ion-option>
+          <ion-option value=1>Male</ion-option>
         </ion-select>
       </ion-item>
 
       <ion-item>
         <ion-label>Clothing Color</ion-label>
         <ion-select name="color"[(ngModel)]="feature.color">
-          <ion-option value="red">Red</ion-option>
-          <ion-option value="blue">Blue</ion-option>
-          <ion-option value="green">Green</ion-option>
-          <ion-option value="yellow">Yellow</ion-option>
-          <ion-option value="orange">Orange</ion-option>
-          <ion-option value="black">Black</ion-option>
+          <ion-option value=0>Red</ion-option>
+          <ion-option value=1>Blue</ion-option>
+          <ion-option value=2>Green</ion-option>
+          <ion-option value=3>Yellow</ion-option>
+          <ion-option value=4>Orange</ion-option>
+          <ion-option value=5>Black</ion-option>
         </ion-select>
       </ion-item>
 
       <ion-item>
         <ion-label floating>Addtional Details</ion-label>
-        <ion-textarea name="addtionalDetails" [(ngModel)]="feature.addtionalDetails"></ion-textarea>
+        <ion-textarea name="addtionalDetails" [(ngModel)]="feature.additional_requests"></ion-textarea>
       </ion-item>
 
     </ion-list>

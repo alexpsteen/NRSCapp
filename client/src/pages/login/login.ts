@@ -50,7 +50,6 @@ export class LoginPage {
   signin () {
     this.auth.signin(this.credentials).then((user) => {
       console.log('signed in');
-
       this.userStore.getCurrentUser().subscribe(user => {
         if (user) {
           console.log(`user found: ${user}`);

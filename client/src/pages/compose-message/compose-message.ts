@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {AlertController} from "ionic-angular";
+import {InboxHomePage} from "../inbox-home/inbox-home";
 
 /**
  * Generated class for the ComposeMessagePage page.
@@ -19,6 +20,12 @@ export class ComposeMessagePage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
   }
 
+  message = {
+      recipient: null,
+      subject: null,
+      body: null
+  }
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad ComposeMessagePage');
   }
@@ -27,7 +34,7 @@ export class ComposeMessagePage {
     const done = this.alertCtrl.create({
         title: "MESSAGE SENT",
     });
-    this.navCtrl.pop();
+    this.navCtrl.setRoot(InboxHomePage)
     done.present();
   }
   submit() {

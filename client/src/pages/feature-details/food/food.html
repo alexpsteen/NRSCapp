@@ -12,28 +12,27 @@
     <ion-list>
 
       <ion-item>
-        <ion-label>Dietary Restrictions</ion-label>
-        <ion-select name="restrictions"[(ngModel)]="feature.restrictions">
-          <ion-option value="nuts">Nuts</ion-option>
-          <ion-option value="gluten">Gluten</ion-option>
-          <ion-option value="dairy">Dairy</ion-option>
-          <ion-option value="other">Other</ion-option>
+        <ion-label>Category</ion-label>
+        <ion-select name="restrictions"[(ngModel)]="feature.category">
+          <ion-option value="0">Asian</ion-option>
+          <ion-option value="1">Hispanic</ion-option>
+          <ion-option value="2">American</ion-option>
+          <ion-option value="3">Italian</ion-option>
         </ion-select>
       </ion-item>
 
       <ion-item>
-        <ion-label>Dietary Restrictions</ion-label>
-        <ion-select name="restrictions"[(ngModel)]="feature.restrictions">
-          <ion-option value="nuts">Nuts</ion-option>
-          <ion-option value="gluten">Gluten</ion-option>
-          <ion-option value="dairy">Dairy</ion-option>
-          <ion-option value="other">Other</ion-option>
+        <ion-label>Number of Staff</ion-label>
+        <ion-select name="restrictions"[(ngModel)]="feature.wait_staff">
+          <ion-option value="0">None</ion-option>
+          <ion-option value="1">0-20</ion-option>
+          <ion-option value="2">20-50</ion-option>
         </ion-select>
       </ion-item>
 
       <ion-item>
         <ion-label floating>Addtional Details</ion-label>
-        <ion-textarea name="addtionalDetails" [(ngModel)]="feature.addtionalDetails"></ion-textarea>
+        <ion-textarea name="addtionalDetails" [(ngModel)]="feature.additional_requests"></ion-textarea>
       </ion-item>
 
     </ion-list>

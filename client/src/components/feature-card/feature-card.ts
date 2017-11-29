@@ -19,9 +19,9 @@ export class FeatureCard {
   get featureName():string {
     switch(this.feature.feature_type) {
       case 0:
-        return 'Venue';
-      case 1:
         return 'Food';
+      case 1:
+        return 'Venue';
       case 2:
         return 'Music';
       case 3:
@@ -32,7 +32,7 @@ export class FeatureCard {
   }
 
   get featureIcon():string {
-    switch(this.feature.type) {
+    switch(this.feature.feature_type) {
       case 0:
         return 'pin';
       case 1:

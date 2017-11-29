@@ -2,7 +2,7 @@ import { Component } from '@angular/core'
 import {AlertController, NavController, NavParams, ToastController, ViewController} from 'ionic-angular'
 import { AuthService } from '../../../app/auth.service'
 import UUID from 'uuid'
-import {IFeature} from "../../../app/feature.interface";
+import {IFeature, IFeatureFood} from "../../../app/feature.interface";
 import {FeatureStore} from "../../../app/feature.store";
 
 @Component({
@@ -10,15 +10,20 @@ import {FeatureStore} from "../../../app/feature.store";
   templateUrl: 'food.html'
 })
 export class FoodDetailsPage {
-  feature:IFeature = {
-      feature_id:null,
-      event_id:null,
-      feature_type:null,
-      status:null,
-      additional_requests:null
-  };
 
-  constructor(
+    feature: IFeatureFood = {
+    feature_id:null,
+    event_id:null,
+    feature_type:null,
+    status:0,
+    additional_requests:null,
+    food_id:null,
+    category:null,
+    wait_staff:null
+};
+
+
+constructor(
     public navCtrl: NavController,
     public auth: AuthService,
     public featureStore: FeatureStore,
@@ -29,10 +34,12 @@ export class FoodDetailsPage {
     if (this.navParams.get('feature')) {
       this.feature = this.navParams.get('feature');
     }
-    if (this.navParams.get('type')) {
+    if (this.navParams.get('type') === 0) {
+      console.log("TYPE:", this.navParams.get('type'));
       this.feature.feature_type = this.navParams.get('type');
     }
     if (this.navParams.get('eventId')) {
+      console.log("in event id");
       this.feature.event_id = this.navParams.get('eventId');
     }
   }
@@ -51,7 +58,6 @@ export class FoodDetailsPage {
       });
     } else {
       console.log('creating feature', this.feature);
-      this.feature.feature_id = UUID.v4();
       this.featureStore.addFeature(this.feature).subscribe(feature => {
         if (feature) {
           this.navCtrl.pop();
