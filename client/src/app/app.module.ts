@@ -47,6 +47,7 @@ import {VendorEventOverviewPage} from "../pages/vendor-event-overview/vendor-eve
 import {VendorProfilePage} from "../pages/vendor-profile/vendor-profile";
 import {EventPlannerHomePage} from "../pages/event-planner-home/event-planner-home";
 import {HeaderBar} from "../components/header-bar/header-bar";
+import {Camera} from "@ionic-native/camera";
 
 
 @NgModule({
@@ -112,6 +113,7 @@ import {HeaderBar} from "../components/header-bar/header-bar";
   providers: [
     StatusBar,
     SplashScreen,
+    Camera,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthService, AuthServiceProvider,
     EventStore, EventStoreProvider,
@@ -121,3 +123,6 @@ import {HeaderBar} from "../components/header-bar/header-bar";
   ]
 })
 export class AppModule {}
+
+declare var AWS;
+AWS.config.customUserAgent = AWS.config.customUserAgent + ' Ionic';

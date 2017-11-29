@@ -2,36 +2,14 @@
   Vendor Profile Page. Shows a description of the vendor, along with
   a picture.
 -->
-<ion-header>
-
-  <ion-navbar>
-    <ion-title>VENDOR PROFILE PAGE</ion-title>
-    <ion-buttons end>
-      <button ion-button icon-only clear (click)="editProfile()">
-        <ion-icon name="settings"></ion-icon>
-      </button>
-    </ion-buttons>
-  </ion-navbar>
-
-</ion-header>
-
+<header-bar title="Vendor Overview"></header-bar>
 
 <ion-content padding>
 
-  <ion-card>
-    <img src = "https://helenimportday.com/wp-content/uploads/2016/04/Vendor-In-QuickBooks-Online.jpg" />
-    <ion-card-content>
-      <ion-card-title>
-        <u>{{vendor.name}}</u>
-      </ion-card-title>
-      <p>
-        <i>{{vendor.description}}</i> <br>
-        <b>E-Mail:</b>{{vendor.email}}<br>
-        <b>Cell Phone:</b>{{vendor.cellphone_number}}<br>
-        <b>Address:</b>{{vendor.address}}<br>
-      </p>
-
-    </ion-card-content>
-  </ion-card>
+  <h1>{{vendor.name}}</h1>
+  <div class="info"><ion-icon name="call" class="contact-icon"></ion-icon><a [href]="'tel:+' + vendor.cellphone_number">{{vendor.cellphone_number}}</a></div>
+  <div class="info"><ion-icon name="mail" class="contact-icon"></ion-icon><a [href]="'mailto:+' + vendor.email">{{vendor.email}}</a></div>
+  <div class="info"><em>{{vendor.address}}</em></div>
+  <p>{{vendor.description}}</p>
 
 </ion-content>

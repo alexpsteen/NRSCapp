@@ -9,6 +9,7 @@ import {UserStore} from "../../app/user.store";
 import _ from 'lodash';
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
 import {EventOverviewPage} from "../event-overview/event-overview";
+import {VendorProfilePage} from "../vendor-profile/vendor-profile";
 
 /**
  * Generated class for the EventPlannerHomePage page.
@@ -50,14 +51,16 @@ export class EventPlannerHomePage {
     });
   }
 
-  gotoEvent(eventId) {
-    this.eventStore.getEventByEventId(eventId).subscribe(event => {
-      if (!event) { return console.log('could not find event. Please check logs') }
+  gotoEvent(event) {
+    this.navCtrl.push(EventOverviewPage, {
+      event: event
+    });
+  }
 
-      this.navCtrl.push(EventOverviewPage, {
-        event: event
-      });
-    })
+  gotoVendor(vendor) {
+    this.navCtrl.push(VendorProfilePage, {
+      vendor: vendor
+    });
   }
 
   private sortEvents (events:IEvent[]): IEvent[] {

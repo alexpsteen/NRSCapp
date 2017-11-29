@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core'
 
-declare const aws_cognito_region
-declare const aws_user_pools_id
-declare const aws_user_pools_web_client_id
-declare const aws_cognito_identity_pool_id
-declare const aws_cloud_logic_custom
+declare var AWS: any;
+declare const aws_cognito_region;
+declare const aws_user_pools_id;
+declare const aws_user_pools_web_client_id;
+declare const aws_cognito_identity_pool_id;
+declare const aws_cloud_logic_custom;
+declare const aws_user_files_s3_bucket;
 
 @Injectable()
 export class AwsConfig {
@@ -16,6 +18,7 @@ export class AwsConfig {
       'appId': aws_user_pools_web_client_id, // your user pool app ID
       'idpURL': `cognito-idp.${aws_cognito_region}.amazonaws.com`, // cognito idp url
       'identityPool': aws_cognito_identity_pool_id, // your federated identity pool ID
+      "aws_user_files_s3_bucket": aws_user_files_s3_bucket,
       'APIs': aws_cloud_logic_custom_obj.reduce((m, v) => { m[v.name] = v.endpoint; return m }, {})
     }
   }

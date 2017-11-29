@@ -23,23 +23,22 @@
 
   <div [ngSwitch]="tabs">
     <ion-list *ngSwitchCase="'myEvents'">
-      <button ion-item *ngFor="let ev of myEvents | async" (click)="gotoEvent(ev.event_id)">
-        <ion-icon [name]="getIcon(ev)" [color]="getIconColor(ev)" item-start></ion-icon>
+      <button ion-item *ngFor="let ev of myEvents | async" (click)="gotoEvent(ev)">
         <span>{{ev.event_name}}</span>
         <ion-note item-end>{{ev.event_date_start | date: 'M/d/yy'}}</ion-note>
       </button>
     </ion-list>
 
     <ion-list *ngSwitchCase="'allEvents'">
-      <button ion-item *ngFor="let ev of allEvents | async" (click)="gotoEvent(ev.event_id)">
-        <ion-icon [name]="getIcon(ev)" [color]="getIconColor(ev)" item-start></ion-icon>
+      <button ion-item *ngFor="let ev of allEvents | async" (click)="gotoEvent(ev)">
         <span>{{ev.event_name}}</span>
         <ion-note item-end>{{ev.event_date_start | date: 'M/d/yy'}}</ion-note>
       </button>
     </ion-list>
 
     <ion-list *ngSwitchCase="'vendors'">
-      <button ion-item *ngFor="let v of vendors | async">
+      <button ion-item *ngFor="let v of vendors | async" (click)="gotoVendor(v)">
+        <ion-icon *ngIf="v.approved == 0" name="alert" color="danger" item-start></ion-icon>
         <span>{{v.name}}</span>
       </button>
     </ion-list>
