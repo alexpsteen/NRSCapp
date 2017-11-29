@@ -2,7 +2,7 @@ import { Component } from '@angular/core'
 import {AlertController, NavController, NavParams, ToastController, ViewController} from 'ionic-angular'
 import { AuthService } from '../../../app/auth.service'
 import UUID from 'uuid'
-import {IFeature} from "../../../app/feature.interface";
+import {IFeature, IFeatureMusic} from "../../../app/feature.interface";
 import {FeatureStore} from "../../../app/feature.store";
 
 @Component({
@@ -10,13 +10,16 @@ import {FeatureStore} from "../../../app/feature.store";
   templateUrl: 'music.html'
 })
 export class MusicDetailsPage {
-  feature:IFeature = {
-      feature_id:null,
-      event_id:null,
-      feature_type:null,
-      status:0,
-      additional_requests:null
-  };
+    feature: IFeatureMusic = {
+    feature_id:null,
+    event_id:null,
+    feature_type:null,
+    status:0,
+    additional_requests:null,
+    music_id:null,
+    genre:null,
+    live_music:null
+};
 
   constructor(
     public navCtrl: NavController,
@@ -51,7 +54,7 @@ export class MusicDetailsPage {
       });
     } else {
       console.log('creating feature', this.feature);
-      this.feature.feature_id = UUID.v4();
+
       this.featureStore.addFeature(this.feature).subscribe(feature => {
         if (feature) {
           this.navCtrl.pop();
