@@ -22,6 +22,7 @@ import {VenueDetailsPage} from "../feature-details/venue/venue";
 import {FoodDetailsPage} from "../feature-details/food/food";
 import {MusicDetailsPage} from "../feature-details/music/music";
 import {ClothingDetailsPage} from "../feature-details/clothing/clothing";
+import {IFeature} from "../../app/feature.interface";
 
 @Component({
   selector: 'page-event-overview',
@@ -33,6 +34,7 @@ export class EventOverviewPage {
   public planner = 'NONE';
 
   planners: BehaviorSubject<List<IUser>> = new BehaviorSubject(List([]));
+  myFeatures: BehaviorSubject<List<IFeature>> = new BehaviorSubject(List([]));
   isAdmin: boolean = false;
 
   constructor(
@@ -64,6 +66,9 @@ export class EventOverviewPage {
     this.userStore.getPlanners().subscribe(planners => {
       this.planners.next(List(planners));
     });
+    this.featureStore.getFeatures(this.event.event_id).subscribe(features => {
+      this.myFeatures.next(List(features));
+    })
   }
 
   editEvent() {

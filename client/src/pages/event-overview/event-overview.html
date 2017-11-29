@@ -51,7 +51,7 @@
 
   <ion-grid>
     <ion-row wrap>
-      <ion-col col-4 *ngFor="let feature of featureStore.features | async">
+      <ion-col col-4 *ngFor="let feature of myFeatures | async">
         <feature-card [feature]="feature" (click)="editFeature(feature)"></feature-card>
       </ion-col>
     </ion-row>

@@ -70,103 +70,57 @@ export class FeatureStore {
   }
 
   getBiddingVendors(id): Observable<any> {
-      let observable = this.auth.getCredentials().map(creds => this.sigv4.get(this.endpoint, `features/all?task=bid&id=${id}`, creds)).concatAll().share();
-
-      return observable.map(resp => resp.status === 200 ? resp.json() : null);
-
+      return this.auth.getCredentials().map(creds => this.sigv4.get(this.endpoint, `features/all?task=bid&id=${id}`, creds)).concatAll().share().map(this.multipleResult);
   }
 
-  getFeatures(id): Observable<any> {
-      let observable = this.auth.getCredentials().map(creds => this.sigv4.get(this.endpoint, `features/all?task=event&id=${id}`, creds)).concatAll().share();
-
-      return observable.map(resp => resp.status === 200 ? resp.json() : null);
+  getFeatures(id): Observable<IFeature[]> {
+      return this.auth.getCredentials().map(creds => this.sigv4.get(this.endpoint, `features/all?task=event&id=${id}`, creds)).concatAll().share().map(this.multipleResult);
   }
 
   addFeature (feature): Observable<any> {
-    let observable = this.auth.getCredentials().map(creds => this.sigv4.post(this.endpoint, 'features?task=feature', feature, creds)).concatAll().share();
-
-    observable.subscribe(resp => {
-      if (resp.status === 200) {
-        let features = this._features.getValue().toArray();
-        let feature = resp.json().feature;
-        features.push(feature);
-        this._features.next(List(this.sort(features)));
-      }
-    });
-    return observable.map(resp => resp.status === 200 ? resp.json().feature : null);
+    return this.auth.getCredentials().map(creds => this.sigv4.post(this.endpoint, 'features?task=feature', feature, creds)).concatAll().share().map(this.singularResult);
   }
 
 
-    getFeature (index): Observable<any> {
-        let features = this._features.getValue().toArray();
-        let obs = this.auth.getCredentials().map(creds => this.sigv4.get(this.endpoint, `features/details?task=feature&id=${features[index].feature_id}&type=${features[index].feature_type}`, creds)).concatAll().share();
-
-        return obs.map(resp => resp.status === 200 ? resp.json().features[0] : null);
+    getFeature (featureId, featureType): Observable<any> {
+        return this.auth.getCredentials().map(creds => this.sigv4.get(this.endpoint, `features/details?task=feature&id=${featureId}&type=${featureType}`, creds)).concatAll().share().map(this.singularResult);
     }
 
-    getVendorDetails(index, featureId):Observable<any> {
-      let vendors = this._vendors.getValue().toArray();
-      let obs = this.auth.getCredentials().map(creds => this.sigv4.get(this.endpoint, `features/details?task=vendorBid&featureId=${featureId}&vendorId=${vendors[index].feature_id}`,creds)).concatAll().share();
-
-      return obs.map(resp => resp.status === 200 ? resp.json() : null);
+    getVendorDetails(vendorId, featureId):Observable<any> {
+      return this.auth.getCredentials().map(creds => this.sigv4.get(this.endpoint, `features/details?task=vendorBid&featureId=${featureId}&vendorId=${vendorId}`,creds)).concatAll().share().map(this.singularResult);
     }
 
     getRecommendedVendor(featureId): Observable<any> {
-      let obs = this.auth.getCredentials().map(creds => this.sigv4.get(this.endpoint, `features/details?task=recommendation&id=${featureId}`, creds)).concatAll().share();
-
-      return obs.map(resp => resp.status === 200 ? resp.json() : null);
+      return this.auth.getCredentials().map(creds => this.sigv4.get(this.endpoint, `features/details?task=recommendation&id=${featureId}`, creds)).concatAll().share().map(this.singularResult);
     }
 
   updateFeature (feature): Observable<any> {
-    // let tasks = this._tasks.getValue().toArray()
-    let obs = this.auth.getCredentials().map(creds => this.sigv4.put(
+    return this.auth.getCredentials().map(creds => this.sigv4.put(
       this.endpoint,
       `features?task=feature&id=${feature.featureId}`,
       feature,
-      creds)).concatAll().share();
+      creds)).concatAll().share().map(this.singularResult);
 
-    // obs.subscribe(resp => {
-    //   if (resp.status === 200) {
-    //     tasks[index] = resp.json().task
-    //     this._tasks.next(List(this.sort(tasks)))
-    //   }
-    // })
-
-    return obs.map(resp => resp.status === 200 ? resp.json().feature : null)
   }
 
   confirmRecommendation(featureId): Observable<IRecommendation> {
-    let obs = this.auth.getCredentials().map(creds => this.sigv4.put(this.endpoint, `features?task=confirm&featureId=${featureId}`, null,creds)).concatAll().share();
-    return obs.map(resp => resp.status === 200 ? resp.json() : null);
+    return this.auth.getCredentials().map(creds => this.sigv4.put(this.endpoint, `features?task=confirm&featureId=${featureId}`, null,creds)).concatAll().share().map(this.singularResult);
   }
 
   rejectRecommendation(featureId): Observable<IRecommendation> {
-    let obs = this.auth.getCredentials().map(creds => this.sigv4.put(this.endpoint, `features?task=reject&featureId=${featureId}`, null, creds)).concatAll().share();
-    return obs.map(resp => resp.status === 200 ? resp.json() : null);
+    return this.auth.getCredentials().map(creds => this.sigv4.put(this.endpoint, `features?task=reject&featureId=${featureId}`, null, creds)).concatAll().share().map(this.singularResult);
   }
 
   addBid (bid): Observable<IBid> {
-      let obs = this.auth.getCredentials().map(creds => this.sigv4.post(this.endpoint, `features?task=bid`, bid,creds)).concatAll().share();
-      return obs.map(resp => resp.status === 200 ? resp.json() : null);
+      return this.auth.getCredentials().map(creds => this.sigv4.post(this.endpoint, `features?task=bid`, bid,creds)).concatAll().share().map(this.singularResult);
   }
 
   addRecommendation (recommendation): Observable<IRecommendation> {
-      let obs = this.auth.getCredentials().map(creds => this.sigv4.post(this.endpoint, `features?task=recommendation`, recommendation,creds)).concatAll().share();
-      return obs.map(resp => resp.status === 200 ? resp.json() : null);
+      return this.auth.getCredentials().map(creds => this.sigv4.post(this.endpoint, `features?task=recommendation`, recommendation,creds)).concatAll().share().map(this.singularResult);
   }
 
   deleteFeature (featureId): Observable<IFeature> {
-    let features = this._features.getValue().toArray();
-    let obs = this.auth.getCredentials().map(creds => this.sigv4.del(this.endpoint, `features?id=${featureId}`, creds)).concatAll().share();
-
-    obs.subscribe(resp => {
-      if (resp.status === 200) {
-        let index = _.findIndex(features, (f) => {return f.featureId === featureId} );
-        features.splice(index, 1)[0];
-        this._features.next(List(<IFeature[]>features));
-      }
-    });
-    return obs.map(resp => resp.status === 200 ? resp.json().feature : null)
+    return this.auth.getCredentials().map(creds => this.sigv4.del(this.endpoint, `features?id=${featureId}`, creds)).concatAll().share().map(this.singularResult);
   }
 
   private sortVendors(vendors:IBid[]): IBid[] {
@@ -176,5 +130,21 @@ export class FeatureStore {
   private sort (features:IFeature[]): IFeature[] {
     return _.orderBy(features, ['type'], ['asc'])
   }
+
+    private singularResult(resp) {
+        return resp.status === 200 ? resp.json() : null;
+    }
+
+    private multipleResult(resp) {
+        if (resp.status === 200) {
+            let data = resp.json();
+            if (data && !Array.isArray(data)) {
+                return [data];
+            }
+            return data;
+        }
+        return [];
+    }
+
 
 }

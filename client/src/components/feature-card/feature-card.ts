@@ -17,7 +17,7 @@ export class FeatureCard {
     public navCtrl: NavController) {}
 
   get featureName():string {
-    switch(this.feature.type) {
+    switch(this.feature.feature_type) {
       case 0:
         return 'Venue';
       case 1:
