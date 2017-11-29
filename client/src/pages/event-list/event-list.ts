@@ -6,16 +6,27 @@ import { LogoutModal } from '../../modal/logout/logout'
 import {NavController, NavParams, ViewController, ModalController, AlertController} from 'ionic-angular'
 import { AuthService } from '../../app/auth.service'
 import {EventStore} from '../../app/event.store'
+import {BehaviorSubject} from "rxjs/BehaviorSubject";
+import {IEvent} from "../../app/event.interface";
+import {List} from "immutable";
 
 @Component({
     selector: 'event-list',
     templateUrl: 'event-list.html'
 })
 export class EventList {
+
+    events: BehaviorSubject<List<IEvent>> = new BehaviorSubject(List([]));
     constructor(public navCtrl: NavController, private viewCtrl: ViewController, public NavParams: NavParams,
                 public modalCtrl: ModalController, public eventStore: EventStore, public auth: AuthService,
                 private alertCtrl: AlertController
     ) { }
+
+    ionViewDidLoad() {
+        this.eventStore.getPublishedEvents().subscribe( events => {
+            this.events.next(List(events));
+        })
+    }
 
     doRefresh (refresher?) {
         let subscription = this.eventStore.refresh().subscribe({
