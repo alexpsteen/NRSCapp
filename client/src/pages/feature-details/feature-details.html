@@ -1,4 +1,4 @@
-<header-bar title="Feature Details"></header-bar>
+<header-bar title="{{featureString}} Details"></header-bar>
 
 <ion-content padding>
 
@@ -11,21 +11,30 @@
 
     <ion-list>
 
-      <ion-item>
-        <ion-label floating>Location</ion-label>
-        <ion-input name="location" [(ngModel)]="feature.location"></ion-input>
-      </ion-item>
+      <!--<ion-item>-->
+        <!--<ion-label >{{field1}}</ion-label>-->
+      <!--</ion-item>-->
+      <!--<ion-item>-->
+        <!--<ion-label >{{field1Descript}}</ion-label>-->
+      <!--</ion-item>-->
+
+      <!--<ion-item>-->
+        <!--<ion-label >{{field2}}</ion-label>-->
+      <!--</ion-item>-->
+      <!--<ion-item>-->
+        <!--<ion-label >{{field2Descript}}</ion-label>-->
+      <!--</ion-item>-->
 
       <ion-item>
-        <ion-label floating>Addtional Details</ion-label>
-        <ion-textarea name="addtionalDetails" [(ngModel)]="feature.addtionalDetails"></ion-textarea>
+        <div>{{field1}}</div>
+        <div>{{field1Descript}}</div>
+
+        <div>{{field2}}</div>
+        <div>{{field2Descript}}</div>
       </ion-item>
 
     </ion-list>
 
-    <ion-row>
-      <button ion-button full type="submit" [disabled]="!featureForm.form.valid">Save</button>
-    </ion-row>
     <ion-row>
       <button ion-button full type="button" *ngIf="feature.featureId" color="danger" (click)="confirmDelete()">Delete</button>
     </ion-row>

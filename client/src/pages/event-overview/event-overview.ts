@@ -98,22 +98,22 @@ export class EventOverviewPage {
   }
 
   editFeature(feature) {
-    let page: any = FeatureDetailsPage;
-    switch (feature.feature_type) {
-      case 0:
-        page = VenueDetailsPage;
-        break;
-      case 1:
-        page = FoodDetailsPage;
-        break;
-      case 2:
-        page = MusicDetailsPage;
-        break;
-      case 3:
-        page = ClothingDetailsPage;
-        break;
-    }
-    this.navCtrl.push(page, {
+    // let page: any = FeatureDetailsPage;
+    // switch (feature.feature_type) {
+    //   case 0:
+    //     page = VenueDetailsPage;
+    //     break;
+    //   case 1:
+    //     page = FoodDetailsPage;
+    //     break;
+    //   case 2:
+    //     page = MusicDetailsPage;
+    //     break;
+    //   case 3:
+    //     page = ClothingDetailsPage;
+    //     break;
+    // }
+    this.navCtrl.push(FeatureDetailsPage, {
       feature: feature
     });
   }
