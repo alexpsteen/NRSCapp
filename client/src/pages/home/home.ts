@@ -1,6 +1,6 @@
 import { Component } from '@angular/core'
 
-import { NavController } from 'ionic-angular'
+import {NavController, NavParams} from 'ionic-angular'
 
 import {EventDetailsPage} from "../event-details/event-details";
 import {EventStore} from "../../app/event.store";
@@ -13,7 +13,8 @@ import {EventOverviewPage} from "../event-overview/event-overview";
 export class HomePage {
   constructor(
     public navCtrl: NavController,
-    public eventStore: EventStore) { }
+    public eventStore: EventStore,
+    public navParams: NavParams) { }
 
   doRefresh (refresher?) {
     let subscription = this.eventStore.refresh().subscribe({
@@ -43,6 +44,7 @@ export class HomePage {
       if (!event) { return console.log('could not find event. Please check logs') }
 
       this.navCtrl.push(EventOverviewPage, {
+        user_type: this.navParams.get('user_type'),
         event: event
       });
     });

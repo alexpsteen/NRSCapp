@@ -2,7 +2,6 @@
 
 <ion-content padding>
 
-  <form (ngSubmit)="saveFeature()" #featureForm="ngForm">
     <ion-card *ngIf="message" color='secondary'>
       <ion-card-content>
         {{message}}
@@ -10,20 +9,6 @@
     </ion-card>
 
     <ion-list>
-
-      <!--<ion-item>-->
-        <!--<ion-label >{{field1}}</ion-label>-->
-      <!--</ion-item>-->
-      <!--<ion-item>-->
-        <!--<ion-label >{{field1Descript}}</ion-label>-->
-      <!--</ion-item>-->
-
-      <!--<ion-item>-->
-        <!--<ion-label >{{field2}}</ion-label>-->
-      <!--</ion-item>-->
-      <!--<ion-item>-->
-        <!--<ion-label >{{field2Descript}}</ion-label>-->
-      <!--</ion-item>-->
 
       <ion-item>
         <div>{{field1}}</div>
@@ -35,10 +20,24 @@
 
     </ion-list>
 
-    <ion-row>
-      <button ion-button full type="button" *ngIf="feature.featureId" color="danger" (click)="confirmDelete()">Delete</button>
-    </ion-row>
+  <ion-list>
+    <ion-list-header class="myEventContainer">
+      <div id="myEventText">Events</div>
+    </ion-list-header>
+    <ul>
+    <button ion-item *ngFor="let ev of eventStore.events | async" (click)="gotoEvent(ev.event_id)">
+      <li>{{ev.event_name}}</li>
+    </button>
+    </ul>
+  </ion-list>
 
-  </form>
+
+  <ion-row>
+    <button ion-button full-type="button" *ngIf="user_type == 1" (click)="showRecommended(feature.feature_id)">Show Recommended Vendor</button>
+  </ion-row>
+
+    <ion-row>
+      <button ion-button full type="button" *ngIf="user_type === 1" color="danger" (click)="confirmDelete()">Delete</button>
+    </ion-row>
 
 </ion-content>
