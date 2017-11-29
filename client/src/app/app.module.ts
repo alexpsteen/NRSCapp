@@ -48,6 +48,7 @@ import {VendorProfilePage} from "../pages/vendor-profile/vendor-profile";
 import {EventPlannerHomePage} from "../pages/event-planner-home/event-planner-home";
 import {HeaderBar} from "../components/header-bar/header-bar";
 import {Camera} from "@ionic-native/camera";
+import {MakeBidPage} from "../pages/make-bid/make-bid";
 
 
 @NgModule({
@@ -76,7 +77,8 @@ import {Camera} from "@ionic-native/camera";
     EditVendorProfilePage,
     VendorProfilePage,
     EventPlannerHomePage,
-    UserInfoPage
+    UserInfoPage,
+      MakeBidPage
   ],
   imports: [
     HttpModule,
@@ -108,7 +110,8 @@ import {Camera} from "@ionic-native/camera";
     EditVendorProfilePage,
     VendorProfilePage,
     EventPlannerHomePage,
-    UserInfoPage
+    UserInfoPage,
+      MakeBidPage
   ],
   providers: [
     StatusBar,
