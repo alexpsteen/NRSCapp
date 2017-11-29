@@ -131,7 +131,7 @@ export class EventOverviewPage {
           text: 'Publish',
           handler: () => {
             this.event.event_status = 1;
-            this.eventStore.publishEvent(this.event).subscribe(event => {
+            this.eventStore.publishEvent(this.event.event_id).subscribe(event => {
               if (event) {
                 this.navCtrl.pop();
                 this.toastCtrl.create({
@@ -156,6 +156,6 @@ export class EventOverviewPage {
   }
 
   assignPlanner(plannerId) {
-    this.eventStore.assignEventPlanner(this.event, plannerId).subscribe();
+    this.eventStore.assignEventPlanner(this.event.event_id, plannerId).subscribe();
   }
 }
