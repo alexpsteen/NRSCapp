@@ -3,6 +3,9 @@ import {AlertController, IonicPage, NavController, NavParams, ToastController, V
 import {EditVendorProfilePage} from "../edit-vendor-profile/edit-vendor-profile";
 import {IVendor, IVendorLite} from "../../app/user.interface";
 import {UserStore} from "../../app/user.store";
+import {FeatureStore} from "../../app/feature.store";
+import {EventOverviewPage} from "../event-overview/event-overview";
+import {IEvent} from "../../app/event.interface";
 
 /**
  * Generated class for the VendorProfilePage page.
@@ -26,19 +29,32 @@ export class VendorProfilePage {
 
   public currentUser:any = {};
   public vendor:IVendor;
+  public feature:any;
+  public user_type:number;
   private s3: any;
   public avatarPhoto: string;
   public selectedPhoto: Blob;
   public sub: string = null;
+  public event: IEvent;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               private viewCtrl: ViewController,
               public userStore: UserStore,
+              public featureStore: FeatureStore,
               public alertCtrl: AlertController,
               public toastCtrl: ToastController) {
     if(this.navParams.get('vendor')) {
       this.vendor = this.navParams.get('vendor');
+    }
+    if(this.navParams.get('feature')) {
+      this.feature = this.navParams.get('feature');
+    }
+    if(this.navParams.get('user_type')) {
+      this.user_type = this.navParams.get('user_type');
+    }
+    if(this.navParams.get('event')) {
+      this.event = this.navParams.get('event');
     }
     this.avatarPhoto = null;
     this.selectedPhoto = null;
@@ -112,6 +128,24 @@ export class VendorProfilePage {
     });
 
     alert.present();
+  }
+
+  confirmVendor(feature_id) {
+    this.featureStore.confirmRecommendation(feature_id).subscribe(rec => {
+      if(rec) {
+        this.navCtrl.pop();
+        this.navCtrl.pop();
+      }
+    })
+  }
+
+  rejectVendor(feature_id){
+    this.featureStore.rejectRecommendation(feature_id).subscribe(rec => {
+      if(rec) {
+        this.navCtrl.pop();
+        this.navCtrl.pop();
+      }
+    })
   }
 
   doToast(text:string) {

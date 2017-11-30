@@ -111,13 +111,10 @@ export class EventOverviewPage {
         console.log("FEATURE STORED");
         this.navCtrl.push(FeatureDetailsPage, {
             feature: this.selectedFeature,
-            user_type: this.user_type
+            user_type: this.user_type,
+            event: this.event
         });
     });
-    //   this.navCtrl.push(FeatureDetailsPage, {
-    //     feature:feature,
-    //       user_type: this.user_type
-    //   })
   }
 
   plan() {

@@ -8,6 +8,7 @@ import {EventStore} from "../../app/event.store";
 import {VendorProfilePage} from "../vendor-profile/vendor-profile";
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
 import {List} from "immutable";
+import {IEvent} from "../../app/event.interface";
 
 @Component({
   selector: 'page-feature-details',
@@ -21,6 +22,7 @@ export class FeatureDetailsPage {
   public field2: String;
   public field1Descript: String;
   public field2Descript: String;
+  public event:IEvent;
 
     biddingVendors: BehaviorSubject<List<any>> = new BehaviorSubject(List([]));
 
@@ -38,6 +40,9 @@ export class FeatureDetailsPage {
       }
       if(this.navParams.get('user_type')) {
           this.user_type = this.navParams.get('user_type');
+      }
+      if(this.navParams.get('event')) {
+          this.event = this.navParams.get('event');
       }
       console.log(this.feature);
       switch (this.feature.feature_type) {
@@ -189,7 +194,7 @@ export class FeatureDetailsPage {
 
   showRecommended(feature_id) {
       this.featureStore.getRecommendedVendor(feature_id).subscribe(vendor => {
-          this.navCtrl.push(VendorProfilePage, {vendor: vendor});
+          this.navCtrl.push(VendorProfilePage, {vendor: vendor, user_type: this.user_type, feature: this.feature, event: this.event});
       })
   }
 
