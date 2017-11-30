@@ -6,6 +6,8 @@ import {IFeature} from "../../app/feature.interface";
 import {FeatureStore} from "../../app/feature.store";
 import {EventStore} from "../../app/event.store";
 import {VendorProfilePage} from "../vendor-profile/vendor-profile";
+import {BehaviorSubject} from "rxjs/BehaviorSubject";
+import {List} from "immutable";
 
 @Component({
   selector: 'page-feature-details',
@@ -19,6 +21,8 @@ export class FeatureDetailsPage {
   public field2: String;
   public field1Descript: String;
   public field2Descript: String;
+
+    biddingVendors: BehaviorSubject<List<any>> = new BehaviorSubject(List([]));
 
   constructor(
     public navCtrl: NavController,
@@ -72,27 +76,109 @@ export class FeatureDetailsPage {
               //venue
               this.featureString = "Venue";
               this.field1 = "Type of Location";
-              this.field1Descript = this.feature.type_of_location;
+              switch(this.feature.type_of_location) {
+                  case 0:
+                      this.field1Descript = "Church";
+                      break
+                  case 1:
+                      this.field1Descript = "Theater";
+                      break;
+                  case 2:
+                      this.field1Descript = "Farm";
+                      break;
+                  case 3:
+                      this.field1Descript = "Beach";
+                      break;
+                  case 4:
+                      this.field1Descript = "Other";
+                      break;
+              }
+
               this.field2 = "Number of People";
-              this.field2Descript = this.feature.num_of_people;
+              switch(this.feature.num_of_people) {
+                  case 0:
+                      this.field2Descript = "1-10";
+                      break;
+                  case 1:
+                      this.field2Descript = "11-25";
+                      break;
+                  case 2:
+                      this.field2Descript = "25-49";
+                      break;
+                  case 3:
+                      this.field2Descript = "50+";
+                      break;
+              }
               break;
           case 2:
               //music
               this.featureString = "Music";
               this.field1 = "Genre";
-              this.field1Descript = this.feature.genre;
+              switch(this.feature.genre) {
+                  case 0:
+                      this.field1Descript = "Rock and Roll";
+                      break;
+                  case 1:
+                      this.field1Descript = "Pop";
+                      break;
+                  case 2:
+                      this.field1Descript = "Rap";
+                      break;
+                  case 3:
+                      this.field1Descript = "Other";
+                      break;
+              }
               this.field2 = "Live Music";
-              this.field2Descript = this.feature.live_music;
+              switch(this.feature.live_music){
+                  case 0:
+                      this.field2Descript = "Band";
+                      break;
+                  case 1:
+                      this.field2Descript = "DJ";
+                      break;
+              }
               break;
           case 3:
               //clothing
               this.featureString = "Clothing";
               this.field1 = "Gender";
-              this.field1Descript = this.feature.gender;
+              switch(this.feature.gender) {
+                  case 0:
+                      this.field1Descript = "Female";
+                      break;
+                  case 1:
+                      this.field1Descript = "Male";
+                      break;
+              }
               this.field2 = "Color";
-              this.field2Descript = this.feature.color;
+              switch(this.feature.color){
+                  case 0:
+                      this.field2Descript = "Red";
+                      break;
+                  case 1:
+                      this.field2Descript = "Blue";
+                      break;
+                  case 2:
+                      this.field2Descript = "Green";
+                      break;
+                  case 3:
+                      this.field2Descript = "Yellow";
+                      break;
+                  case 4:
+                      this.field2Descript = "Orange";
+                      break;
+                  case 5:
+                      this.field2Descript = "Black";
+                      break;
+              }
               break;
       }
+    }
+
+    ionViewDidLoad() {
+      this.featureStore.getBiddingVendors(this.feature.feature_id).subscribe(vendors => {
+          this.biddingVendors.next(List(vendors));
+      });
     }
 
 
