@@ -40,9 +40,10 @@ export class FeatureDetailsPage {
       if (this.navParams.get('feature')) {
           this.feature = this.navParams.get('feature');
       }
-      if(this.navParams.get('user_type')) {
+      if(this.navParams.get('user_type') >= 0) {
           this.user_type = this.navParams.get('user_type');
       }
+      console.log("FEATURE DETAILS USER TYPE", this.user_type);
       if(this.navParams.get('event')) {
           this.event = this.navParams.get('event');
       }

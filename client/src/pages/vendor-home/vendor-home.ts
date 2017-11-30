@@ -48,6 +48,7 @@ export class VendorHomePage {
     if(this.navParams.get('user_type')) {
       this.user_type = this.navParams.get('user_type');
     }
+    console.log("VENDOR USER TYPE:", this.user_type);
   }
 
   ionViewDidLoad() {

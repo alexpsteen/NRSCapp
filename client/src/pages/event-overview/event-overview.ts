@@ -54,9 +54,10 @@ export class EventOverviewPage {
     if (this.navParams.get('event')) {
       this.event = this.navParams.get('event');
     }
-    if(this.navParams.get('user_type')) {
+    if(this.navParams.get('user_type') >= 0) {
       this.user_type = this.navParams.get('user_type');
     }
+    console.log("EVENT-OVERVIEW USER TYPE:", this.user_type);
     if(this.navParams.get('vendor')) {
       this.vendor = this.navParams.get('vendor');
     }

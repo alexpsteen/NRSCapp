@@ -26,6 +26,7 @@ import {VendorProfilePage} from "../vendor-profile/vendor-profile";
 export class EventPlannerHomePage {
 
   tabs:string = 'myEvents';
+  user_type:number;
 
   myEvents: BehaviorSubject<List<IEvent>> = new BehaviorSubject(List([]));
   allEvents: BehaviorSubject<List<IEvent>> = new BehaviorSubject(List([]));
@@ -37,6 +38,10 @@ export class EventPlannerHomePage {
               public navParams: NavParams,
               public eventStore: EventStore,
               public userStore: UserStore) {
+      if(this.navParams.get('user_type')>= 0) {
+          this.user_type = this.navParams.get('user_type');
+      }
+    console.log("EVENT HOME USER TYPE:", this.user_type);
   }
 
   ionViewDidLoad() {
@@ -53,7 +58,8 @@ export class EventPlannerHomePage {
 
   gotoEvent(event) {
     this.navCtrl.push(EventOverviewPage, {
-      event: event
+      event: event,
+        user_type:this.user_type
     });
   }
 
