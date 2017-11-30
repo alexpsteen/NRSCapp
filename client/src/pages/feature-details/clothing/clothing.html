@@ -33,7 +33,7 @@
 
       <ion-item>
         <ion-label floating>Addtional Details</ion-label>
-        <ion-textarea name="addtionalDetails" [(ngModel)]="feature.additional_requests"></ion-textarea>
+        <ion-textarea [attr.rows] = "10" name="addtionalDetails" [(ngModel)]="feature.additional_requests"></ion-textarea>
       </ion-item>
 
     </ion-list>
