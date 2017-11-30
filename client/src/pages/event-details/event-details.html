@@ -18,12 +18,12 @@
 
       <ion-item>
         <ion-label floating>Start Date</ion-label>
-        <ion-datetime name="startDate" displayFormat="MMMM DD, YYYY hh:mm a" pickerFormat="MMM DD, YYYY hh:mm a" min="2017-09-27" max="2020-12-31" [(ngModel)]="event.event_date_start"></ion-datetime>
+        <ion-datetime #startDate name="startDate" displayFormat="MMMM DD, YYYY hh:mm a" pickerFormat="MMM DD, YYYY hh:mm a" min="2017-09-27" max="2020-12-31" [(ngModel)]="event.event_date_start"></ion-datetime>
       </ion-item>
 
       <ion-item>
         <ion-label floating>End Date</ion-label>
-        <ion-datetime name="endDate" displayFormat="MMMM DD, YYYY hh:mm a" pickerFormat="MMM DD, YYYY hh:mm a" min="2017-09-27" max="2020-12-31" [(ngModel)]="event.event_date_end"></ion-datetime>
+        <ion-datetime #endDate name="endDate" displayFormat="MMMM DD, YYYY hh:mm a" pickerFormat="MMM DD, YYYY hh:mm a" min="2017-09-27" max="2020-12-31" [(ngModel)]="event.event_date_end"></ion-datetime>
       </ion-item>
 
       <div id="budget-content">

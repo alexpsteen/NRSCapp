@@ -1,6 +1,7 @@
 feature-card {
   ion-card {
     height: 13vh;
+    position: relative;
 
     ion-icon {
       font-size: 60px;
@@ -11,6 +12,24 @@ feature-card {
     span {
       text-align: center;
       display: block;
+    }
+
+    .triangle {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 0;
+      height: 0;
+      border-right: 40px solid #32db64;
+      border-bottom: 40px solid transparent;
+    }
+
+    .triangle-icon {
+      color: white;
+      position: absolute;
+      top: -10px;
+      right: 3px;
+      font-size: 3em;
     }
   }
 }

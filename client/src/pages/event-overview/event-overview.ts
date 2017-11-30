@@ -23,6 +23,9 @@ import {FoodDetailsPage} from "../feature-details/food/food";
 import {MusicDetailsPage} from "../feature-details/music/music";
 import {ClothingDetailsPage} from "../feature-details/clothing/clothing";
 import {IFeature} from "../../app/feature.interface";
+import {Observable} from "rxjs/Observable";
+
+let Rx = require('rxjs/Rx');
 
 @Component({
   selector: 'page-event-overview',
@@ -35,6 +38,7 @@ export class EventOverviewPage {
   public planner = 'NONE';
   public selectedFeature:any;
   public vendor:any;
+  public usedBudget:number = 0;
 
   planners: BehaviorSubject<List<IUser>> = new BehaviorSubject(List([]));
   myFeatures: BehaviorSubject<List<IFeature>> = new BehaviorSubject(List([]));
@@ -63,24 +67,59 @@ export class EventOverviewPage {
     }
   }
 
-  ionViewDidLoad() {
+  ionViewDidEnter() {
+    this.loadData();
+  }
+
+  loadData(): Observable<any> {
+    let observables: Observable<any>[] = [];
     if (this.event.event_status == EventStatus.PUBLISHED) {
-      this.userStore.getUserById(this.event.event_planner_id).subscribe(user => {
+      let obs1 = this.userStore.getUserById(this.event.event_planner_id);
+      obs1.subscribe(user => {
         if (user) {
           this.planner = `${user.first_name} ${user.last_name}`;
         }
       });
+      observables.push(obs1);
     }
-    this.userStore.getCurrentUser().subscribe(user => {
+    let obs2 = this.userStore.getCurrentUser();
+    obs2.subscribe(user => {
       this.isAdmin = user.user_type === 0;
       this.isVendor = user.user_type === 2;
     });
-    this.userStore.getPlanners().subscribe(planners => {
+    observables.push(obs2);
+    let obs3 = this.userStore.getPlanners();
+    obs3.subscribe(planners => {
       this.planners.next(List(planners));
     });
-    this.featureStore.getFeatures(this.event.event_id).subscribe(features => {
+    observables.push(obs3);
+    let obs4 = this.featureStore.getFeatures(this.event.event_id);
+    obs4.subscribe(features => {
       this.myFeatures.next(List(features));
-    })
+    });
+    observables.push(obs4);
+    return Rx.Observable.concat(observables);
+  }
+
+  doRefresh (refresher?) {
+    let subscription = this.loadData().subscribe({
+      complete: () => {
+        if (subscription) {
+          subscription.unsubscribe();
+        }
+        if (refresher) {
+          refresher.complete();
+        }
+      },
+      error: (err) => {
+        if (subscription) {
+          subscription.unsubscribe();
+        }
+        if (refresher) {
+          refresher.complete();
+        }
+      }
+    });
   }
 
   editEvent() {
@@ -163,5 +202,9 @@ export class EventOverviewPage {
 
   assignPlanner(plannerId) {
     this.eventStore.assignEventPlanner(this.event.event_id, plannerId).subscribe();
+  }
+
+  getBudgetWidth() {
+    return "{'width': 'calc(100% * '" + this.usedBudget + "' / '" + this.event.event_budget + "')'}";
   }
 }

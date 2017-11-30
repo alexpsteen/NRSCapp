@@ -1,6 +1,9 @@
 <header-bar title="Overview"></header-bar>
 
 <ion-content>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
 
   <div padding>
     <h2>{{event.event_name}}</h2>
@@ -23,7 +26,7 @@
       <span class="time-period">End: <span class="time">{{event.event_date_end | date: 'short'}}</span></span>
     </div>
     <div class="overview-row">
-      <span class="time-period">Budget</span>
+      <span class="time-period">Budget: ${{event.event_budget - usedBudget}} remaining</span>
     </div>
     <div class="overview-row">
       <div class="budget-outer">
@@ -31,6 +34,7 @@
           <span class="min">0</span>
           <span class="max">{{event.event_budget}}</span>
         </div>
+        <div class="budget-used" [ngStyle]="{'width': 'calc(100% * ' + usedBudget + ' / ' + event.event_budget + ')'}"></div>
       </div>
     </div>
   </div>

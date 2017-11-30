@@ -4,6 +4,10 @@
 <header-bar title="Event Planner Home"></header-bar>
 
 <ion-content padding>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
   <div padding>
     <ion-segment [(ngModel)]="tabs">
       <ion-segment-button value="myEvents">

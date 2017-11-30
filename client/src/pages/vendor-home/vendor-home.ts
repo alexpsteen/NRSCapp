@@ -51,7 +51,7 @@ export class VendorHomePage {
     console.log("VENDOR USER TYPE:", this.user_type);
   }
 
-  ionViewDidLoad() {
+  ionViewDidEnter() {
     this.loadData();
   }
 

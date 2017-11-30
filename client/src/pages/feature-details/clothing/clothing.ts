@@ -79,7 +79,7 @@ export class ClothingDetailsPage {
         {
           text: 'Delete',
           handler: () => {
-            this.featureStore.deleteFeature(this.feature.feature_id).subscribe(feature => {
+            this.featureStore.deleteFeature(this.feature.feature_id, this.feature.feature_type).subscribe(feature => {
               if (feature) {
                 this.navCtrl.pop();
                 this.doToast('Feature deleted successfully');
