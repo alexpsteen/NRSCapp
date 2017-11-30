@@ -30,6 +30,7 @@ export class VendorHomePage {
   tabs:string = 'myEvents';
 
   public vendor:IVendorLite;
+  public user_type:number;
   myEvents: BehaviorSubject<List<IEvent>> = new BehaviorSubject(List([]));
   allEvents: BehaviorSubject<List<IEvent>> = new BehaviorSubject(List([]));
   private myEventIds: List<number>;
@@ -43,6 +44,9 @@ export class VendorHomePage {
   ) {
     if (this.navParams.get('vendor')) {
       this.vendor = this.navParams.get('vendor');
+    }
+    if(this.navParams.get('user_type')) {
+      this.user_type = this.navParams.get('user_type');
     }
   }
 
@@ -90,7 +94,9 @@ export class VendorHomePage {
 
   gotoEvent(event) {
     this.navCtrl.push(EventOverviewPage, {
-      event: event
+      event: event,
+        vendor: this.vendor,
+        user_type: this.user_type
     });
   }
 

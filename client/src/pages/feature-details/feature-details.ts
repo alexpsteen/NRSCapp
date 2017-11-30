@@ -9,6 +9,7 @@ import {VendorProfilePage} from "../vendor-profile/vendor-profile";
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
 import {List} from "immutable";
 import {IEvent} from "../../app/event.interface";
+import {MakeBidPage} from "../make-bid/make-bid";
 
 @Component({
   selector: 'page-feature-details',
@@ -23,6 +24,7 @@ export class FeatureDetailsPage {
   public field1Descript: String;
   public field2Descript: String;
   public event:IEvent;
+  public vendor: any;
 
     biddingVendors: BehaviorSubject<List<any>> = new BehaviorSubject(List([]));
 
@@ -43,6 +45,9 @@ export class FeatureDetailsPage {
       }
       if(this.navParams.get('event')) {
           this.event = this.navParams.get('event');
+      }
+      if(this.navParams.get('vendor')) {
+          this.vendor = this.navParams.get('vendor');
       }
       console.log(this.feature);
       switch (this.feature.feature_type) {
@@ -190,7 +195,13 @@ export class FeatureDetailsPage {
   get title():string { return this.feature.feature_id ? 'Edit Feature' : 'Create Feature' }
 
 
+    goToBidPage() {
+      this.navCtrl.push(MakeBidPage, {
+          feature: this.feature,
+          vendor: this.vendor
 
+      });
+    }
 
   showRecommended(feature_id) {
       this.featureStore.getRecommendedVendor(feature_id).subscribe(vendor => {

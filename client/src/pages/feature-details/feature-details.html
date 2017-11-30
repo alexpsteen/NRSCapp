@@ -31,6 +31,10 @@
     </ul>
   </ion-list>
 
+  <ion-row>
+    <button ion-button full type="button" *ngIf="user_type == 2" (click)="goToBidPage()">Add Bid</button>
+  </ion-row>
+
 
   <ion-row>
     <button ion-button full type="button" *ngIf="user_type == 1" (click)="showRecommended(feature.feature_id)">Show Recommended Vendor</button>

@@ -34,6 +34,7 @@ export class EventOverviewPage {
   public featureStatus:string = 'all';
   public planner = 'NONE';
   public selectedFeature:any;
+  public vendor:any;
 
   planners: BehaviorSubject<List<IUser>> = new BehaviorSubject(List([]));
   myFeatures: BehaviorSubject<List<IFeature>> = new BehaviorSubject(List([]));
@@ -55,6 +56,9 @@ export class EventOverviewPage {
     }
     if(this.navParams.get('user_type')) {
       this.user_type = this.navParams.get('user_type');
+    }
+    if(this.navParams.get('vendor')) {
+      this.vendor = this.navParams.get('vendor');
     }
   }
 
@@ -112,9 +116,11 @@ export class EventOverviewPage {
         this.navCtrl.push(FeatureDetailsPage, {
             feature: this.selectedFeature,
             user_type: this.user_type,
-            event: this.event
+            event: this.event,
+            vendor: this.vendor,
         });
     });
+
   }
 
   plan() {
