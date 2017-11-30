@@ -6,7 +6,7 @@
 
 <ion-content padding>
 
-  <div *ngIf="currentUser.user_type == 0">
+  <div *ngIf="currentUser.user_type == 0 && bidView != 1">
     <button *ngIf="!vendor.approved" full ion-button color="secondary" (click)="updateVendorStatus(1)">Approve</button>
     <button *ngIf="vendor.approved" full ion-button color="danger" (click)="updateVendorStatus(0)">Deactivate</button>
   </div>
@@ -21,6 +21,11 @@
   <div class="info"><ion-icon name="mail" class="contact-icon"></ion-icon><a [href]="'mailto:+' + vendor.email">{{vendor.email}}</a></div>
   <div class="info"><em>{{vendor.address}}</em></div>
   <p>{{vendor.description}}</p>
+
+  <div>
+    <h1 *ngIf="(user_type == 0 && bidView == 1) || user_type == 1">Bid</h1>
+    <p *ngIf="(user_type == 0 && bidView == 1) || user_type == 1">{{vendor.bid}}</p>
+  </div>
 
   <ion-row>
     <button ion-button full type="button" *ngIf="user_type == 0 && bidView == 1" (click)="recommendVendor()">Recommend</button>

@@ -23,6 +23,7 @@ export class FeatureDetailsPage {
   public field2: String;
   public field1Descript: String;
   public field2Descript: String;
+  public additionalRequests: String;
   public event:IEvent;
   public vendor: any;
 
@@ -51,6 +52,7 @@ export class FeatureDetailsPage {
           this.vendor = this.navParams.get('vendor');
       }
       console.log(this.feature);
+      this.additionalRequests = this.feature.additional_requests;
       switch (this.feature.feature_type) {
           case 0:
             //food
