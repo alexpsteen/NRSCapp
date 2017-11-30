@@ -15,7 +15,12 @@
 
 <ion-content padding>
   <ion-item>
-    <ion-textarea class="BidDescript" [attr.rows]="10" placeholder="Describe your bid" [(ngModel)]="bidText"></ion-textarea>
+    <ion-label>Describe your bid</ion-label>
+    <ion-textarea class="BidDescript" rows="10" placeholder="Describe your bid" [(ngModel)]="bid.bid"></ion-textarea>
+  </ion-item>
+  <ion-item>
+    <ion-label>Bid amount (in USD)</ion-label>
+    <ion-input type="text" name="amount" required [(ngModel)]="bid.amount"></ion-input>
   </ion-item>
   <ion-row>
     <button ion-button full type="button" (click)="addNewBid()">Submit Bid</button>

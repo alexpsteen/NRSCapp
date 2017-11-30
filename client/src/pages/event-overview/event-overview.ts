@@ -41,7 +41,9 @@ export class EventOverviewPage {
   public usedBudget:number = 0;
 
   planners: BehaviorSubject<List<IUser>> = new BehaviorSubject(List([]));
-  myFeatures: BehaviorSubject<List<IFeature>> = new BehaviorSubject(List([]));
+  myFeaturesAll: BehaviorSubject<List<IFeature>> = new BehaviorSubject(List([]));
+  myFeaturesConfirmed: BehaviorSubject<List<IFeature>> = new BehaviorSubject(List([]));
+  myFeaturesUnconfirmed: BehaviorSubject<List<IFeature>> = new BehaviorSubject(List([]));
   isAdmin: boolean = false;
   isVendor: boolean = false;
 
@@ -93,9 +95,26 @@ export class EventOverviewPage {
       this.planners.next(List(planners));
     });
     observables.push(obs3);
+    const that = this;
     let obs4 = this.featureStore.getFeatures(this.event.event_id);
     obs4.subscribe(features => {
-      this.myFeatures.next(List(features));
+      const unconfirmed = features.filter(f => {return f.status == 0});
+      const confirmed = features.filter(f => {return f.status == 1});
+      this.myFeaturesAll.next(List(features));
+      this.myFeaturesConfirmed.next(List(confirmed));
+      this.myFeaturesUnconfirmed.next(List(unconfirmed));
+      const featureIds = features.filter(f => {return f.status == 1}).map(f => {
+        return f.feature_id;
+      });
+      let obs5 = this.featureStore.getRecommendations(featureIds);
+      obs5.subscribe(recs => {
+        if (recs) {
+          recs.forEach(r => {
+            that.usedBudget += r.amount;
+          })
+        }
+      });
+      observables.push(obs5);
     });
     observables.push(obs4);
     return Rx.Observable.concat(observables);

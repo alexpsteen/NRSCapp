@@ -17,14 +17,13 @@ import {IBid} from "../../app/feature.interface";
 })
 export class MakeBidPage {
 
-  public bidText: string;
-    bid: IBid = {
+  bid: IBid = {
     feature_id:null,
     vendor_id:null,
     interested_id:null,
-    bid:null
-
-};
+    bid:null,
+    amount:0
+  };
   public feature:any;
   public vendor:any;
 
@@ -45,7 +44,6 @@ export class MakeBidPage {
   addNewBid() {
     this.bid.feature_id = this.feature.feature_id;
     this.bid.vendor_id = this.vendor.vendor_id;
-    this.bid.bid = this.bidText;
     this.featureStore.addBid(this.bid).subscribe(newBid => {
       if(newBid) {
         this.navCtrl.pop();

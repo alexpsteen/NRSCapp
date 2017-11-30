@@ -22,9 +22,10 @@
   <div class="info"><em>{{vendor.address}}</em></div>
   <p>{{vendor.description}}</p>
 
-  <div>
-    <h1 *ngIf="(user_type == 0 && bidView == 1) || user_type == 1">Bid</h1>
-    <p *ngIf="(user_type == 0 && bidView == 1) || user_type == 1">{{vendor.bid}}</p>
+  <div *ngIf="(user_type == 0 && bidView == 1) || user_type == 1">
+    <h1>Bid</h1>
+    <p>{{vendor.amout}}</p>
+    <p>{{vendor.bid}}</p>
   </div>
 
   <ion-row>

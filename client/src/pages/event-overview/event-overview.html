@@ -53,6 +53,32 @@
     </ion-segment>
   </ion-navbar>
 
+  <div [ngSwitch]="featureStatus">
+    <ion-grid *ngSwitchCase="'all'">
+      <ion-row wrap>
+        <ion-col col-4 *ngFor="let feature of myFeaturesAll | async">
+          <feature-card [feature]="feature" (click)="seeFeature(feature)"></feature-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid *ngSwitchCase="'confirmed'">
+      <ion-row wrap>
+        <ion-col col-4 *ngFor="let feature of myFeaturesConfirmed | async">
+          <feature-card [feature]="feature" (click)="seeFeature(feature)"></feature-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid *ngSwitchCase="'unconfirmed'">
+      <ion-row wrap>
+        <ion-col col-4 *ngFor="let feature of myFeaturesUnconfirmed | async">
+          <feature-card [feature]="feature" (click)="seeFeature(feature)"></feature-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
   <ion-grid>
     <ion-row wrap>
       <ion-col col-4 *ngFor="let feature of myFeatures | async">

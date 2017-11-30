@@ -103,6 +103,10 @@ export class FeatureStore {
 
   }
 
+  getRecommendations(featureIds): Observable<IRecommendation[]> {
+    return this.auth.getCredentials().map(creds => this.sigv4.get(this.endpoint, `features/recs?featureIds=${featureIds}`,creds)).concatAll().share().map(this.multipleResult);
+  }
+
   confirmRecommendation(featureId): Observable<IRecommendation> {
     return this.auth.getCredentials().map(creds => this.sigv4.put(this.endpoint, `features?task=confirm&featureId=${featureId}`, null,creds)).concatAll().share().map(this.singularResult);
   }

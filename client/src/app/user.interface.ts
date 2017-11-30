@@ -21,6 +21,8 @@ export interface IVendor {
   description:string
   approved:number
   name:string
+  bid?:string
+  amount?:number
 }
 
 export interface IVendorLite {

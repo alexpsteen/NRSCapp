@@ -42,7 +42,8 @@ export class VendorProfilePage {
     recommend_id:null,
     feature_id:null,
     vendor_id:null,
-    confirm:0
+    confirm:0,
+      amount:0
 };
 
   constructor(public navCtrl: NavController,
@@ -163,6 +164,7 @@ export class VendorProfilePage {
   recommendVendor() {
     this.recommendation.feature_id = this.feature.feature_id;
     this.recommendation.vendor_id = this.vendor.vendor_id;
+    this.recommendation.amount = this.vendor.amount;
     this.featureStore.addRecommendation(this.recommendation).subscribe(rec => {
       if(rec) {
         this.navCtrl.pop();

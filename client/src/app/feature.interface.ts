@@ -57,15 +57,16 @@ export interface IBid {
   feature_id:number,
     vendor_id:number,
     interested_id:number,
-    bid:string
-
+    bid:string,
+  amount:number
 }
 
 export interface IRecommendation {
   recommend_id:number,
     feature_id:number,
     vendor_id:number,
-    confirm:number
+    confirm:number,
+  amount:number
 }
 
 export interface IVendorBid {
