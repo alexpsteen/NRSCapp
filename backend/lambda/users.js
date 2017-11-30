@@ -142,9 +142,38 @@ function handleUsersPUT (httpEvent, context) {
   }
 }
 
+// foreign keys may prevent deletion
 function handleUsersDELETE (httpEvent, context) {
-  console.log('Users DELETE not implemented');
-  successResponse(context, {});
+  const params =  httpEvent.queryStringParameters;
+  console.log('deleting user', params.id);
+  let userQuery = 'DELETE FROM user WHERE user_id = ?';
+  const inserts = [params.id];
+  userQuery = mysql.format(userQuery, inserts);
+  if (params.type === 'user') {
+    runFinalQuery(context, userQuery);
+  } else if (params.type === 'vendor') {
+    try {
+      let vendorUpdate = 'DELETE FROM vendor WHERE user_id = ?';
+      vendorUpdate = mysql.format(vendorUpdate, inserts);
+      console.log('running vendor query:', vendorUpdate);
+      console.log('running user query:', userQuery);
+      pool.query(vendorUpdate, (error, results) => {
+        if (error) {
+          console.log('found err in q: ', error);
+          throw error;
+        }
+        pool.query(userQuery, (error2, results2) => {
+          if (error2) {
+            console.log('found err in q: ', error2);
+            throw error2;
+          }
+          successResponse(context, results2);
+        });
+      });
+    } catch (err) {
+      errorResponse(context, err);
+    }
+  }
 }
 
 function getTaskType (path) {

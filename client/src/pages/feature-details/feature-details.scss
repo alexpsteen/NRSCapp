@@ -2,4 +2,31 @@ page-feature-details {
   textarea {
     height: 20vh;
   }
+  .fieldTitle {
+    font-size: medium;
+    margin-top: 12px;
+    color: #595959;
+  }
+  .fieldDesc {
+    font-size: small;
+    margin-left: 15px;
+    margin-top: 5px;
+    color: #999;
+  }
+  .myEventContainer {
+    background: #ccc;
+  }
+  #myEventText {
+    font-size: larger;
+  }
+  .zero {
+    border: 0;
+    margin: 0;
+    padding: 0;
+  }
+  .eventName {
+    font-size: larger;
+    text-align: center;
+    //background: #dedede;
+  }
 }

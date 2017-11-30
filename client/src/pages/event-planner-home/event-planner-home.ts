@@ -92,4 +92,8 @@ export class EventPlannerHomePage {
         return 'primary';
     }
   }
+
+  getEventClass(plannerId) {
+    return plannerId ? '' : 'unassigned';
+  }
 }

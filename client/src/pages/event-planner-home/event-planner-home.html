@@ -29,13 +29,23 @@
       </button>
     </ion-list>
 
+    <div *ngSwitchCase="'allEvents'">
+      <ion-list>
+        <button ion-item *ngFor="let ev of allEvents | async" (click)="gotoEvent(ev)">
+          <span [ngClass]="getEventClass(ev.event_planner_id)">{{ev.event_name}}</span>
+          <ion-note item-end>{{ev.event_date_start | date: 'M/d/yy'}}</ion-note>
+        </button>
+      </ion-list>
+      <ion-row>
+        <ion-col>
+          * <span class="unassigned">Red </span>events are unassigned
+        </ion-col>
+      </ion-row>
+    </div>
     <ion-list *ngSwitchCase="'allEvents'">
-      <button ion-item *ngFor="let ev of allEvents | async" (click)="gotoEvent(ev)">
-        <span>{{ev.event_name}}</span>
-        <ion-note item-end>{{ev.event_date_start | date: 'M/d/yy'}}</ion-note>
-      </button>
-    </ion-list>
 
+    </ion-list>
+    
     <div *ngSwitchCase="'vendors'">
       <ion-list>
         <button ion-item *ngFor="let v of vendors | async" (click)="gotoVendor(v)">

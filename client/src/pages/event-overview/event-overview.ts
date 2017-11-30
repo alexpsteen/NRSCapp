@@ -30,8 +30,10 @@ import {IFeature} from "../../app/feature.interface";
 })
 export class EventOverviewPage {
   public event:IEvent;
+  public user_type:number;
   public featureStatus:string = 'all';
   public planner = 'NONE';
+  public selectedFeature:any;
 
   planners: BehaviorSubject<List<IUser>> = new BehaviorSubject(List([]));
   myFeatures: BehaviorSubject<List<IFeature>> = new BehaviorSubject(List([]));
@@ -49,6 +51,9 @@ export class EventOverviewPage {
     public toastCtrl: ToastController) {
     if (this.navParams.get('event')) {
       this.event = this.navParams.get('event');
+    }
+    if(this.navParams.get('user_type')) {
+      this.user_type = this.navParams.get('user_type');
     }
   }
 
@@ -97,25 +102,20 @@ export class EventOverviewPage {
     });
   }
 
-  editFeature(feature) {
-    // let page: any = FeatureDetailsPage;
-    // switch (feature.feature_type) {
-    //   case 0:
-    //     page = VenueDetailsPage;
-    //     break;
-    //   case 1:
-    //     page = FoodDetailsPage;
-    //     break;
-    //   case 2:
-    //     page = MusicDetailsPage;
-    //     break;
-    //   case 3:
-    //     page = ClothingDetailsPage;
-    //     break;
-    // }
-    this.navCtrl.push(FeatureDetailsPage, {
-      feature: feature
+  seeFeature(feature) {
+    console.log("SEE FEATURE");
+    this.featureStore.getFeature(feature.feature_id, feature.feature_type).subscribe( returnedFeature => {
+      this.selectedFeature = returnedFeature;
+        console.log("FEATURE STORED");
+        this.navCtrl.push(FeatureDetailsPage, {
+            feature: this.selectedFeature,
+            user_type: this.user_type
+        });
     });
+    //   this.navCtrl.push(FeatureDetailsPage, {
+    //     feature:feature,
+    //       user_type: this.user_type
+    //   })
   }
 
   plan() {
@@ -131,7 +131,7 @@ export class EventOverviewPage {
           text: 'Publish',
           handler: () => {
             this.event.event_status = 1;
-            this.eventStore.publishEvent(this.event).subscribe(event => {
+            this.eventStore.publishEvent(this.event.event_id).subscribe(event => {
               if (event) {
                 this.navCtrl.pop();
                 this.toastCtrl.create({
@@ -156,6 +156,6 @@ export class EventOverviewPage {
   }
 
   assignPlanner(plannerId) {
-    this.eventStore.assignEventPlanner(this.event, plannerId).subscribe();
+    this.eventStore.assignEventPlanner(this.event.event_id, plannerId).subscribe();
   }
 }

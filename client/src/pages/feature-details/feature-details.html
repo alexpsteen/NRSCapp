@@ -2,43 +2,42 @@
 
 <ion-content padding>
 
-  <form (ngSubmit)="saveFeature()" #featureForm="ngForm">
     <ion-card *ngIf="message" color='secondary'>
       <ion-card-content>
         {{message}}
       </ion-card-content>
     </ion-card>
 
+  <ion-list>
+    <!--<ion-list-header class="myEventContainer">-->
+      <!--<div id="myEventText" class="zero"></div>-->
+    <!--</ion-list-header>-->
+    <ul class="zero">
+      <button class="zero eventName" ion-item *ngFor="let ev of eventStore.events | async">
+        <div>{{featureString}} Feature for {{ev.event_name}}</div>
+      </button>
+    </ul>
+  </ion-list>
+
     <ion-list>
 
-      <!--<ion-item>-->
-        <!--<ion-label >{{field1}}</ion-label>-->
-      <!--</ion-item>-->
-      <!--<ion-item>-->
-        <!--<ion-label >{{field1Descript}}</ion-label>-->
-      <!--</ion-item>-->
-
-      <!--<ion-item>-->
-        <!--<ion-label >{{field2}}</ion-label>-->
-      <!--</ion-item>-->
-      <!--<ion-item>-->
-        <!--<ion-label >{{field2Descript}}</ion-label>-->
-      <!--</ion-item>-->
-
       <ion-item>
-        <div>{{field1}}</div>
-        <div>{{field1Descript}}</div>
+        <div class="fieldTitle">{{field1}}</div>
+        <div class="fieldDesc">{{field1Descript}}</div>
 
-        <div>{{field2}}</div>
-        <div>{{field2Descript}}</div>
+        <div class="fieldTitle">{{field2}}</div>
+        <div class="fieldDesc">{{field2Descript}}</div>
       </ion-item>
 
     </ion-list>
 
-    <ion-row>
-      <button ion-button full type="button" *ngIf="feature.featureId" color="danger" (click)="confirmDelete()">Delete</button>
-    </ion-row>
 
-  </form>
+  <ion-row>
+    <button ion-button full type="button" *ngIf="user_type == 1" (click)="showRecommended(feature.feature_id)">Show Recommended Vendor</button>
+  </ion-row>
+
+    <ion-row>
+      <button ion-button full type="button" *ngIf="user_type === 1" color="danger" (click)="confirmDelete()">Delete</button>
+    </ion-row>
 
 </ion-content>

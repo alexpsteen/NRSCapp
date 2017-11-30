@@ -56,11 +56,13 @@ export class LoginPage {
           switch (user.user_type) {
             case UserType.PLANNER:
               this.navCtrl.setRoot(EventPlannerHomePage, {
+                  user_type: 0,
                 user: user
               });
               break;
             case UserType.CUSTOMER:
               this.navCtrl.setRoot(HomePage, {
+                  user_type:1,
                 user: user
               });
               break;
@@ -68,6 +70,7 @@ export class LoginPage {
               this.userStore.getCurrentVendor().subscribe(vendor => {
                 if(vendor) {
                     this.navCtrl.setRoot(VendorHomePage, {
+                        user_type: 2,
                         vendor: vendor
                     });
                 }

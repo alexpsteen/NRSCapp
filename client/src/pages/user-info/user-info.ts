@@ -119,8 +119,10 @@ export class UserInfoPage {
         console.error('user creation error...', err);
       });
     } else {
+      const that = this;
       this.userStore.updateUser(userObj).subscribe(user => {
         this.dismiss();
+        that.dismiss();
       }, err => {
         console.error('user save error...', err);
       });
