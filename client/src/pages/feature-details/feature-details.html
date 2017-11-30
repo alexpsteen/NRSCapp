@@ -25,7 +25,7 @@
       <div id="myEventText" class="zero">Bidding Vendors</div>
     </ion-list-header>
     <ul class="zero">
-      <button class="zero eventName" ion-item *ngFor="let v of biddingVendors | async">
+      <button class="zero eventName" ion-item *ngFor="let v of biddingVendors | async" (click)="seeVendor(v)">
         <div>{{v.name}}</div>
       </button>
     </ul>

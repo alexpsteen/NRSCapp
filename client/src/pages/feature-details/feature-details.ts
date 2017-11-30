@@ -210,6 +210,17 @@ export class FeatureDetailsPage {
       })
   }
 
+  seeVendor(vendor) {
+      this.featureStore.getVendorDetails(vendor.vendor_id, this.feature.feature_id).subscribe(vendor => {
+          this.navCtrl.push(VendorProfilePage, {
+              vendor:vendor,
+              user_type : this.user_type,
+              feature: this.feature,
+              event: this.event
+          });
+      })
+  }
+
   confirmDelete() {
     const alert = this.alertCtrl.create({
       title: 'Delete?',
