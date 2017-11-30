@@ -99,24 +99,28 @@ export class EventOverviewPage {
     const that = this;
     let obs4 = this.featureStore.getFeatures(this.event.event_id);
     obs4.subscribe(features => {
-      const unconfirmed = features.filter(f => {return f.status == 0});
-      const confirmed = features.filter(f => {return f.status == 1});
+      const unconfirmed = features ? features.filter(f => {return f.status == 0}) : [];
+      const confirmed = features ? features.filter(f => {return f.status == 1}) : [];
       this.myFeaturesAll.next(List(features));
       this.myFeaturesConfirmed.next(List(confirmed));
       this.myFeaturesUnconfirmed.next(List(unconfirmed));
-      const featureIds = features.filter(f => {return f.status == 1}).map(f => {
-        return f.feature_id;
-      });
-      let obs5 = this.featureStore.getRecommendations(featureIds);
-      obs5.subscribe(recs => {
-        console.warn(that.usedBudget, recs);
-        if (recs) {
-          recs.forEach(r => {
-            that.usedBudget += r.amount;
-          })
-        }
-      });
-      observables.push(obs5);
+      if (features) {
+        const featureIds = features.filter(f => {
+          return f.status == 1
+        }).map(f => {
+          return f.feature_id;
+        });
+        let obs5 = this.featureStore.getRecommendations(featureIds);
+        obs5.subscribe(recs => {
+          console.warn(that.usedBudget, recs);
+          if (recs) {
+            recs.forEach(r => {
+              that.usedBudget += r.amount;
+            })
+          }
+        });
+        observables.push(obs5);
+      }
     });
     observables.push(obs4);
     return Rx.Observable.concat(observables);

@@ -93,7 +93,7 @@
         <ion-icon name="add"></ion-icon>
         Add Feature
       </button>
-      <button ion-button (click)="plan()" color="secondary">
+      <button *ngIf="event.event_status == 0" ion-button (click)="plan()" color="secondary">
         LET'S PLAN!
       </button>
     </ion-toolbar>
