@@ -216,7 +216,8 @@ export class FeatureDetailsPage {
               vendor:vendor,
               user_type : this.user_type,
               feature: this.feature,
-              event: this.event
+              event: this.event,
+              bidView: 1
           });
       })
   }

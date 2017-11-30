@@ -23,6 +23,10 @@
   <p>{{vendor.description}}</p>
 
   <ion-row>
+    <button ion-button full type="button" *ngIf="user_type == 0 && bidView == 1" (click)="recommendVendor()">Recommend</button>
+  </ion-row>
+
+  <ion-row>
     <button ion-button full type="button" *ngIf="user_type == 1" (click)="confirmVendor(feature.feature_id)">Confirm</button>
   </ion-row>
 

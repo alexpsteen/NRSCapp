@@ -6,6 +6,7 @@ import {UserStore} from "../../app/user.store";
 import {FeatureStore} from "../../app/feature.store";
 import {EventOverviewPage} from "../event-overview/event-overview";
 import {IEvent} from "../../app/event.interface";
+import {IRecommendation} from "../../app/feature.interface";
 
 /**
  * Generated class for the VendorProfilePage page.
@@ -36,6 +37,13 @@ export class VendorProfilePage {
   public selectedPhoto: Blob;
   public sub: string = null;
   public event: IEvent;
+  public bidView:number;
+    recommendation: IRecommendation = {
+    recommend_id:null,
+    feature_id:null,
+    vendor_id:null,
+    confirm:0
+};
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -50,12 +58,16 @@ export class VendorProfilePage {
     if(this.navParams.get('feature')) {
       this.feature = this.navParams.get('feature');
     }
-    if(this.navParams.get('user_type')) {
+    if(this.navParams.get('user_type') >= 0) {
       this.user_type = this.navParams.get('user_type');
     }
     if(this.navParams.get('event')) {
       this.event = this.navParams.get('event');
     }
+    if(this.navParams.get('bidView')) {
+      this.bidView = this.navParams.get('bidView');
+    }
+    console.log("BID VIEW:", this.bidView);
     this.avatarPhoto = null;
     this.selectedPhoto = null;
     this.s3 = new AWS.S3({
@@ -146,6 +158,17 @@ export class VendorProfilePage {
         this.navCtrl.pop();
       }
     })
+  }
+
+  recommendVendor() {
+    this.recommendation.feature_id = this.feature.feature_id;
+    this.recommendation.vendor_id = this.vendor.vendor_id;
+    this.featureStore.addRecommendation(this.recommendation).subscribe(rec => {
+      if(rec) {
+        this.navCtrl.pop();
+        this.navCtrl.pop();
+      }
+    });
   }
 
   doToast(text:string) {
