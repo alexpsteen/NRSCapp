@@ -6,6 +6,7 @@ import { LoginModal } from '../../modal/login/login'
 import { LogoutModal } from '../../modal/logout/logout'
 import { AuthService } from '../../app/auth.service'
 import {EventStore} from '../../app/event.store'
+import {ComposeMessagePage} from "../compose-message/compose-message";
 
 @Component({
     selector:"read-message",
@@ -50,6 +51,13 @@ export class ReadMessage {
     }
 
     load() {
-        document.getElementById("message").innerHTML = "Message";
+        //document.getElementById("message").innerHTML = "Message";
+        this.navCtrl.setRoot(ComposeMessagePage)
+    }
+
+    message = {
+        sender: "",
+        subject: "",
+        body: ""
     }
 }

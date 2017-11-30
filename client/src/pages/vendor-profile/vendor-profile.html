@@ -6,6 +6,11 @@
 
 <ion-content padding>
 
+  <div padding text-center>
+    <div *ngIf="avatarPhoto" class="avatar" [style.background-image]="'url('+ avatarPhoto +')'">
+    </div>
+  </div>
+
   <h1>{{vendor.name}}</h1>
   <div class="info"><ion-icon name="call" class="contact-icon"></ion-icon><a [href]="'tel:+' + vendor.cellphone_number">{{vendor.cellphone_number}}</a></div>
   <div class="info"><ion-icon name="mail" class="contact-icon"></ion-icon><a [href]="'mailto:+' + vendor.email">{{vendor.email}}</a></div>
