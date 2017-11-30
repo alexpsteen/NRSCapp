@@ -34,17 +34,17 @@
     </ul>
   </ion-list>
 
-  <ion-row>
-    <button ion-button full type="button" *ngIf="user_type == 2" (click)="goToBidPage()">Add Bid</button>
+  <ion-row *ngIf="user_type == 2">
+    <button ion-button full type="button" (click)="goToBidPage()">Add Bid</button>
   </ion-row>
 
 
-  <ion-row>
-    <button ion-button full type="button" *ngIf="user_type == 1" (click)="showRecommended(feature.feature_id)">Show Recommended Vendor</button>
+  <ion-row *ngIf="user_type == 1 && showButton && !feature.status">
+    <button ion-button full type="button" (click)="showRecommended(feature.feature_id)">Show Recommended Vendor</button>
   </ion-row>
 
-    <ion-row>
-      <button ion-button full type="button" *ngIf="user_type === 1" color="danger" (click)="confirmDelete()">Delete</button>
+    <ion-row *ngIf="user_type !== 2 && !showButton">
+      <button ion-button full type="button" color="danger" (click)="confirmDelete()">Delete</button>
     </ion-row>
 
 </ion-content>

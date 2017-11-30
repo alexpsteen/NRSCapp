@@ -26,6 +26,7 @@ export class FeatureDetailsPage {
   public additionalRequests: String;
   public event:IEvent;
   public vendor: any;
+  public showButton: boolean = false;
 
     biddingVendors: BehaviorSubject<List<any>> = new BehaviorSubject(List([]));
 
@@ -188,8 +189,10 @@ export class FeatureDetailsPage {
       }
     }
 
-    ionViewDidLoad() {
+    ionViewDidEnter() {
       this.featureStore.getBiddingVendors(this.feature.feature_id).subscribe(vendors => {
+        console.warn(vendors);
+        this.showButton = vendors && vendors.length > 0;
           this.biddingVendors.next(List(vendors));
       });
     }

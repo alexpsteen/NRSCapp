@@ -22,7 +22,7 @@ export class MakeBidPage {
     vendor_id:null,
     interested_id:null,
     bid:null,
-    amount:0
+    amount:null
   };
   public feature:any;
   public vendor:any;

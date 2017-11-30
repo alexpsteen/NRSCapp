@@ -74,6 +74,7 @@ export class EventOverviewPage {
   }
 
   loadData(): Observable<any> {
+    this.usedBudget = 0;
     let observables: Observable<any>[] = [];
     if (this.event.event_status == EventStatus.PUBLISHED) {
       let obs1 = this.userStore.getUserById(this.event.event_planner_id);
@@ -108,6 +109,7 @@ export class EventOverviewPage {
       });
       let obs5 = this.featureStore.getRecommendations(featureIds);
       obs5.subscribe(recs => {
+        console.warn(that.usedBudget, recs);
         if (recs) {
           recs.forEach(r => {
             that.usedBudget += r.amount;
