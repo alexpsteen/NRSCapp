@@ -10,6 +10,7 @@ import _ from 'lodash';
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
 import {EventOverviewPage} from "../event-overview/event-overview";
 import {VendorProfilePage} from "../vendor-profile/vendor-profile";
+import {Observable} from "rxjs/Observable";
 
 /**
  * Generated class for the EventPlannerHomePage page.
@@ -17,6 +18,7 @@ import {VendorProfilePage} from "../vendor-profile/vendor-profile";
  * See http://ionicframework.com/docs/components/#navigation for more info
  * on Ionic pages and navigation.
  */
+let Rx = require('rxjs/Rx');
 
 @IonicPage()
 @Component({
@@ -39,15 +41,48 @@ export class EventPlannerHomePage {
               public userStore: UserStore) {
   }
 
-  ionViewDidLoad() {
-    this.eventStore.getEventsByEventPlannerId().subscribe(events => {
+  ionViewDidEnter() {
+    this.loadData();
+  }
+
+  loadData(): Observable<any> {
+    let observables: Observable<any>[] = [];
+    let obs1 = this.eventStore.getEventsByEventPlannerId();
+    obs1.subscribe(events => {
       this.myEvents.next(List(this.sortEvents(events)));
     });
-    this.eventStore.getAllEvents().subscribe(events => {
+    observables.push(obs1);
+    let obs2 = this.eventStore.getAllEvents();
+    obs2.subscribe(events => {
       this.allEvents.next(List(this.sortEvents(events)));
     });
-    this.userStore.getVendors().subscribe(vendors => {
+    observables.push(obs2);
+    let obs3 = this.userStore.getVendors();
+    obs3.subscribe(vendors => {
       this.vendors.next(List(this.sortVendors(vendors)));
+    });
+    observables.push(obs3);
+    return Rx.Observable.concat(observables);
+  }
+
+  doRefresh (refresher?) {
+    let subscription = this.loadData().subscribe({
+      complete: () => {
+        if (subscription) {
+          subscription.unsubscribe();
+        }
+        if (refresher) {
+          refresher.complete();
+        }
+      },
+      error: (err) => {
+        if (subscription) {
+          subscription.unsubscribe();
+        }
+        if (refresher) {
+          refresher.complete();
+        }
+      }
     });
   }
 

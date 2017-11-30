@@ -25,22 +25,35 @@ page-event-overview {
   }
 
   .budget-outer {
+    position: relative;
+    border: 1px solid #3aa6ff;
+
     .budget-total {
       position: relative;
       height: 20px;
-      background-color: lightgrey;
+      background-color: #98ddab;
 
       .min {
         position: absolute;
         left: 0;
         padding-left: 3px;
+        z-index: 1;
       }
 
       .max {
         position: absolute;
         right: 0;
         padding-right: 3px;
+        z-index: 1;
       }
+    }
+
+    .budget-used {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 20px;
+      background-color: #3aa6ff;
     }
   }
 

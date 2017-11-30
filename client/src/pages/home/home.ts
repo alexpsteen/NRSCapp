@@ -2,30 +2,55 @@ import { Component } from '@angular/core'
 
 import {NavController, NavParams} from 'ionic-angular'
 
+import _ from 'lodash';
+
 import {EventDetailsPage} from "../event-details/event-details";
 import {EventStore} from "../../app/event.store";
 import {EventOverviewPage} from "../event-overview/event-overview";
+import {BehaviorSubject} from "rxjs/BehaviorSubject";
+import {List} from "immutable";
+import {IEvent} from "../../app/event.interface";
+import {Observable} from "rxjs/Observable";
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 export class HomePage {
+
+  public events: BehaviorSubject<List<IEvent>> = new BehaviorSubject(List([]));
+
   constructor(
     public navCtrl: NavController,
     public eventStore: EventStore,
     public navParams: NavParams) { }
 
+  ionViewDidEnter() {
+    this.loadData();
+  }
+
+  loadData(): Observable<IEvent[]> {
+    let obs = this.eventStore.getEvents();
+    obs.subscribe(events => {
+      this.events.next(List(this.sortEvents(events)));
+    });
+    return obs;
+  }
+
   doRefresh (refresher?) {
-    let subscription = this.eventStore.refresh().subscribe({
+    let subscription = this.loadData().subscribe({
       complete: () => {
-        subscription.unsubscribe();
+        if (subscription) {
+          subscription.unsubscribe();
+        }
         if (refresher) {
           refresher.complete();
         }
       },
       error: (err) => {
-        subscription.unsubscribe();
+        if (subscription) {
+          subscription.unsubscribe();
+        }
         if (refresher) {
           refresher.complete();
         }
@@ -45,7 +70,8 @@ export class HomePage {
 
       this.navCtrl.push(EventOverviewPage, {
         user_type: this.navParams.get('user_type'),
-        event: event
+        event: event,
+        parentPage: this
       });
     });
   }
@@ -70,5 +96,9 @@ export class HomePage {
       default:
         return 'alert';
     }
+  }
+
+  private sortEvents (events:IEvent[]): IEvent[] {
+    return _.orderBy(events, ['event_date_start', 'event_name'], ['asc', 'asc'])
   }
 }

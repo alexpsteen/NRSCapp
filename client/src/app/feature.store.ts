@@ -119,8 +119,8 @@ export class FeatureStore {
       return this.auth.getCredentials().map(creds => this.sigv4.post(this.endpoint, `features?task=recommendation`, recommendation,creds)).concatAll().share().map(this.singularResult);
   }
 
-  deleteFeature (featureId): Observable<IFeature> {
-    return this.auth.getCredentials().map(creds => this.sigv4.del(this.endpoint, `features?id=${featureId}`, creds)).concatAll().share().map(this.singularResult);
+  deleteFeature (featureId, featureType): Observable<IFeature> {
+    return this.auth.getCredentials().map(creds => this.sigv4.del(this.endpoint, `features?id=${featureId}&type=${featureType}`, creds)).concatAll().share().map(this.singularResult);
   }
 
   private sortVendors(vendors:IBid[]): IBid[] {

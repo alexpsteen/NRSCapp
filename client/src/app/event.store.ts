@@ -32,6 +32,11 @@ export class EventStore {
 
   get events () { return Observable.create( fn => this._events.subscribe(fn) ) }
 
+  getEvents (): Observable<IEvent[]> {
+    return this.auth.getCredentials().map(creds =>
+      this.sigv4.get(this.endpoint, `events/customer`, creds)).concatAll().share().map(this.multipleResult);
+  }
+
   getEventsByCustomerId (): Observable<IEvent[]> {
     return this.auth.getCredentials().map(creds =>
         this.sigv4.get(this.endpoint, `events/customer`, creds)).concatAll().share().map(this.multipleResult);

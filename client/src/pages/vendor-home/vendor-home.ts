@@ -50,7 +50,7 @@ export class VendorHomePage {
     }
   }
 
-  ionViewDidLoad() {
+  ionViewDidEnter() {
     this.loadData();
   }
 

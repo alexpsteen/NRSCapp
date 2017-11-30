@@ -34,9 +34,9 @@ export class FeatureCard {
   get featureIcon():string {
     switch(this.feature.feature_type) {
       case 0:
-        return 'pin';
-      case 1:
         return 'restaurant';
+      case 1:
+        return 'pin';
       case 2:
         return 'musical-notes';
       case 3:
