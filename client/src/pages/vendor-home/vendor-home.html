@@ -1,26 +1,44 @@
-<header-bar title="Home"></header-bar>
+<header-bar title="Vendor Home"></header-bar>
 
-<ion-content>
+<ion-content padding>
     <ion-refresher (ionRefresh)="doRefresh($event)">
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
-    <div class="container">
-        <div class = "header-container" style="display:inline-block">
-            <h1>Vendor</h1>
-        </div>
-        <div class = "button-container" style="float:right; display:inline-block">
-            <button ion-button (click)="goToProfilePage()">View Profile</button>
+
+    <div padding>
+        <ion-segment [(ngModel)]="tabs">
+            <ion-segment-button value="myEvents">
+                Events I'm Servicing
+            </ion-segment-button>
+
+            <ion-segment-button value="allEvents">
+                All Events
+            </ion-segment-button>
+        </ion-segment>
+
+    </div>
+
+    <div [ngSwitch]="tabs">
+        <ion-list *ngSwitchCase="'myEvents'">
+            <button ion-item *ngFor="let ev of myEvents | async" (click)="gotoEvent(ev)">
+                <span>{{ev.event_name}}</span>
+                <ion-note item-end>{{ev.event_date_start | date: 'M/d/yy'}}</ion-note>
+            </button>
+        </ion-list>
+
+        <div *ngSwitchCase="'allEvents'">
+            <ion-list>
+                <button ion-item *ngFor="let ev of allEvents | async" (click)="gotoEvent(ev)">
+                    <span [ngClass]="getEventClass(ev.event_id)">{{ev.event_name}}</span>
+                    <ion-note item-end>{{ev.event_date_start | date: 'M/d/yy'}}</ion-note>
+                </button>
+            </ion-list>
+            <ion-row>
+                <ion-col>
+                    * <span class="assigned">Green </span>events are being serviced by you
+                </ion-col>
+            </ion-row>
         </div>
     </div>
-    <ion-list>
-        <ion-list-header>
-            Events I'm Serving
-        </ion-list-header>
-        <button ion-item *ngFor="let ev of eventStore.events | async;">
-            <ion-icon [name]="getIcon(ev)" [color]="getIconColor(ev)" item-start></ion-icon>
-            <span>{{ev.name}}</span>
-            <ion-note item-end>{{ev.startDate | date: 'M/d/yy'}}</ion-note>
-        </button>
-    </ion-list>
-    <button ion-button (click)="openEventList()">View All Events</button>
+
 </ion-content>

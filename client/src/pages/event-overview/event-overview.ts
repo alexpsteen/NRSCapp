@@ -38,6 +38,7 @@ export class EventOverviewPage {
   planners: BehaviorSubject<List<IUser>> = new BehaviorSubject(List([]));
   myFeatures: BehaviorSubject<List<IFeature>> = new BehaviorSubject(List([]));
   isAdmin: boolean = false;
+  isVendor: boolean = false;
 
   constructor(
     public navCtrl: NavController,
@@ -67,6 +68,7 @@ export class EventOverviewPage {
     }
     this.userStore.getCurrentUser().subscribe(user => {
       this.isAdmin = user.user_type === 0;
+      this.isVendor = user.user_type === 2;
     });
     this.userStore.getPlanners().subscribe(planners => {
       this.planners.next(List(planners));

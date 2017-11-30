@@ -4,7 +4,7 @@
 
   <div padding>
     <h2>{{event.event_name}}</h2>
-    <button class="settings" ion-button clear icon-only (click)="editEvent()">
+    <button *ngIf="!isVendor" class="settings" ion-button clear icon-only (click)="editEvent()">
       <ion-icon name='settings'></ion-icon>
     </button>
     <div class="overview-row" *ngIf="!isAdmin">
@@ -57,7 +57,7 @@
     </ion-row>
   </ion-grid>
 
-  <ion-footer>
+  <ion-footer *ngIf="!isVendor">
     <ion-toolbar>
       <button ion-button icon-left (click)="addFeature()" color="light">
         <ion-icon name="add"></ion-icon>

@@ -52,6 +52,11 @@ export class EventStore {
         this.sigv4.get(this.endpoint, `events/eventPlanner`, creds)).concatAll().share().map(this.multipleResult);
   }
 
+  getEventsByVendorId (): Observable<IEvent[]> {
+    return this.auth.getCredentials().map(creds =>
+      this.sigv4.get(this.endpoint, `events/vendor`, creds)).concatAll().share().map(this.multipleResult);
+  }
+
   getPublishedEvents (): Observable<IEvent[]> {
     return this.auth.getCredentials().map(creds =>
         this.sigv4.get(this.endpoint, `events/published`, creds)).concatAll().share().map(this.multipleResult);

@@ -37,9 +37,9 @@
       </div>
 
     </ion-list>
-    <button ion-button full type="submit" [disabled]="!eventForm.form.valid">Save Event</button>
+    <button ion-button full class="btn-space" type="submit" [disabled]="!eventForm.form.valid">Save Event</button>
 
-    <button ion-button full type="button" *ngIf="event.event_id" color="danger" (click)="confirmDelete()">Delete</button>
+    <button ion-button full class="btn-space" type="button" *ngIf="event.event_id" color="danger" (click)="confirmDelete()">Delete</button>
   </form>
 
 </ion-content>
