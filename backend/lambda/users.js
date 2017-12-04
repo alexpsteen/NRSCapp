@@ -108,8 +108,8 @@ function handleUsersPUT (httpEvent, context) {
     const userObj = JSON.parse(httpEvent.body);
     const user = userObj.user;
     const vendor = userObj.vendor;
-    let userQuery = 'UPDATE user SET first_name = ?, last_name = ?, cellphone_number = ? WHERE authentication_id = ?';
-    const inserts = [user.first_name, user.last_name, user.cellphone_number, cognitoId];
+    let userQuery = 'UPDATE user SET first_name = ?, last_name = ?, email = ?, cellphone_number = ? WHERE authentication_id = ?';
+    const inserts = [user.first_name, user.last_name, user.email, user.cellphone_number, cognitoId];
     userQuery = mysql.format(userQuery, inserts);
     if (vendor) {
       try {
