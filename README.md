@@ -53,15 +53,15 @@ These are the required steps to run the project locally for development. For pro
 
 3. Select the nrsc-app tile by clicking on it:
 
-![install 3](https://github.com/alexpsteen/NRSCapp/blob/master/media/install2.png "Install Step 3")
+![install 3](https://github.com/alexpsteen/NRSCapp/blob/master/media/install3.png "Install Step 3")
 
 4. Select the Hosting and Streaming tile by clicking on it:
 
-![install 4](https://github.com/alexpsteen/NRSCapp/blob/master/media/install2.png "Install Step 4")
+![install 4](https://github.com/alexpsteen/NRSCapp/blob/master/media/install4.png "Install Step 4")
 
 5. Click on the Download aws-config.js file button and save the file:
 
-![install 5](https://github.com/alexpsteen/NRSCapp/blob/master/media/install2.png "Install Step 5")
+![install 5](https://github.com/alexpsteen/NRSCapp/blob/master/media/install5.png "Install Step 5")
 
 6. Move the aws-config.js file to the client/src/assets folder of the NRSCapp folder created earlier when downloading the code source.
 
