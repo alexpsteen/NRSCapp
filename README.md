@@ -69,6 +69,7 @@ These are the required steps to run the project locally for development. For pro
 * Change to the client directory in the NRSCapp directory: `cd NRSCapp/client`
 * Run npm install to get the required libraries: `npm install`
 * Run the Ionic server: `ionic serve`
+* If your default Internet browser does not automatically open, navigate to the following address: `http://localhost:8100`
 
 ### Troubleshooting
 
