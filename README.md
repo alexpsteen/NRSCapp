@@ -36,9 +36,8 @@ These are the required steps to run the project locally for development. For pro
 ### Code Download
 
 * Check out the code repository from Github: `git clone https://github.com/alexpsteen/NRSCapp.git`
-  * Change to the client directory in the new NRSCapp directory: `cd NRSCapp` followed by `cd client`
 * OR download the master branch as a zip file and unzip it: [DOWNLOAD](https://github.com/alexpsteen/NRSCapp/archive/master.zip)
-* Follow the next steps to obtain the aws-config.js file which will contain the info for all the AWS connections
+* Follow the next steps to obtain the aws-config.js file which will contain the info for all the AWS connections. **THIS FILE SHOULD NOT BE CHECKED INTO SOURCE CONTROL SINCE IT CONTAINS SENSITIVE INFORMATION.**
 
 ### Obtain aws-config.js
 
