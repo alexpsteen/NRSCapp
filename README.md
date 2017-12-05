@@ -20,9 +20,8 @@ This is the mobile app for [Northern Roots Southern Charm](http://www.northernro
 
 ### Known Defects
 
-* **Budget Bar:** Budget bar does not move when money is put in.
-* **Messaging:** Messaging system not currently linked to main database.
 * **Bid Validation:** Vendors can submit invalid input for their bid. Invalid bid prices are automatically set to $0.
+* **Messaging:** Messaging system not currently linked to main database.
 * **Multiple Pages:** If a navigation button is clicked more than once before the next page can open, multiple pages are opened.
 
 ## Installation Guide
