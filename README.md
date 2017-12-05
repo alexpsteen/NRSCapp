@@ -14,7 +14,9 @@ This is the mobile app for [Northern Roots Southern Charm](http://www.northernro
 
 ### Fixed Defects
 
-* None, Initial Release.
+* **Linked Database:** Database queries are fixed, and all calls to the database return the appropriate information.
+* **Profile Image Changes Reflected Immediately:** Selecting a new profile image changes the image immediately, rather than on subsequent views to the profile page.
+* **Dropdown Lists Fixed:** Pages that use Dropdown component no longer produce runtime errors.
 
 ### Known Defects
 
