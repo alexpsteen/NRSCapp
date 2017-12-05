@@ -6,18 +6,22 @@ This is the mobile app for [Northern Roots Southern Charm](http://www.northernro
 
 ### New Features
 
-* feature 1
-* feature 2
+* Customers can create events and add features to those events
+* Vendors can bid to service customer features that they match with
+* Event Planners can recommend vendors to service specific features
+* Messaging system between customers, vendors, and event planners.
+
 
 ### Fixed Defects
 
-* fixed 1
-* fixed 2
+* None, Initial Release.
 
 ### Known Defects
 
-* known 1
-* known 2
+* **Budget Bar:** Budget bar does not move when money is put in.
+* **Messaging:** Messaging system not currently linked to main database.
+* **Bid Validation:** Vendors can submit invalid input for their bid. Invalid bid prices are automatically set to $0.
+* **Multiple Pages:** If a navigation button is clicked more than once before the next page can open, multiple pages are opened.
 
 ## Installation Guide
 
